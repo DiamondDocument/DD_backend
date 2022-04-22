@@ -13,4 +13,6 @@ public interface UserService {
     boolean isLegalEmail(String email);
     boolean isLegalPassword(String password);
     boolean isLegalUserId(String userId);
+
+    User selectUserByEmail(String email);
 }

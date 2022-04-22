@@ -43,4 +43,9 @@ public class UserServiceImp implements UserService {
     public boolean isLegalUserId(String userId) {
         return false;
     }
+
+    @Override
+    public User selectUserByEmail(String email) {
+        return null;
+    }
 }
