@@ -1,13 +1,13 @@
 spring:
   datasource:
-    url: jdbc:mysql://127.0.0.1:2077/DD_backend
-    password: 2002116yy
+    url: jdbc:mysql://localhost:3306/DD_backend
+    password: Longyizhou2001
     username: root
   jpa:
     hibernate:
       ddl-auto: update
 mybatis:
   mapper-locations: classpath:Mapper/*.xml
-  type-aliases-package: com.example.project.Entity
+  type-aliases-package: diamondpick.dd_backend.Entity
 server:
-  port: 2078
+  port: 8080
