@@ -22,8 +22,8 @@ public class MessageController {
 
     @PostMapping("/api/message/send")
     public Map<String, Object> sendMessage(@RequestBody Map<String, String> requestMap) {
-        int senderID = Integer.parseInt(requestMap.get("senderId"));
-        int receiverID = Integer.parseInt(requestMap.get("receiverId"));
+        String senderID = requestMap.get("senderId");
+        String receiverID = requestMap.get("receiverId");
         String messageContent = requestMap.get("message");
         Map<String, Object> map = new HashMap<>();
         try {
@@ -50,7 +50,7 @@ public class MessageController {
     }
 
     @GetMapping("/api/message/receive")
-    public Map<String, Object> receiveMessage(@RequestParam("userId") int receiverID) {
+    public Map<String, Object> receiveMessage(@RequestParam("userId") String receiverID) {
         Map<String, Object> map = new HashMap<>();
         try {
             User userReceiver = userService.selectUserByUserId(receiverID);
