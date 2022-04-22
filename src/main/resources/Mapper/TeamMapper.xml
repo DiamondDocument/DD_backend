@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="diamondpick.dd_backend.Dao.TeamDao">
+    <insert id="registerNewTeam" parameterType="TeamMessage">
+        insert into `TeamMessage`(`teamName`,`teamIntroductory`) value (#{teamName},#{teamIntroductory})
+    </insert>
+    <select id="selectTeamByTeamId" resultType="TeamMessage">
+        select * from Student where teamID = #{teamID}
+    </select>
+    <select id="selectUserByUserIdInTeam" resultType="TeamMember">
+        select * from Student where userID = #{userID} and teamID = #{teamID}
+    </select>
+    <insert id="registerNewMember" parameterType="TeamMember">
+        insert into `TeamMember`(`teamID`,`userID`,`rank`) value (#{teamID},#{userID},#{rank})
+    </insert>
+</mapper>
