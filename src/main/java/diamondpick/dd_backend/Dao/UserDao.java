@@ -3,13 +3,14 @@ package diamondpick.dd_backend.Dao;
 
 import diamondpick.dd_backend.Entity.User;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
 @Mapper
 public interface UserDao {
-    public void InsertNewUser(User user);
-    public User SelectUserById(String user_id);
-    public List<User> SelectUserByName(String user_id);
-
+    public void InsertNewUser(@Param("user") User user);
+    public User selectUserById(@Param("user_id") String user_id);
+    public boolean insertUser(@Param("user") User user);
+    public List<User> selectUserBy(@Param("name") String name, @Param("value")Object value);
 }
