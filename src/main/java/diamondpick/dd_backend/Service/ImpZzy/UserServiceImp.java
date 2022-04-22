@@ -2,7 +2,9 @@ package diamondpick.dd_backend.Service.ImpZzy;
 
 import diamondpick.dd_backend.Entity.User;
 import diamondpick.dd_backend.Service.UserService;
+import org.springframework.stereotype.Service;
 
+@Service
 public class UserServiceImp implements UserService {
     @Override
     public User selectUserByUserId(String id) {
