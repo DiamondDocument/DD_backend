@@ -19,12 +19,12 @@ public class MessageServiceImpl implements MessageService {
     }
 
     @Override
-    public ArrayList<Message> receiveMessageByUserId(int userId, int status) {
+    public ArrayList<Message> receiveMessageByUserId(String userId, int status) {
         return messageDao.receiveMessageByUserId(userId, status);
     }
 
     @Override
-    public void changeMessageStatus(int userId, int preStatus, int postStatus) {
+    public void changeMessageStatus(String userId, int preStatus, int postStatus) {
         messageDao.changeMessageStatus(userId, preStatus, postStatus);
     }
 }
