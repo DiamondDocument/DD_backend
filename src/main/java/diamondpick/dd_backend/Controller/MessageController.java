@@ -2,6 +2,7 @@ package diamondpick.dd_backend.Controller;
 
 import diamondpick.dd_backend.Entity.Message;
 import diamondpick.dd_backend.Service.MessageService;
+import diamondpick.dd_backend.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import com.alibaba.fastjson.JSONObject;
