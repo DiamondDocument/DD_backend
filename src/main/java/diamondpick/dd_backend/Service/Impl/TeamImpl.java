@@ -20,7 +20,7 @@ public class TeamImpl implements TeamService {
         return teamDao.selectTeamByTeamId(teamID);
     }
     @Override
-    public TeamMember selectUserByUserIdInTeam(int userID,int teamID){
+    public TeamMember selectUserByUserIdInTeam(String userID,int teamID){
         return teamDao.selectUserByUserIdInTeam(userID,teamID);
     }
     @Override

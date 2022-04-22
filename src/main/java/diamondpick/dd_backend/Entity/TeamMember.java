@@ -7,10 +7,10 @@ import javax.persistence.Id;
 public class TeamMember {
     @Id
     private int teamID;
-    private int userID;
+    private String userID;
     private String rank;
     public TeamMember(){}
-    public TeamMember(int teamID,int userID,String rank){
+    public TeamMember(int teamID,String userID,String rank){
         this.teamID = teamID;
         this.userID = userID;
         this.rank = rank;
@@ -24,7 +24,7 @@ public class TeamMember {
         return teamID;
     }
 
-    public int getUserID() {
+    public String getUserID() {
         return userID;
     }
 
@@ -36,7 +36,7 @@ public class TeamMember {
         this.rank = rank;
     }
 
-    public void setUserID(int userID) {
+    public void setUserID(String userID) {
         this.userID = userID;
     }
 }

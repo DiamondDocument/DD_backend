@@ -3,6 +3,7 @@ package diamondpick.dd_backend.Controller;
 
 import diamondpick.dd_backend.Entity.TeamMember;
 import diamondpick.dd_backend.Entity.TeamMessage;
+import diamondpick.dd_backend.Entity.User;
 import diamondpick.dd_backend.Service.TeamService;
 import diamondpick.dd_backend.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +32,7 @@ public class TeamController {
     public Map<String,Object> teamCreate(@RequestBody Map<String,String> re_map){
         String teamName = re_map.get("teamName");
         String teamIntroductory = re_map.get("teamIntroductory");
-        int userID = Integer.parseInt(re_map.get("userID"));
+        String userID = re_map.get("userID");
         Map<String,Object> map = new HashMap<>();
         try {
             User user = userService.selectUserByUserId(userID);
@@ -63,10 +64,10 @@ public class TeamController {
     @PostMapping("/api/team/join")
     public Map<String,Object> teamJoin(@RequestBody Map<String,String> re_map){
         int teamID = Integer.parseInt(re_map.get("teamID"));
-        int userID = Integer.parseInt(re_map.get("userID"));
+        String userID = re_map.get("userID");
         Map<String,Object> map = new HashMap<>();
         try {
-            User user = userService.selectUserByUserId(userId);
+            User user = userService.selectUserByUserId(userID);
             TeamMessage teamMessage = teamService.selectTeamByTeamId(teamID);
             TeamMember teamMember1 = teamService.selectUserByUserIdInTeam(userID,teamID);
             if(user==null){
