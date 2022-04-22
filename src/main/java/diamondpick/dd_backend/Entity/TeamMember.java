@@ -8,12 +8,12 @@ public class TeamMember {
     @Id
     private int teamID;
     private String userID;
-    private String rank;
+    private String user_rank;
     public TeamMember(){}
-    public TeamMember(int teamID,String userID,String rank){
+    public TeamMember(int teamID,String userID,String user_rank){
         this.teamID = teamID;
         this.userID = userID;
-        this.rank = rank;
+        this.user_rank = user_rank;
     }
 
     public void setTeamID(int teamID) {
@@ -28,12 +28,12 @@ public class TeamMember {
         return userID;
     }
 
-    public String getRank() {
-        return rank;
+    public String getUser_rank() {
+        return user_rank;
     }
 
-    public void setRank(String rank) {
-        this.rank = rank;
+    public void setUser_rank(String rank) {
+        this.user_rank = rank;
     }
 
     public void setUserID(String userID) {
