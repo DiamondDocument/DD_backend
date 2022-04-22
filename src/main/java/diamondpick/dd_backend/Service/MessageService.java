@@ -7,6 +7,6 @@ import java.util.Date;
 
 public interface MessageService {
     void sendNewMessage(Message sendMessage);
-    ArrayList<Message> receiveMessageByUserId(int userId, int status);
-    void changeMessageStatus(int userId, int preStatus, int postStatus);
+    ArrayList<Message> receiveMessageByUserId(String userId, int status);
+    void changeMessageStatus(String userId, int preStatus, int postStatus);
 }

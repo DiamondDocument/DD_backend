@@ -10,7 +10,7 @@ import java.util.ArrayList;
 public interface MessageDao {
     void sendNewMessage(Message sendMessage);
 
-    ArrayList<Message> receiveMessageByUserId(@Param("userId") int userId, @Param("status") int status);
+    ArrayList<Message> receiveMessageByUserId(@Param("userId")  String userId, @Param("status") int status);
 
-    void changeMessageStatus(@Param("userId") int userId, @Param("preStatus") int preStatus, @Param("postStatus") int postStatus);
+    void changeMessageStatus(@Param("userId") String userId, @Param("preStatus") int preStatus, @Param("postStatus") int postStatus);
 }

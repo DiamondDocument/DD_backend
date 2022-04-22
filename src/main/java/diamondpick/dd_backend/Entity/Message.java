@@ -12,8 +12,8 @@ public class Message {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int messageID;
 
-    private int senderID;
-    private int receiverID;
+    private String senderID;
+    private String receiverID;
     private String message;
     private Date dateCreated;
     /* status identifies the current status of the message.
@@ -23,7 +23,7 @@ public class Message {
 
     public Message() {
     }
-    public Message(int senderID, int receiverID, String message, Date dateCreated, int status) {
+    public Message(String senderID, String receiverID, String message, Date dateCreated, int status) {
         this.senderID = senderID;
         this.receiverID = receiverID;
         this.message = message;
@@ -39,19 +39,19 @@ public class Message {
         this.messageID = messageID;
     }
 
-    public int getSenderID() {
+    public String getSenderID() {
         return senderID;
     }
 
-    public void setSenderID(int senderID) {
+    public void setSenderID(String senderID) {
         this.senderID = senderID;
     }
 
-    public int getReceiverID() {
+    public String getReceiverID() {
         return receiverID;
     }
 
-    public void setReceiverID(int receiverID) {
+    public void setReceiverID(String receiverID) {
         this.receiverID = receiverID;
     }
 
