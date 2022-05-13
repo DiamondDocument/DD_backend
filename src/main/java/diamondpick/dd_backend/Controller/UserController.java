@@ -4,6 +4,7 @@ import diamondpick.dd_backend.Entity.User;
 import diamondpick.dd_backend.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -15,7 +16,7 @@ public class UserController {
     private UserService userService;
 
     @GetMapping("/api/login")
-    public Map<String, Object> login(@RequestParam(name = "email")String email, @RequestParam(name = "id")String userId, @RequestParam(name = "pwd")String password){
+    public Map<String, Object> login(@RequestParam(name = "email",required = false) String email, @RequestParam(name = "id")String userId, @RequestParam(name = "pwd")String password){
         Map<String, Object> response = new HashMap<>();
         response.put("error",0);
         response.put("nickName",null);
@@ -57,7 +58,8 @@ public class UserController {
 
 
     @PostMapping("/api/register")
-    public RegisterRes register(@RequestBody RegisterReq request) {
+    public RegisterRes register(@RequestParam("file") MultipartFile file) {
+        RegisterReq request = new RegisterReq();
         RegisterRes response = new RegisterRes(0);
         if(request.userId == null && request.password == null)
             return new RegisterRes(-1);
