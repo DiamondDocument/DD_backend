@@ -45,7 +45,7 @@ public class TeamController {
                 map.put("message", "团队名称不合规范");
             }
             else{
-                TeamMessage teamMessage = new TeamMessage(teamName,teamIntroductory);
+                TeamMessage teamMessage = new TeamMessage(teamName,userID,teamIntroductory);
                 teamService.registerNewTeam(teamMessage);
                 int teamID = teamMessage.getTeamID();
                 TeamMember teamMember = new TeamMember(teamID,userID,"队长");

@@ -14,6 +14,17 @@ public class User {
     private String gender;
     private String user_introductory;
     private String user_email;
+    private int messageID11;
+    private int messageID12;
+    private int messageID13;
+    private int messageID14;
+    private int messageID15;
+    private int messageID16;
+    private int messageID17;
+    private int messageID18;
+    private int messageID19;
+    private int messageID110;
+
 
     public String getUser_id() {
         return user_id;
