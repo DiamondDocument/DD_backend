@@ -8,13 +8,13 @@ import java.sql.Date;
 public class RecentBrowse {
     @Id
     private String u_id;
-    private int m_id;
+    private int d_id;
     private Date browseTime;
     public Date getBrowseTime() {
         return browseTime;
     }
     public int getM_id() {
-        return m_id;
+        return d_id;
     }
     public String getU_id() {
         return u_id;
@@ -23,7 +23,7 @@ public class RecentBrowse {
         this.browseTime = browseTime;
     }
     public void setM_id(int m_id) {
-        this.m_id = m_id;
+        this.d_id = d_id;
     }
     public void setU_id(String u_id) {
         this.u_id = u_id;
