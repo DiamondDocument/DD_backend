@@ -10,4 +10,6 @@ public interface TeamDao {
     TeamMessage selectTeamByTeamId(int teamID);
     TeamMember selectUserByUserIdInTeam(String userID,int teamID);
     void registerNewMember(TeamMember teamMember);
+    String selectCaptainID(int teamID);
+    int selectTeamID(String captainID);
 }

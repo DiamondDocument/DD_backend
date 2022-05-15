@@ -10,11 +10,13 @@ public class TeamMessage {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int teamID;
+    private String captainID;
     private String teamName;
     private String teamIntroductory;
-    public TeamMessage(String teamName,String teamIntroductory){
+    public TeamMessage(String teamName,String captainID,String teamIntroductory){
         this.teamName=teamName;
         this.teamIntroductory=teamIntroductory;
+        this.captainID = captainID;
     }
     public TeamMessage(){}
 

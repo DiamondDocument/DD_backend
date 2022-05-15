@@ -1,22 +1,34 @@
 package diamondpick.dd_backend.Controller;
 
+import diamondpick.dd_backend.Entity.TeamMember;
+import diamondpick.dd_backend.Entity.TeamMessage;
 import diamondpick.dd_backend.Entity.User;
+import diamondpick.dd_backend.Service.MailService;
 import diamondpick.dd_backend.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
+import org.thymeleaf.TemplateEngine;
 
+import javax.annotation.Resource;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
 @RestController
 public class UserController {
 
     @Autowired
     private UserService userService;
+    @Autowired
+    private MailService mailService;
+    @Autowired
+    private UserController userController;
+
+    @Resource
+    private TemplateEngine templateEngine;
 
     @GetMapping("/api/login")
-    public Map<String, Object> login(@RequestParam(name = "email",required = false) String email, @RequestParam(name = "id")String userId, @RequestParam(name = "pwd")String password){
+    public Map<String, Object> login(@RequestParam(name = "email")String email, @RequestParam(name = "id")String userId, @RequestParam(name = "pwd")String password){
         Map<String, Object> response = new HashMap<>();
         response.put("error",0);
         response.put("nickName",null);
@@ -58,8 +70,7 @@ public class UserController {
 
 
     @PostMapping("/api/register")
-    public RegisterRes register(@RequestParam("file") MultipartFile file) {
-        RegisterReq request = new RegisterReq();
+    public RegisterRes register(@RequestBody RegisterReq request) {
         RegisterRes response = new RegisterRes(0);
         if(request.userId == null && request.password == null)
             return new RegisterRes(-1);

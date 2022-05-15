@@ -3,17 +3,19 @@ package diamondpick.dd_backend.Entity;
 
 
 import javax.persistence.*;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 public class User {
     @Id
     private String user_id;
-
     private String nickname;
     private String password;
     private String gender;
     private String user_introductory;
     private String user_email;
+
 
     public String getUser_id() {
         return user_id;
