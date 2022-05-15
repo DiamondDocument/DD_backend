@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="diamondpick.dd_backend.Dao.FolderDao">
+    <resultMap id="FolderResultMap" type="diamondpick.dd_backend.Entity.Folder">
+        <result column="id" property="folderId"/>
+        <result column="f_name" property="folderName"/>
+        <result column="c_uid" property="creatorId"/>
+        <result column="create_time" property="createTime"/>
+        <result column="parent_id" property="parentId"/>
+        <result column="self_authority" property="selfAuthority"/>
+        <result column="now_authority" property="nowAuthority"/>
+    </resultMap>
+
+    <insert id="createFolder">
+        INSERT INTO `Folder` (`id`, `f_name`, `c_uid`, `create_time`, `self_authority`, `now_authority`, `parent_id`)
+        VALUES (#{folderId}, #{folderName}, #{creatorId}, #{createTime}, #{selfAuthority}, #{nowAuthority}, #{parentId})
+    </insert>
+
+    <select id="openFolder" resultMap="FolderResultMap">
+        SELECT *
+        FROM `Folder`
+        WHERE `parent_id` = #{folderId}
+    </select>
+</mapper>
