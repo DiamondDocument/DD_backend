@@ -17,7 +17,7 @@ public class TeamImpl implements TeamService {
     }
     @Override
     public TeamMessage selectTeamByTeamId(int teamID){
-        return teamDao.selectTeamByTeamId(teamID);
+        return teamDao.selectTeam(teamID);
     }
     @Override
     public TeamMember selectUserByUserIdInTeam(String userID,int teamID){

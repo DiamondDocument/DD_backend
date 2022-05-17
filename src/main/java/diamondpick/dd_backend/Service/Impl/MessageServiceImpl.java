@@ -13,6 +13,22 @@ import java.util.ArrayList;
 public class MessageServiceImpl implements MessageService {
     @Autowired
     private MessageDao messageDao;
+
+    @Override
+    public boolean newInviteMsg(String teamId, String receiverId) {
+        return false;
+    }
+
+    @Override
+    public void newInviteDealMsg(boolean isAccept, String dealerId, String teamId) {
+
+    }
+
+    @Override
+    public boolean newApplyMsg(String senderId, String teamId) {
+        return false;
+    }
+
     @Override
     public void sendNewMessage(Message sendMessage) {
         messageDao.sendNewMessage(sendMessage);

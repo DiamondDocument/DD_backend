@@ -10,8 +10,15 @@ import java.util.List;
 
 @Mapper
 public interface UserDao {
+
+    //////////////
+    public User selectUser(@Param("user_id") String userId);
+
+    //////////////
+
+
     public void InsertNewUser(@Param("user") User user);
-    public User selectUserById(@Param("user_id") String user_id);
+
     public void insertUser(User user);
     public List<User> selectUserBy(@Param("name") String name, @Param("value")Object value);
     public void InsertRecentBrowse(@Param("message_id") int message_id);

@@ -6,8 +6,12 @@ import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
 public interface TeamDao {
+
+    //
+    public void selectTeam(String teamId);
+
     void registerNewTeam(TeamMessage teamMessage);
-    TeamMessage selectTeamByTeamId(int teamID);
+    TeamMessage selectTeam(int teamID);
     TeamMember selectUserByUserIdInTeam(String userID,int teamID);
     void registerNewMember(TeamMember teamMember);
     String selectCaptainID(int teamID);

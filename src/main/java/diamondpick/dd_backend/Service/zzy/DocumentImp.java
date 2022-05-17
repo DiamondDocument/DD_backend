@@ -1,10 +1,10 @@
 package diamondpick.dd_backend.Service.zzy;
 
 import diamondpick.dd_backend.Dao.DocumentDao;
-import diamondpick.dd_backend.Entity.User;
+import diamondpick.dd_backend.Entity.yyh.User;
 import diamondpick.dd_backend.Entity.zzy.Document;
 import diamondpick.dd_backend.Entity.yyh.User;
-import diamondpick.dd_backend.Entity.ZZY.Document;
+import diamondpick.dd_backend.Entity.zzy.Document;
 import diamondpick.dd_backend.Service.DocumentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -57,15 +57,15 @@ public class DocumentImp implements DocumentService {
         return true;
     }
 
-    @Override
-    public String getCreatorId(String documentId) {
-        try {
-//            String ret = documentDao.findUIdByDId(documentId);
-//            return ret;
-        }catch (Exception e){
-            e.printStackTrace();
-            return null;
-        }
-        return null;
-    }
+//    @Override
+//    public String getCreatorId(String documentId) {
+//        try {
+////            String ret = documentDao.findUIdByDId(documentId);
+////            return ret;
+//        }catch (Exception e){
+//            e.printStackTrace();
+//            return null;
+//        }
+//        return null;
+//    }
 }
