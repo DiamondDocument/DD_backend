@@ -96,3 +96,27 @@ create table message
     constraint fk_message_sender foreign key (sender_id) references user(user_id),
     constraint fk_message_receiver foreign key (receiver_id) references user(user_id)
 );
+
+create table userrecycle
+(
+    file_id         char(7)     not null    primary key,
+    del_id          varchar(20) not null,
+    del_time        datetime    not null,
+    pre_folder_id   char(7)     null,
+    user_id         varchar(20) not null,
+    constraint fk_userrecycle_del foreign key (del_id) references user(user_id),
+    constraint fk_userrecycle_folder foreign key (pre_folder_id) references folder(folder_id),
+    constraint fk_userrecycle_user foreign key (user_id) references user(user_id)
+);
+
+create table teamrecycle
+(
+    file_id         char(7)     not null    primary key,
+    del_id          varchar(20) not null,
+    del_time        datetime    not null,
+    pre_folder_id   char(7)     null,
+    team_id         char(7) not null,
+    constraint fk_teamrecycle_del foreign key (del_id) references user(user_id),
+    constraint fk_teamrecycle_folder foreign key (pre_folder_id) references folder(folder_id),
+    constraint fk_teamrecycle_team foreign key (team_id) references team(team_id)
+);
