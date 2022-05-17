@@ -11,8 +11,22 @@ import java.util.ArrayList;
 public interface DocumentDao {
 
 
-    public Document selectDoc(String documentId);
-    public void deleteDoc(String documentId);
+    public Document selectDoc(String docId);
+    public void deleteDoc(String docId);
+
+    /**
+     *
+     * @param docId
+     * @param key 对应着Documents表中的相应字段
+     * @param value 对应着要更新的值
+     */
+    public void updateDoc(String docId, String key, String value);
+
+
+
+    //////////////////////
+    ////个人
+    //////////////////////
     /**
      *
      * @param documentId

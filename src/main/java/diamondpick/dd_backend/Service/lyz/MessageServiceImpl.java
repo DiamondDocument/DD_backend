@@ -19,12 +19,28 @@ public class MessageServiceImpl implements MessageService {
     }
 
     @Override
-    public void newInviteDealMsg(boolean isAccept, String dealerId, String teamId) {
+    public boolean newInviteDealMsg(boolean isAccept, String dealerId, String teamId) {
 
+        return isAccept;
+    }
+
+    @Override
+    public boolean newApplyDealMsg(boolean isAccept, String dealerId, String teamId) {
+        return false;
     }
 
     @Override
     public boolean newApplyMsg(String senderId, String teamId) {
+        return false;
+    }
+
+    @Override
+    public boolean newAtMsg(String senderId, String docId, String receiverId) {
+        return false;
+    }
+
+    @Override
+    public boolean newCommentMsg(String senderId, String docId) {
         return false;
     }
 

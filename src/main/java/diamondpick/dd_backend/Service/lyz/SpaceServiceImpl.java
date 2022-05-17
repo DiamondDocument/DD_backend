@@ -12,6 +12,27 @@ import java.util.ArrayList;
 public class SpaceServiceImpl implements SpaceService {
     @Autowired
     private SpaceDao spaceDao;
+
+    @Override
+    public Space newUserSpace(String userId) {
+        return null;
+    }
+
+    @Override
+    public Space newTeamSpace(String teamId) {
+        return null;
+    }
+
+    @Override
+    public Space newUserRecycle(String userId) {
+        return null;
+    }
+
+    @Override
+    public Space newTeamRecycle(String teamId) {
+        return null;
+    }
+
     @Override
     public ArrayList<Space> getMySpace(String userId) {
         return spaceDao.getMySpace(userId);

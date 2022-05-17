@@ -8,7 +8,17 @@ import java.util.ArrayList;
 @Service
 public interface SpaceService {
 
-     //创建空间、回收站
+     /*
+    周五之前实现
+    周五之前实现
+    周五之前实现
+     */
+    //////////////
+    //返回类型改成对应的
+    public Space newUserSpace(String userId);
+    public Space newTeamSpace(String teamId);
+    public Space newUserRecycle(String userId);
+    public Space newTeamRecycle(String teamId);
 
 
     public ArrayList<Space> getMySpace(String userId);

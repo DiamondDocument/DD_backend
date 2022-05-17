@@ -4,17 +4,10 @@ import diamondpick.dd_backend.Entity.yyh.User;
 
 import javax.persistence.*;
 
-@Entity
 public class DocumentCollector {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @ManyToOne
-    @JoinColumn(name = "d_id")
     private Document document;
-    @ManyToOne
-    @JoinColumn(name = "u_id")
     private User user;
 
 

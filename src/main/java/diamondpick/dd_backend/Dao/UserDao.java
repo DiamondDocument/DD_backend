@@ -20,13 +20,12 @@ public interface UserDao {
     周五之前实现
     周五之前实现
      */
-    public User selectUser(@Param("userId") String userId);
-    public TeamMessage selectTeam(@Param("teamId") String teamId);
-    //RecentDocument的内容见Entity.zzy
-    public ArrayList<RecentDocument> selectRecentDoc(@Param("userId") String userId);
-    //注意，每个用户和文档的关系只有一条浏览记录，就是最近浏览的那条，也即输入的用户和文档如果browse表里面
-    public void insertRecent(@Param("userId") String userId, @Param("docId") String docId);
     //////////////
+    public User selectUser(@Param("userId") String userId);
+    //////////////
+
+
+
 
 
     public void InsertNewUser(@Param("user") User user);

@@ -4,13 +4,12 @@ spring:
     password: 2002116yy
     username: root
     initialization-mode: always
-#    schema: classpath:/Sql/create.sql
+#    schema: classpath:/Sql/*.sql
 #  jpa:
 #    hibernate:
 #      ddl-auto: create
 mybatis:
   mapper-locations:
-    - classpath:Mapper/*.xml
     - classpath:Mapper/zzy/*.xml
     - classpath:Mapper/lyz/*.xml
     - classpath:Mapper/yyh/*.xml

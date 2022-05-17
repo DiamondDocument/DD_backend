@@ -1,50 +1,29 @@
 package diamondpick.dd_backend.Entity.zzy;
 
-
-import diamondpick.dd_backend.Entity.yyh.User;
-
-import javax.persistence.*;
-import java.sql.Timestamp;
 import java.util.Date;
 
-@Entity(name = "documents")
 public class Document {
-    @Id
+
     private String id;
-
     private String name;
-
-
-    @ManyToOne
-    @JoinColumn(name = "creatorId")
-    User creator;
-//    @Column(columnDefinition = "default now()")
+    private String creatorId;
     private Date createTime;
-
-    @ManyToOne
-    @JoinColumn(name = "modifyId")
-    User modifier;
-//    private String modifyUid;
+    private String modifierId;
     private Date modifyTime;
-
-    private Integer selfAuthority;
-    private Integer nowAuthority;
-
-    @ManyToOne
-    @JoinColumn(name = "fatherId")
-    Document father;
+    private int selfAuth;
+    private int nowAuth;
+    private boolean isEditing;
+    private String parentId;
 
 
-//    private String fatherId;
+    
+    public String getId() {
+        return id;
+    }
 
-
-//    public String getCreatorId() {
-//        return creatorId;
-//    }
-
-//    public void setCreatorId(String creatorId) {
-//        this.creatorId = creatorId;
-//    }
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;
@@ -54,20 +33,12 @@ public class Document {
         this.name = name;
     }
 
-    public String getId() {
-        return id;
+    public String getCreatorId() {
+        return creatorId;
     }
 
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public User getCreator() {
-        return creator;
-    }
-
-    public void setCreator(User creator) {
-        this.creator = creator;
+    public void setCreatorId(String creatorId) {
+        this.creatorId = creatorId;
     }
 
     public Date getCreateTime() {
@@ -78,56 +49,52 @@ public class Document {
         this.createTime = createTime;
     }
 
-//    public String getModifyUid() {
-//        return modifyUid;
-//    }
-//
-
-    public User getModifier() {
-        return modifier;
+    public String getModifierId() {
+        return modifierId;
     }
 
-    public void setModifier(User modifier) {
-        this.modifier = modifier;
+    public void setModifierId(String modifierId) {
+        this.modifierId = modifierId;
     }
-//    public void setModifyUid(String modifyUid) {
-//        this.modifyUid = modifyUid;
-//    }
 
     public Date getModifyTime() {
         return modifyTime;
-    }
-
-    public void setModifyTime(Timestamp modifyTime) {
-        this.modifyTime = modifyTime;
-    }
-
-    public Integer getSelfAuthority() {
-        return selfAuthority;
-    }
-
-    public void setSelfAuthority(Integer selfAuthority) {
-        this.selfAuthority = selfAuthority;
-    }
-
-    public Integer getNowAuthority() {
-        return nowAuthority;
-    }
-
-    public void setNowAuthority(Integer nowAuthority) {
-        this.nowAuthority = nowAuthority;
     }
 
     public void setModifyTime(Date modifyTime) {
         this.modifyTime = modifyTime;
     }
 
-//    public String getFatherId() {
-//        return fatherId;
-//    }
-//
-//    public void setFatherId(String fatherId) {
-//        this.fatherId = fatherId;
-//    }
+    public int getSelfAuth() {
+        return selfAuth;
+    }
+
+    public void setSelfAuth(int selfAuth) {
+        this.selfAuth = selfAuth;
+    }
+
+    public int getNowAuth() {
+        return nowAuth;
+    }
+
+    public void setNowAuth(int nowAuth) {
+        this.nowAuth = nowAuth;
+    }
+
+    public boolean isEditing() {
+        return isEditing;
+    }
+
+    public void setEditing(boolean editing) {
+        isEditing = editing;
+    }
+
+    public String getParentId() {
+        return parentId;
+    }
+
+    public void setParentId(String parentId) {
+        this.parentId = parentId;
+    }
 }
 

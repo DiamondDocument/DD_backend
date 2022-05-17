@@ -34,16 +34,16 @@ class DdBackendApplicationTests {
 
     @Test
     void insertDoc() {
-        addUser();
-        String id = "d100000";
-        Document newDoc = new Document();
-        newDoc.setId(id);
-        newDoc.setCreateTime(new Date());
-        newDoc.setNowAuthority(4);
-        newDoc.setSelfAuthority(4);
-        Document retDoc;
-        documentDao.insertDoc("空文档","123",3,null);
-        retDoc = newDoc;
+//        addUser();
+//        String id = "d100000";
+//        Document newDoc = new Document();
+//        newDoc.setId(id);
+//        newDoc.setCreateTime(new Date());
+//        newDoc.setNowAuthority(4);
+//        newDoc.setSelfAuthority(4);
+//        Document retDoc;
+//        documentDao.insertDoc("空文档","123",3,null);
+//        retDoc = newDoc;
     }
     @Test
     void NewDocument(){
