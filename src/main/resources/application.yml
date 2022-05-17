@@ -4,10 +4,10 @@ spring:
     password: 2002116yy
     username: root
     initialization-mode: always
-#    schema: classpath:Sql/ZZY/document.sql
-  jpa:
-    hibernate:
-      ddl-auto: create
+#    schema: classpath:/Sql/create.sql
+#  jpa:
+#    hibernate:
+#      ddl-auto: create
 mybatis:
   mapper-locations:
     - classpath:Mapper/*.xml

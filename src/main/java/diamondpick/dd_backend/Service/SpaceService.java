@@ -7,6 +7,10 @@ import java.util.ArrayList;
 
 @Service
 public interface SpaceService {
+
+     //创建空间、回收站
+
+
     public ArrayList<Space> getMySpace(String userId);
     public ArrayList<Space> getTeamSpace(String teamId);
     public ArrayList<Space> getCollectionSpace(String userId);

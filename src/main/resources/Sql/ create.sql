@@ -21,7 +21,8 @@ create table user_team
     user_id   varchar(20) not null,
     user_rank char(2)     not null,
     foreign key (user_id) references users (user_id),
-    foreign key (team_id) references teams (team_id)
+    foreign key (team_id) references teams (team_id),
+    primary key (team_id, user_id)
 );
 create table documents
 (
@@ -33,20 +34,24 @@ create table documents
     modify_time datetime,
     self_auth   int         not null,
     now_auth    int         not null,
+    is_editing  int         not null,
+    parent_id   char(7)     ,
     foreign key (creator_id) references users (user_id),
     foreign key (modifier_id) references users (user_id)
 );
-create table user_last
+create table user_recent
 (
     doc_id      char(7)     not null,
     user_id     varchar(20) not null,
     browse_time datetime    not null,
     foreign key (user_id) references users (user_id),
-    foreign key (doc_id) references documents (doc_id)
+    foreign key (doc_id) references documents (doc_id),
+    primary key (doc_id, user_id)
 );
 
 create table team_apply
 (
+    id         int primary key,
     team_id    char(5)     not null,
     user_id    varchar(20) not null,
     apply_time datetime    not null,
@@ -56,6 +61,7 @@ create table team_apply
 );
 create table team_invite
 (
+    id          int primary key,
     team_id     char(5)     not null,
     user_id     varchar(20) not null,
     invite_time datetime    not null,
@@ -163,12 +169,14 @@ create table document_collector
     doc_id       varchar(20) not null,
     collector_id varchar(20) not null,
     foreign key (collector_id) references users (user_id),
-    foreign key (doc_id) references documents (doc_id)
+    foreign key (doc_id) references documents (doc_id),
+    primary key (doc_id, collector_id)
 );
 create table template_collector
 (
     temp_id      varchar(20) not null,
     collector_id varchar(20) not null,
     foreign key (collector_id) references users (user_id),
-    foreign key (temp_id) references templates (temp_id)
+    foreign key (temp_id) references templates (temp_id),
+    primary key (temp_id, collector_id)
 );
