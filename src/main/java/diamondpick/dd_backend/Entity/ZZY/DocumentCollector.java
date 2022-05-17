@@ -1,7 +1,6 @@
 package diamondpick.dd_backend.Entity.ZZY;
 
-import diamondpick.dd_backend.Entity.User;
-import lombok.Generated;
+import diamondpick.dd_backend.Entity.yyh.User;
 
 import javax.persistence.*;
 

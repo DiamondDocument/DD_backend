@@ -1,8 +1,8 @@
-package diamondpick.dd_backend.Service.Impl;
+package diamondpick.dd_backend.Service.yyh;
 
 import diamondpick.dd_backend.Dao.TeamDao;
-import diamondpick.dd_backend.Entity.TeamMember;
-import diamondpick.dd_backend.Entity.TeamMessage;
+import diamondpick.dd_backend.Entity.yyh.TeamMember;
+import diamondpick.dd_backend.Entity.yyh.TeamMessage;
 import diamondpick.dd_backend.Service.TeamService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

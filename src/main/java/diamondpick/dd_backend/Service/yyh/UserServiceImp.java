@@ -1,7 +1,7 @@
-package diamondpick.dd_backend.Service.zzy;
+package diamondpick.dd_backend.Service.yyh;
 
 import diamondpick.dd_backend.Dao.UserDao;
-import diamondpick.dd_backend.Entity.User;
+import diamondpick.dd_backend.Entity.yyh.User;
 import diamondpick.dd_backend.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

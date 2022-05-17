@@ -1,8 +1,6 @@
-package diamondpick.dd_backend.Controller;
+package diamondpick.dd_backend.Controller.yyh;
 
-import diamondpick.dd_backend.Entity.TeamMember;
-import diamondpick.dd_backend.Entity.TeamMessage;
-import diamondpick.dd_backend.Entity.User;
+import diamondpick.dd_backend.Entity.yyh.User;
 import diamondpick.dd_backend.Service.MailService;
 import diamondpick.dd_backend.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +10,6 @@ import org.thymeleaf.TemplateEngine;
 import javax.annotation.Resource;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Random;
 
 @RestController
 public class UserController {

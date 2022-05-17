@@ -1,7 +1,7 @@
 package diamondpick.dd_backend.Controller;
 
 import diamondpick.dd_backend.Entity.Message;
-import diamondpick.dd_backend.Entity.User;
+import diamondpick.dd_backend.Entity.yyh.User;
 import diamondpick.dd_backend.Service.MessageService;
 import diamondpick.dd_backend.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;

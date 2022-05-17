@@ -1,7 +1,7 @@
 package diamondpick.dd_backend.Entity.ZZY;
 
 
-import diamondpick.dd_backend.Entity.User;
+import diamondpick.dd_backend.Entity.yyh.User;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
