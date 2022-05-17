@@ -1,4 +1,4 @@
-package diamondpick.dd_backend.Controller.ZZY;
+package diamondpick.dd_backend.Controller.zzy;
 
 import diamondpick.dd_backend.Entity.zzy.Document;
 import diamondpick.dd_backend.Service.DocumentService;
