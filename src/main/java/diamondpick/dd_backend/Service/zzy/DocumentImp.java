@@ -1,6 +1,8 @@
 package diamondpick.dd_backend.Service.zzy;
 
 import diamondpick.dd_backend.Dao.DocumentDao;
+import diamondpick.dd_backend.Entity.User;
+import diamondpick.dd_backend.Entity.zzy.Document;
 import diamondpick.dd_backend.Entity.yyh.User;
 import diamondpick.dd_backend.Entity.ZZY.Document;
 import diamondpick.dd_backend.Service.DocumentService;

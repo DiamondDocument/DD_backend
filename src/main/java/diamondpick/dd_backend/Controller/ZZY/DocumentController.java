@@ -1,6 +1,6 @@
 package diamondpick.dd_backend.Controller.ZZY;
 
-import diamondpick.dd_backend.Entity.ZZY.Document;
+import diamondpick.dd_backend.Entity.zzy.Document;
 import diamondpick.dd_backend.Service.DocumentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
