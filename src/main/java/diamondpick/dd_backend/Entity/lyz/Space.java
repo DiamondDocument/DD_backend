@@ -1,4 +1,4 @@
-package diamondpick.dd_backend.Entity;
+package diamondpick.dd_backend.Entity.lyz;
 
 public class Space {
     private String spaceId;

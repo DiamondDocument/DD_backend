@@ -1,7 +1,7 @@
 package diamondpick.dd_backend.Dao;
 
 
-import diamondpick.dd_backend.Entity.Message;
+import diamondpick.dd_backend.Entity.lyz.Message;
 import diamondpick.dd_backend.Entity.yyh.User;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;

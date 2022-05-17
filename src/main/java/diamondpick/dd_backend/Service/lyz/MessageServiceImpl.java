@@ -1,12 +1,11 @@
-package diamondpick.dd_backend.Service.Impl;
+package diamondpick.dd_backend.Service.lyz;
 
-import diamondpick.dd_backend.Entity.Message;
+import diamondpick.dd_backend.Entity.lyz.Message;
 import diamondpick.dd_backend.Service.MessageService;
 import diamondpick.dd_backend.Dao.MessageDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
 import java.util.ArrayList;
 
 @Service

@@ -1,7 +1,7 @@
-package diamondpick.dd_backend.Controller;
+package diamondpick.dd_backend.Controller.lyz;
 
 import com.alibaba.fastjson.JSONObject;
-import diamondpick.dd_backend.Entity.Folder;
+import diamondpick.dd_backend.Entity.lyz.Folder;
 import diamondpick.dd_backend.Service.FolderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;

@@ -1,6 +1,6 @@
 package diamondpick.dd_backend.Service;
 
-import diamondpick.dd_backend.Entity.Folder;
+import diamondpick.dd_backend.Entity.lyz.Folder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;

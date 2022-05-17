@@ -1,7 +1,7 @@
-package diamondpick.dd_backend.Service.Impl;
+package diamondpick.dd_backend.Service.lyz;
 
 import diamondpick.dd_backend.Dao.FolderDao;
-import diamondpick.dd_backend.Entity.Folder;
+import diamondpick.dd_backend.Entity.lyz.Folder;
 import diamondpick.dd_backend.Service.FolderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

@@ -1,6 +1,6 @@
 package diamondpick.dd_backend.Dao;
 
-import diamondpick.dd_backend.Entity.Space;
+import diamondpick.dd_backend.Entity.lyz.Space;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 

@@ -1,4 +1,4 @@
-package diamondpick.dd_backend.Entity;
+package diamondpick.dd_backend.Entity.lyz;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;

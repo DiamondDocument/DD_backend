@@ -1,6 +1,6 @@
 package diamondpick.dd_backend.Dao;
 
-import diamondpick.dd_backend.Entity.Folder;
+import diamondpick.dd_backend.Entity.lyz.Folder;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.ArrayList;

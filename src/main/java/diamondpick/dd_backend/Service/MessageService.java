@@ -1,10 +1,9 @@
 package diamondpick.dd_backend.Service;
 
-import diamondpick.dd_backend.Entity.Message;
+import diamondpick.dd_backend.Entity.lyz.Message;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 @Service
 public interface MessageService {
