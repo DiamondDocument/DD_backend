@@ -50,7 +50,7 @@ public class FolderController {
             System.out.println("folders.size() = " + folders.size());
             // documents = documentService.getDocuments(folderId);
             map.put("error", 0);
-            if (folders.size() == 0 ) {
+            if (folders.size() == 0) {
                 map.put("error", 0);
                 map.put("message", "当前文件夹为空");
             } else {

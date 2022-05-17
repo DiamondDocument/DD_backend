@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtdd/mybatis-3-mapper.dtd" >
+<mapper namespace="diamondpick.dd_backend.Dao.DocumentDao">
+    <resultMap id="UserResult" type="User">
+        <id property="user_id" column="id"/>
+    </resultMap>
+    <select id="selectUser" resultMap="UserResult">
+        select * from user where id = #{id}
+    </select>
+    <insert id="insertDoc" >
+        <selectKey keyProperty="id" order="BEFORE">
+            select concat('d', cast(count(*) + 100000 as char(6))) from document
+        </selectKey>
+<!--        <selectKey keyProperty="f_auth" order="BEFORE">-->
+<!--            select now_authority from documents where id = #{fatherId}-->
+<!--        </selectKey>-->
+        insert into documents(id,name,creator_id,self_authority,now_authority,father_id)
+                    values(#{id},#{name},#{creatorId},min(#{f_auth},#{selfAuthority},#{selfAuthority}),#{fatherId})
+    </insert>
+    <update id="setCreator" >
+        update from documents set creator_id = #{creatorId}
+    </update>
+    <resultMap id="DocResult" type="Document">
+        <association property="creator" column="creator_id" javaType="User" select="selectUser">
+            <id property="user_id" column= "id"/>
+        </association>
+    </resultMap>
+    <select id="selectDoc" resultMap="DocResult">
+        select * from documents where id = #{id}
+    </select>
+    <select id="numOfDoc" resultType="Integer">
+        select count(*) from documents
+    </select>
+    <select id="findUIdByDId" resultType="String">
+        select create_uid from documents where id = #{did}
+    </select>
+    <insert id="insertDocCollector" >
+        insert into document_collector(d_id,u_id) values(#{dId},#{uId})
+    </insert>
+    <select id="selectByCollector" resultType="Document">
+        select documents.*
+        from documents join document_collector
+        on documents.id = document_collector.d_id
+        and document_collector.u_id = #{cId}
+    </select>
+</mapper>
+
+

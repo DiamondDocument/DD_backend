@@ -1,4 +1,4 @@
-package diamondpick.dd_backend.Service.ImpZzy;
+package diamondpick.dd_backend.Service.zzy;
 
 import diamondpick.dd_backend.Dao.UserDao;
 import diamondpick.dd_backend.Entity.User;
@@ -17,7 +17,13 @@ public class UserServiceImp implements UserService {
 
     @Override
     public boolean addUser(User user) {
-        return userDao.insertUser(user);
+        try{
+            userDao.insertUser(user);
+            return true;
+        }catch (Exception e){
+            e.printStackTrace();
+            return false;
+        }
     }
 
     @Override
