@@ -12,8 +12,9 @@ import java.util.List;
 public interface UserDao {
     public void InsertNewUser(@Param("user") User user);
     public User selectUserById(@Param("user_id") String user_id);
-    public boolean insertUser(@Param("user") User user);
+    public void insertUser(User user);
     public List<User> selectUserBy(@Param("name") String name, @Param("value")Object value);
     public void InsertRecentBrowse(@Param("message_id") int message_id);
     public List<Message> selectRecentBrowse(@Param("user_id") String user_id);
+
 }

@@ -3,11 +3,17 @@ spring:
     url: jdbc:mysql://localhost:2077/dd_backend
     password: 2002116yy
     username: root
+    initialization-mode: always
+#    schema: classpath:Sql/ZZY/document.sql
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: create
 mybatis:
-  mapper-locations: classpath:Mapper/*.xml
+  mapper-locations:
+    - classpath:Mapper/*.xml
+    - classpath:Mapper/zzy/*.xml
+    - classpath:Mapper/lyz/*.xml
+    - classpath:Mapper/yyh/*.xml
   type-aliases-package: diamondpick.dd_backend.Entity
 server:
   port: 8080

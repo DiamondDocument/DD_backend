@@ -9,6 +9,7 @@ import java.util.Set;
 @Entity
 public class User {
     @Id
+    @Column(name = "id")
     private String user_id;
     private String nickname;
     private String password;
@@ -42,7 +43,7 @@ public class User {
     }
 
     public boolean setUserId(String user_id) {
-        if(!nickname.matches("[A-Z]|[a-z]|[0-9]*")) return false;
+        if(!user_id.matches("[A-Z]|[a-z]|[0-9]*")) return false;
         this.user_id = user_id;
         return true;
     }

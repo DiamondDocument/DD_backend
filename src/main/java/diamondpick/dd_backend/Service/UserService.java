@@ -5,6 +5,8 @@ import org.springframework.stereotype.Service;
 
 @Service
 public interface UserService {
+
+
     //若为null则意味着不存在
     public User selectUserByUserId(String id);
     //插入失败则返回false
