@@ -1,6 +1,6 @@
 package diamondpick.dd_backend.Service;
 
-import diamondpick.dd_backend.Entity.User;
+import diamondpick.dd_backend.Entity.yyh.User;
 import org.springframework.stereotype.Service;
 
 @Service

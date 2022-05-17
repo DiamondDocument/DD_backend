@@ -1,8 +1,6 @@
-package diamondpick.dd_backend.Controller;
+package diamondpick.dd_backend.Controller.yyh;
 
-import diamondpick.dd_backend.Entity.TeamMember;
-import diamondpick.dd_backend.Entity.TeamMessage;
-import diamondpick.dd_backend.Entity.User;
+import diamondpick.dd_backend.Entity.yyh.User;
 import diamondpick.dd_backend.Service.MailService;
 import diamondpick.dd_backend.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -96,19 +94,47 @@ public class UserController {
         if(!userService.addUser(newUser)) return new RegisterRes(-1);
         return new RegisterRes(0);
     }
+    @GetMapping("/api/user/send-identifying")
+    public Map<String,Object> identifying(@RequestParam(name = "email")String email){
+        Map<String,Object> map = new HashMap<>();
+        if(email == null || !userService.isLegalEmail(email)){
+            map.put("error",1);
+            map.put("message","邮箱格式错误");
+            return map;
+        }
+        Random random = new Random();
+        String identifying="";
+        for (int i=0;i<6;i++){
+            identifying+=random.nextInt(10);
+        }
+        mailService.sendSimpleMail(email,"注册验证码",identifying);
+        map.put("error",0);
+        map.put("message",identifying);
+        return map;
+    }
+
+    @GetMapping("/api/user/register/check-id")
+    public Map<String,Object> checkID(@RequestParam(name = "id")String id){
+        Map<String,Object> map = new HashMap<>();
+        if(userService.selectUserByUserId(id)==null){
+            map.put("error",1);
+            map.put("message","用户不存在");
+        }
+        else{
+            map.put("error",0);
+            map.put("message","用户存在");
+        }
+        return map;
+    }
 
     @GetMapping("/api/user/information")
     public getUserInformationRes getUserInformation(@RequestParam(name = "id") String id) {
         User user = userService.selectUserByUserId(id);
         if(user == null)
             return new getUserInformationRes(1);
-        return new getUserInformationRes(0,user.getNickname(),user.getGender(),
-                    user.getUser_introductory(),user.getUser_email());
+        return new getUserInformationRes(0,user.getNickname(),
+                user.getUser_introductory(),user.getUser_email());
     }
-}
-
-
-
 class RegisterRes {
     private Integer error;
 
@@ -129,17 +155,18 @@ class RegisterReq {
 class getUserInformationRes {
     private Integer error;
     private String nickname;
-    private String gender;
+    //private String gender;
     private String userIntroductory;
     private String email;
-    public getUserInformationRes(Integer error, String nickname, String gender, String userIntroductory, String email) {
+    public getUserInformationRes(Integer error, String nickname, String userIntroductory, String email) {
         this.error = error;
         this.nickname = nickname;
-        this.gender = gender;
+        //this.gender = gender;
         this.userIntroductory = userIntroductory;
         this.email = email;
     }
     public getUserInformationRes(Integer error) {
         this.error = error;
     }
+}
 }

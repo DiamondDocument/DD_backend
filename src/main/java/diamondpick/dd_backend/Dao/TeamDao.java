@@ -1,7 +1,7 @@
 package diamondpick.dd_backend.Dao;
 
-import diamondpick.dd_backend.Entity.TeamMember;
-import diamondpick.dd_backend.Entity.TeamMessage;
+import diamondpick.dd_backend.Entity.yyh.TeamMember;
+import diamondpick.dd_backend.Entity.yyh.TeamMessage;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper

@@ -1,10 +1,8 @@
 package diamondpick.dd_backend.Dao;
 
-import diamondpick.dd_backend.Entity.User;
-import diamondpick.dd_backend.Entity.ZZY.Document;
+import diamondpick.dd_backend.Entity.zzy.Document;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
 
 import java.util.ArrayList;
 
