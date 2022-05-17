@@ -13,4 +13,6 @@ public interface MessageDao {
     ArrayList<Message> receiveMessageByUserId(@Param("userId")  String userId, @Param("status") int status);
 
     void changeMessageStatus(@Param("userId") String userId, @Param("preStatus") int preStatus, @Param("postStatus") int postStatus);
+
+    ArrayList<Message> listMessage(@Param("userId") String userId);
 }

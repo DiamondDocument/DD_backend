@@ -27,4 +27,9 @@ public class MessageServiceImpl implements MessageService {
     public void changeMessageStatus(String userId, int preStatus, int postStatus) {
         messageDao.changeMessageStatus(userId, preStatus, postStatus);
     }
+
+    @Override
+    public ArrayList<Message> listMessage(String userId) {
+        return messageDao.listMessage(userId);
+    }
 }

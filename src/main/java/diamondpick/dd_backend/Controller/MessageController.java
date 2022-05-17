@@ -50,7 +50,7 @@ public class MessageController {
         return map;
     }
 
-    @GetMapping("/api/message/receive")
+    @GetMapping("/api/message/mark")
     public Map<String, Object> receiveMessage(@RequestParam("userId") String receiverID) {
         Map<String, Object> map = new HashMap<>();
         try {
@@ -76,6 +76,44 @@ public class MessageController {
                     map.put("error", 0);
                     map.put("message", jsonList);
                     messageService.changeMessageStatus(receiverID, 1, 2);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            map.put("error", -1);
+            map.put("message", "其他错误");
+        }
+        return map;
+    }
+
+    @PostMapping("/api/message/list")
+    public Map<String, Object> listMessage(@RequestBody Map<String, String> requestMap) {
+        String userId = requestMap.get("userId");
+        Map<String, Object> map = new HashMap<>();
+        try {
+            User user = userService.selectUserByUserId(userId);
+            if (user == null) {
+                map.put("error", 1);
+                map.put("message", "用户不存在：接收者不存在");
+            } else {
+                ArrayList<Message> messages;
+                messages = messageService.listMessage(userId);
+                if (messages.size() == 0) {
+                    map.put("error", 0);
+                    map.put("message", "当前用户没有新通知");
+                } else {
+                    ArrayList<JSONObject> jsonList = new ArrayList<>();
+                    for (Message message : messages) {
+                        JSONObject jsonObject = new JSONObject();
+                        SimpleDateFormat formatter = new SimpleDateFormat("yyyy.MM.dd.HH.mm");
+                        jsonObject.put("content", message.getMessage());
+                        jsonObject.put("date", formatter.format(message.getDateCreated()));
+                        jsonObject.put("status", message.getStatus());
+                        jsonList.add(jsonObject);
+                    }
+                    map.put("error", 0);
+                    map.put("message", jsonList);
+                    messageService.changeMessageStatus(userId, 2, 3);
                 }
             }
         } catch (Exception e) {

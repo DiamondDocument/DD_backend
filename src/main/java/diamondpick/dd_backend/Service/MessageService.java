@@ -11,4 +11,6 @@ public interface MessageService {
     void sendNewMessage(Message sendMessage);
     ArrayList<Message> receiveMessageByUserId(String userId, int status);
     void changeMessageStatus(String userId, int preStatus, int postStatus);
+
+    ArrayList<Message> listMessage(String userId);
 }

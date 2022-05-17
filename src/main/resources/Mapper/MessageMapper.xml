@@ -28,4 +28,10 @@
         where `receiverID` = #{userId}
           and `status` = #{preStatus}
     </update>
+
+    <select id="listMessage" resultMap="MessageResultMap">
+        select *
+        from `Message`
+        where `receiverID` = #{userId}
+    </select>
 </mapper>
