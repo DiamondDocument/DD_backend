@@ -1,9 +1,9 @@
-package diamondpick.dd_backend.Controller;
+package diamondpick.dd_backend.Controller.yyh;
 
 
-import diamondpick.dd_backend.Entity.TeamMember;
-import diamondpick.dd_backend.Entity.TeamMessage;
-import diamondpick.dd_backend.Entity.User;
+import diamondpick.dd_backend.Entity.yyh.TeamMember;
+import diamondpick.dd_backend.Entity.yyh.TeamMessage;
+import diamondpick.dd_backend.Entity.yyh.User;
 import diamondpick.dd_backend.Service.TeamService;
 import diamondpick.dd_backend.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;

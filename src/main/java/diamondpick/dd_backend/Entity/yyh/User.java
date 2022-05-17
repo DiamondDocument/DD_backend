@@ -1,4 +1,4 @@
-package diamondpick.dd_backend.Entity;
+package diamondpick.dd_backend.Entity.yyh;
 
 
 

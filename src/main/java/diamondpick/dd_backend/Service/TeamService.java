@@ -1,7 +1,7 @@
 package diamondpick.dd_backend.Service;
 
-import diamondpick.dd_backend.Entity.TeamMessage;
-import diamondpick.dd_backend.Entity.TeamMember;
+import diamondpick.dd_backend.Entity.yyh.TeamMessage;
+import diamondpick.dd_backend.Entity.yyh.TeamMember;
 
 public interface TeamService {
     public void registerNewTeam(TeamMessage teamMessage);
