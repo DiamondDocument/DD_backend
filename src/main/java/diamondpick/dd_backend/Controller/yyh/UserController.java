@@ -135,38 +135,56 @@ public class UserController {
         return new getUserInformationRes(0,user.getNickname(),
                 user.getUser_introductory(),user.getUser_email());
     }
-class RegisterRes {
-    private Integer error;
 
-    public RegisterRes(Integer error) {
-        this.error = error;
+    @PostMapping("/api/user/modify/password ")
+    public Map<String,Object> modifyPassword(@RequestBody Map<String,String> re_map) {
+        Map<String,Object> map = new HashMap<>();
+        String id = re_map.get("userID");
+        String newPass = re_map.get("newPwd");
+        User user = userService.selectUserByUserId(id);
+        if(user==null){
+            map.put("error", 1);
+            map.put("message", "用户不存在");
+            return map;
+        }
+        user.setPassword(newPass);
+        map.put("error", 0);
+        map.put("message", "修改成功");
+        return map;
     }
 
-    public Integer getError() {
-        return error;
+    class RegisterRes {
+        private Integer error;
+
+        public RegisterRes(Integer error) {
+            this.error = error;
+        }
+
+        public Integer getError() {
+            return error;
+        }
     }
-}
-class RegisterReq {
-    String userId;
-    String nickname;
-    String password;
-    String email;
-}
-class getUserInformationRes {
-    private Integer error;
-    private String nickname;
-    //private String gender;
-    private String userIntroductory;
-    private String email;
-    public getUserInformationRes(Integer error, String nickname, String userIntroductory, String email) {
-        this.error = error;
-        this.nickname = nickname;
-        //this.gender = gender;
-        this.userIntroductory = userIntroductory;
-        this.email = email;
+    class RegisterReq {
+        String userId;
+        String nickname;
+        String password;
+        String email;
     }
-    public getUserInformationRes(Integer error) {
-        this.error = error;
+    class getUserInformationRes {
+        private Integer error;
+        private String nickname;
+        //private String gender;
+        private String userIntroductory;
+        private String email;
+        public getUserInformationRes(Integer error, String nickname, String userIntroductory, String email) {
+            this.error = error;
+            this.nickname = nickname;
+            //this.gender = gender;
+            this.userIntroductory = userIntroductory;
+            this.email = email;
+        }
+        public getUserInformationRes(Integer error) {
+            this.error = error;
+        }
     }
-}
 }
