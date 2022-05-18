@@ -18,13 +18,14 @@ public class Message {
     private int msgType;
     private String msgContent;
     /* status identifies the current status of the message.
-    *  1: successfully send
-    *  2: already read*/
+     *  1: successfully send
+     *  2: already read*/
     private int msgStatus;
     private String msgDocId;
     private String teamId;
     private int dealStatus;
     private static int folderIdCounter = 0;
+
     public Message() {
     }
 
