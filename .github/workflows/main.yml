@@ -40,7 +40,7 @@ jobs:
         with:
           local: target/DD_backend-0.0.1-SNAPSHOT.jar
 #          remote: diamond@43.138.71.108
-          remote: ~/actions/DD_backend-0.0.1-SNAPSHOT.jar
+          remote: actions/DD_backend-0.0.1-SNAPSHOT.jar
           host: ${{ secrets.HOST }}
           username: ${{ secrets.SSH_USER }}
           password: ${{ secrets.SSH_PASSWORD }}
