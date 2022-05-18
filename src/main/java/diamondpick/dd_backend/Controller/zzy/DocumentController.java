@@ -32,11 +32,12 @@ public class DocumentController {
     }
     @PostMapping(value = "/api/document/create")
     public HashMap<String,Object> CreateDocument(@RequestBody CreateDocumentReq req){
-        Document newDoc;
-        if((newDoc = documentService.newDoc(req.name, req.userId, req.authority, req.fatherId)) == null){
-            return response(-1,"documentId",null);
-        }
-        return  response(0, "documentId", newDoc.getId());
+//        Document newDoc;
+//        if((newDoc = documentService.newDoc(req.name, req.userId, req.authority, req.fatherId)) == null){
+//            return response(-1,"documentId",null);
+//        }
+//        return  response(0, "documentId", newDoc.getId());
+        return null;
     }
 }
 class Response{

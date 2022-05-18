@@ -3,15 +3,15 @@ create table users
     user_id  varchar(20) primary key not null,
     nickname varchar(20)             not null,
     password varchar(20)             not null,
-    gender   char(5)                 not null,
-    intro    varchar(255)            not null,
-    email    varchar(50)             not null
+    gender   char(5)                 ,
+    intro    varchar(255)            ,
+    email    varchar(50)
 );
 create table teams
 (
     team_id    char(5) primary key not null,
     name       varchar(20)         not null,
-    intro      varchar(255)        not null,
+    intro      varchar(255)        ,
     captain_id varchar(20)         not null,
     foreign key (captain_id) references users (user_id)
 );
@@ -34,7 +34,7 @@ create table documents
     modify_time datetime,
     self_auth   int         not null,
     now_auth    int         not null,
-    is_editing  int         not null,
+    is_editing  int         not null default 0,
     parent_id   char(7)     ,
     foreign key (creator_id) references users (user_id),
     foreign key (modifier_id) references users (user_id)
@@ -166,7 +166,7 @@ create table templates
 );
 create table document_collector
 (
-    doc_id       varchar(20) not null,
+    doc_id       char(7) not null,
     collector_id varchar(20) not null,
     foreign key (collector_id) references users (user_id),
     foreign key (doc_id) references documents (doc_id),
@@ -174,7 +174,7 @@ create table document_collector
 );
 create table template_collector
 (
-    temp_id      varchar(20) not null,
+    temp_id      char(7) not null,
     collector_id varchar(20) not null,
     foreign key (collector_id) references users (user_id),
     foreign key (temp_id) references templates (temp_id),
