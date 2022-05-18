@@ -8,7 +8,7 @@ public class Space {
     String creatorId;
     Date createTime;
     char spaceType;
-    private int spaceIdCounter = 0;
+    private static int spaceIdCounter = 0;
 
     public Space() {
     }
