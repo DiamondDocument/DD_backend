@@ -35,15 +35,24 @@ jobs:
 #          java-version: 1.8
       - name: Generate the package
         run: mvn -B package --file pom.xml -Dmaven.test.skip=true
-      - name: 将 JAR 包部署到服务器
-        uses: garygrossgarten/github-action-scp@release
+      - name: copy file via ssh password
+        uses: appleboy/scp-action@master
         with:
-          local: target/DD_backend-0.0.1-SNAPSHOT.jar
-#          remote: diamond@43.138.71.108
-          remote: actions/DD_backend-0.0.1-SNAPSHOT.jar
           host: ${{ secrets.HOST }}
           username: ${{ secrets.SSH_USER }}
           password: ${{ secrets.SSH_PASSWORD }}
+#          port: ${{ secrets.PORT }}
+          source: "target/DD_backend-0.0.1-SNAPSHOT.jar"
+          target: "actions/DD_backend-0.0.1-SNAPSHOT.jar"
+#      - name: 将 JAR 包部署到服务器
+#        uses: garygrossgarten/github-action-scp@release
+#        with:
+#          local: target/DD_backend-0.0.1-SNAPSHOT.jar
+##          remote: diamond@43.138.71.108
+#          remote: actions/DD_backend-0.0.1-SNAPSHOT.jar
+#          host: ${{ secrets.HOST }}
+#          username: ${{ secrets.SSH_USER }}
+#          password: ${{ secrets.SSH_PASSWORD }}
       - name: 在服务器上执行 java -jar，请确保服务器安装了 JDK
         if: always()
         uses: fifsky/ssh-action@master
