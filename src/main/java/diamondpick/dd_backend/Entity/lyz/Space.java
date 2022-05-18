@@ -1,17 +1,19 @@
 package diamondpick.dd_backend.Entity.lyz;
 
+import java.util.Date;
+
 public class Space {
-    private String spaceId;
-    private String spaceName;
-    private String creatorId;
-    private String createTime;
-    private char spaceType;
+    String spaceId;
+    String spaceName;
+    String creatorId;
+    Date createTime;
+    char spaceType;
     private int spaceIdCounter = 0;
 
     public Space() {
     }
 
-    public Space(String spaceName, String creatorId, String createTime, char spaceType) {
+    public Space(String spaceName, String creatorId, Date createTime, char spaceType) {
         String spaceId = spaceType + String.format("%06d", spaceIdCounter);
         spaceIdCounter++;
         this.spaceId = spaceId;
@@ -23,10 +25,6 @@ public class Space {
 
     public String getSpaceId() {
         return spaceId;
-    }
-
-    public void setSpaceId(String spaceId) {
-        this.spaceId = spaceId;
     }
 
     public String getSpaceName() {
@@ -46,11 +44,11 @@ public class Space {
         this.creatorId = creatorId;
     }
 
-    public String getCreateTime() {
+    public Date getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(String createTime) {
+    public void setCreateTime(Date createTime) {
         this.createTime = createTime;
     }
 
@@ -60,13 +58,5 @@ public class Space {
 
     public void setSpaceType(char spaceType) {
         this.spaceType = spaceType;
-    }
-
-    public int getSpaceIdCounter() {
-        return spaceIdCounter;
-    }
-
-    public void setSpaceIdCounter(int spaceIdCounter) {
-        this.spaceIdCounter = spaceIdCounter;
     }
 }

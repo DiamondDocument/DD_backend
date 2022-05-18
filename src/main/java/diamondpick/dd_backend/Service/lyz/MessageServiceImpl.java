@@ -1,8 +1,9 @@
 package diamondpick.dd_backend.Service.lyz;
 
+import diamondpick.dd_backend.Dao.TeamDao;
 import diamondpick.dd_backend.Entity.lyz.Message;
 import diamondpick.dd_backend.Service.MessageService;
-import diamondpick.dd_backend.Dao.MessageDao;
+import diamondpick.dd_backend.Dao.lyz.MessageDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,8 +14,13 @@ public class MessageServiceImpl implements MessageService {
     @Autowired
     private MessageDao messageDao;
 
+    @Autowired
+    private TeamDao teamDao;
+
     @Override
     public boolean newInviteMsg(String teamId, String receiverId) {
+        String senderId = teamDao.selectCaptainID(Integer.parseInt(teamId));
+
         return false;
     }
 
@@ -26,6 +32,7 @@ public class MessageServiceImpl implements MessageService {
 
     @Override
     public boolean newApplyDealMsg(boolean isAccept, String dealerId, String teamId) {
+
         return false;
     }
 

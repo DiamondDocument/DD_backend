@@ -10,72 +10,121 @@ import java.util.Date;
 public class Message {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int messageID;
-
-    private String senderID;
-    private String receiverID;
-    private String message;
-    private Date dateCreated;
+    private String messageId;
+    private String senderId;
+    private String receiverId;
+    private Date sendTime;
+    private Date receiveTime;
+    private int msgType;
+    private String msgContent;
     /* status identifies the current status of the message.
     *  1: successfully send
     *  2: already read*/
-    private int status;
-
+    private int msgStatus;
+    private String msgDocId;
+    private String teamId;
+    private int dealStatus;
+    private static int folderIdCounter = 0;
     public Message() {
     }
-    public Message(String senderID, String receiverID, String message, Date dateCreated, int status) {
-        this.senderID = senderID;
-        this.receiverID = receiverID;
-        this.message = message;
-        this.dateCreated = dateCreated;
-        this.status = status;
+
+    public Message(String senderId, String receiverId, int msgType, String msgContent, String msgDocId, String teamId, int dealStatus) {
+        String id = "m" + String.format("%06d", folderIdCounter++);
+        folderIdCounter++;
+        this.messageId = id;
+        this.senderId = senderId;
+        this.receiverId = receiverId;
+        this.sendTime = new Date(System.currentTimeMillis());
+        this.receiveTime = null;
+        this.msgType = msgType;
+        this.msgContent = msgContent;
+        this.msgStatus = 1;
+        this.msgDocId = msgDocId;
+        this.teamId = teamId;
+        this.dealStatus = dealStatus;
     }
 
-    public int getMessageID() {
-        return messageID;
+    public String getMessageId() {
+        return messageId;
     }
 
-    public void setMessageID(int messageID) {
-        this.messageID = messageID;
+    public String getSenderId() {
+        return senderId;
     }
 
-    public String getSenderID() {
-        return senderID;
+    public void setSenderId(String senderId) {
+        this.senderId = senderId;
     }
 
-    public void setSenderID(String senderID) {
-        this.senderID = senderID;
+    public String getReceiverId() {
+        return receiverId;
     }
 
-    public String getReceiverID() {
-        return receiverID;
+    public void setReceiverId(String receiverId) {
+        this.receiverId = receiverId;
     }
 
-    public void setReceiverID(String receiverID) {
-        this.receiverID = receiverID;
+    public Date getSendTime() {
+        return sendTime;
     }
 
-    public String getMessage() {
-        return message;
+    public void setSendTime(Date sendTime) {
+        this.sendTime = sendTime;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
+    public Date getReceiveTime() {
+        return receiveTime;
     }
 
-    public Date getDateCreated() {
-        return dateCreated;
+    public void setReceiveTime(Date receiveTime) {
+        this.receiveTime = receiveTime;
     }
 
-    public void setDateCreated(Date dateCreated) {
-        this.dateCreated = dateCreated;
+    public int getMsgType() {
+        return msgType;
     }
 
-    public int getStatus() {
-        return status;
+    public void setMsgType(int msgType) {
+        this.msgType = msgType;
     }
 
-    public void setStatus(int status) {
-        this.status = status;
+    public String getMsgContent() {
+        return msgContent;
+    }
+
+    public void setMsgContent(String msgContent) {
+        this.msgContent = msgContent;
+    }
+
+    public int getMsgStatus() {
+        return msgStatus;
+    }
+
+    public void setMsgStatus(int msgStatus) {
+        this.msgStatus = msgStatus;
+    }
+
+    public String getMsgDocId() {
+        return msgDocId;
+    }
+
+    public void setMsgDocId(String msgDocId) {
+        this.msgDocId = msgDocId;
+    }
+
+    public String getTeamId() {
+        return teamId;
+    }
+
+    public void setTeamId(String teamId) {
+        this.teamId = teamId;
+    }
+
+    public int getDealStatus() {
+        return dealStatus;
+    }
+
+    public void setDealStatus(int dealStatus) {
+        this.dealStatus = dealStatus;
     }
 }
