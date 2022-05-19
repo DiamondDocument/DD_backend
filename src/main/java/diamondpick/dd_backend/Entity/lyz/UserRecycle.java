@@ -8,8 +8,8 @@ public class UserRecycle extends Recycle {
     public UserRecycle() {
     }
 
-    public UserRecycle(String fileId, String delId, Date delTime, String preFolderId, String userId) {
-        super(fileId, delId, delTime, preFolderId);
+    public UserRecycle(String fileId, String delId, String preFolderId, String userId) {
+        super(fileId, delId, preFolderId);
         this.userId = userId;
     }
 }

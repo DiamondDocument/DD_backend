@@ -11,14 +11,20 @@
         <result column="now_authority" property="nowAuthority"/>
     </resultMap>
 
-    <insert id="createFolder">
-        INSERT INTO `Folder` (`id`, `f_name`, `c_uid`, `create_time`, `self_authority`, `now_authority`, `parent_id`)
-        VALUES (#{folderId}, #{folderName}, #{creatorId}, #{createTime}, #{selfAuthority}, #{nowAuthority}, #{parentId})
-    </insert>
+    <!--    <insert id="createFolder">-->
+    <!--        INSERT INTO `Folder` (`id`, `f_name`, `c_uid`, `create_time`, `self_authority`, `now_authority`, `parent_id`)-->
+    <!--        VALUES (#{folderId}, #{folderName}, #{creatorId}, #{createTime}, #{selfAuthority}, #{nowAuthority}, #{parentId})-->
+    <!--    </insert>-->
 
-    <select id="openFolder" resultMap="FolderResultMap">
-        SELECT *
-        FROM `Folder`
-        WHERE `parent_id` = #{folderId}
+    <!--    <select id="openFolder" resultMap="FolderResultMap">-->
+    <!--        SELECT *-->
+    <!--        FROM `Folder`-->
+    <!--        WHERE `parent_id` = #{folderId}-->
+    <!--    </select>-->
+
+    <select id="getParentId">
+        select parent_id
+        from folder
+        where folder_id = #{fileId}
     </select>
 </mapper>

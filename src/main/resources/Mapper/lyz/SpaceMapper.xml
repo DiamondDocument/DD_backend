@@ -8,6 +8,25 @@
 <!--        <result column="" property="createTime"/>-->
 <!--        <result column="" property="spaceType"/>-->
 <!--    </resultMap>-->
+    <insert id="newUserSpace">
+        insert into `userspace`(`userspace_id`, `userspace_name`, `creator_id`, `create_time`)
+        values (#{spaceId}, #{spaceName}, #{creatorId}, #{createTime})
+    </insert>
+
+    <insert id="newTeamSpace">
+        insert into `teamspace`(`teamspace_id`, `teamspace_name`, `team_id`, `create_time`)
+        values (#{spaceId}, #{spaceName}, #{creatorId}, #{createTime})
+    </insert>
+
+    <insert id="newUserRecycle">
+        insert into `userrecycle`(`file_id`, `del_id`, `del_time`, `pre_folder_id`, `user_id`)
+        values (#{fileId}, #{delId}, #{delTime}, #{preFolderId}, #{userId})
+    </insert>
+
+    <insert id="newTeamRecycle">
+        insert into `teamrecycle`(`file_id`, `del_id`, `del_time`, `pre_folder_id`, `team_id`)
+        values (#{fileId}, #{delId}, #{delTime}, #{preFolderId}, #{teamId})
+    </insert>
 
 <!--    <select id="getMySpace" resultType="">-->
 

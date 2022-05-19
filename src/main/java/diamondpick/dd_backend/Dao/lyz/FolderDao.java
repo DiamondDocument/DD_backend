@@ -10,4 +10,6 @@ public interface FolderDao {
     void createFolder(Folder folder);
 
     ArrayList<Folder> openFolder(String folderId);
+
+    String getParentId(String fileId);
 }

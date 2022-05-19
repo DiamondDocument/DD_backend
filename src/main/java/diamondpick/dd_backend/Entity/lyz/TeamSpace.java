@@ -7,7 +7,7 @@ public class TeamSpace extends Space {
         spaceType = 't';
     }
 
-    public TeamSpace(String spaceName, String creatorId, Date createTime) {
-        super(spaceName, creatorId, createTime, 't');
+    public TeamSpace(String spaceName, String creatorId) {
+        super(spaceName, creatorId, 't');
     }
 }

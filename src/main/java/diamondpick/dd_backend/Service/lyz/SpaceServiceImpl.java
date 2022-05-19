@@ -1,6 +1,8 @@
 package diamondpick.dd_backend.Service.lyz;
 
+import diamondpick.dd_backend.Dao.lyz.FolderDao;
 import diamondpick.dd_backend.Dao.lyz.SpaceDao;
+import diamondpick.dd_backend.Dao.zzy.DocumentDao;
 import diamondpick.dd_backend.Entity.lyz.TeamRecycle;
 import diamondpick.dd_backend.Entity.lyz.TeamSpace;
 import diamondpick.dd_backend.Entity.lyz.UserRecycle;
@@ -14,23 +16,69 @@ public class SpaceServiceImpl implements SpaceService {
     @Autowired
     private SpaceDao spaceDao;
 
+    @Autowired
+    private FolderDao folderDao;
+
+    @Autowired
+    private DocumentDao documentDao;
+
     @Override
-    public UserSpace newUserSpace(String userId) {
-        return null;
+    public UserSpace newUserSpace(String userId, String userSpaceName) {
+        try {
+            UserSpace space = new UserSpace(userSpaceName, userId);
+            spaceDao.newUserSpace(space);
+            return space;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     @Override
-    public TeamSpace newTeamSpace(String teamId) {
-        return null;
+    public TeamSpace newTeamSpace(String teamId, String teamSpaceName) {
+        try {
+            TeamSpace space = new TeamSpace(teamSpaceName, teamId);
+            spaceDao.newTeamSpace(space);
+            return space;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     @Override
-    public UserRecycle newUserRecycle(String userId) {
-        return null;
+    public UserRecycle newUserRecycle(String fileId, String userId, String delId) {
+        try {
+            String preFolderId = null;
+            if (fileId.charAt(0) == 'f') {
+                preFolderId = folderDao.getParentId(fileId);
+            } else if (fileId.charAt(0) == 'd') {
+                preFolderId = documentDao.getParentId(fileId);
+            }
+            UserRecycle recycle = new UserRecycle(fileId, delId, preFolderId, userId);
+            spaceDao.newUserRecycle(recycle);
+            return recycle;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     @Override
-    public TeamRecycle newTeamRecycle(String teamId) {
-        return null;
+    public TeamRecycle newTeamRecycle(String fileId, String teamId, String delId) {
+        try {
+            String preFolderId = null;
+            if (fileId.charAt(0) == 'f') {
+                preFolderId = folderDao.getParentId(fileId);
+            } else if (fileId.charAt(0) == 'd') {
+                preFolderId = documentDao.getParentId(fileId);
+            }
+            TeamRecycle recycle = new TeamRecycle(fileId, delId, preFolderId, teamId);
+            spaceDao.newTeamRecycle(recycle);
+            return recycle;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 }

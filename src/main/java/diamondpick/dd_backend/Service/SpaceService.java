@@ -16,9 +16,9 @@ public interface SpaceService {
      */
     //////////////
     //返回类型改成对应的
-    public UserSpace newUserSpace(String userId);
-    public TeamSpace newTeamSpace(String teamId);
-    public UserRecycle newUserRecycle(String userId);
-    public TeamRecycle newTeamRecycle(String teamId);
+    public UserSpace newUserSpace(String userId, String userSpaceName);
+    public TeamSpace newTeamSpace(String teamId, String teamSpaceName);
+    public UserRecycle newUserRecycle(String fileId, String userId, String delId);
+    public TeamRecycle newTeamRecycle(String fileId, String teamId, String delId);
 
 }

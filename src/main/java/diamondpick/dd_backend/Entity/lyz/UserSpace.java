@@ -7,7 +7,7 @@ public class UserSpace extends Space {
         spaceType = 'u';
     }
 
-    public UserSpace(String spaceName, String creatorId, Date createTime) {
-        super(spaceName, creatorId, createTime, 'u');
+    public UserSpace(String spaceName, String creatorId) {
+        super(spaceName, creatorId, 'u');
     }
 }

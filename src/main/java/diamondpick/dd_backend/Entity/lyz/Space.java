@@ -13,13 +13,13 @@ public class Space {
     public Space() {
     }
 
-    public Space(String spaceName, String creatorId, Date createTime, char spaceType) {
+    public Space(String spaceName, String creatorId, char spaceType) {
         String spaceId = spaceType + String.format("%06d", spaceIdCounter);
         spaceIdCounter++;
         this.spaceId = spaceId;
         this.spaceName = spaceName;
         this.creatorId = creatorId;
-        this.createTime = createTime;
+        this.createTime = new Date(System.currentTimeMillis());
         this.spaceType = spaceType;
     }
 
@@ -36,20 +36,16 @@ public class Space {
         this.spaceName = spaceName;
     }
 
+    public void setSpaceId(String spaceId) {
+        this.spaceId = spaceId;
+    }
+
     public String getCreatorId() {
         return creatorId;
     }
 
     public void setCreatorId(String creatorId) {
         this.creatorId = creatorId;
-    }
-
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
     }
 
     public char getSpaceType() {

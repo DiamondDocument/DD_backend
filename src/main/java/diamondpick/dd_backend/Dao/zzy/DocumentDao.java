@@ -36,5 +36,5 @@ public interface DocumentDao {
     public Integer numOfDoc();
 
 
-
+    String getParentId(String fileId);
 }
