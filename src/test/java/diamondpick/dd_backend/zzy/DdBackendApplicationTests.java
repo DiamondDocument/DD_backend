@@ -1,7 +1,7 @@
 package diamondpick.dd_backend.zzy;
 
-import diamondpick.dd_backend.Dao.CollectionDao;
-import diamondpick.dd_backend.Dao.DocumentDao;
+import diamondpick.dd_backend.Dao.zzy.CollectionDao;
+import diamondpick.dd_backend.Dao.zzy.DocumentDao;
 import diamondpick.dd_backend.Entity.zzy.Document;
 import diamondpick.dd_backend.Service.DocumentService;
 import diamondpick.dd_backend.Service.UserService;

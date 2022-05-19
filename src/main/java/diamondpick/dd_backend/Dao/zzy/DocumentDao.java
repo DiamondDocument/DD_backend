@@ -1,4 +1,4 @@
-package diamondpick.dd_backend.Dao;
+package diamondpick.dd_backend.Dao.zzy;
 
 import diamondpick.dd_backend.Entity.zzy.Document;
 import org.apache.ibatis.annotations.Mapper;
