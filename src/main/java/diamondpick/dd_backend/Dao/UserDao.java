@@ -15,13 +15,9 @@ import java.util.List;
 @Mapper
 public interface UserDao {
 
-    /*
-    周五之前实现
-    周五之前实现
-    周五之前实现
-     */
-    //////////////
+
     public User selectUser(@Param("userId") String userId);
+
     //////////////
 
 
