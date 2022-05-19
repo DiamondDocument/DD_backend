@@ -11,27 +11,29 @@
     </resultMap>
 
     <insert id="sendNewMessage">
-        insert into `Message`(`senderID`, `receiverID`, `message`, `status`)
-        values (#{senderID}, #{receiverID}, #{message}, #{status})
+        insert into `Message`(`msg_id`, `sender_id`, `receiver_id`, `send_time`, `receive_time`, `msg_type`,
+                              `msg_content`, `msg_status`, `msg_doc_id`, `team_id`, `deal_status`)
+        values (#{messageId}, #{senderId}, #{receiverId}, #{sendTime}, #{receiveTime}, #{msgType},
+                #{msgContent}, #{msgStatus}, #{msgDocId}, #{teamId}, #{dealStatus})
     </insert>
 
-    <select id="receiveMessageByUserId" resultMap="MessageResultMap">
-        select *
-        from `Message`
-        where `receiverID` = #{userId}
-          and `status` = #{status}
-    </select>
+<!--    <select id="receiveMessageByUserId" resultMap="MessageResultMap">-->
+<!--        select *-->
+<!--        from `Message`-->
+<!--        where `receiverID` = #{userId}-->
+<!--          and `status` = #{status}-->
+<!--    </select>-->
 
-    <update id="changeMessageStatus">
-        update `message`
-        set `status` = #{postStatus}
-        where `receiverID` = #{userId}
-          and `status` = #{preStatus}
-    </update>
+<!--    <update id="changeMessageStatus">-->
+<!--        update `message`-->
+<!--        set `status` = #{postStatus}-->
+<!--        where `receiverID` = #{userId}-->
+<!--          and `status` = #{preStatus}-->
+<!--    </update>-->
 
-    <select id="listMessage" resultMap="MessageResultMap">
-        select *
-        from `Message`
-        where `receiverID` = #{userId}
-    </select>
+<!--    <select id="listMessage" resultMap="MessageResultMap">-->
+<!--        select *-->
+<!--        from `Message`-->
+<!--        where `receiverID` = #{userId}-->
+<!--    </select>-->
 </mapper>
