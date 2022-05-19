@@ -15,4 +15,4 @@ mybatis:
     - classpath:Mapper/yyh/*.xml
   type-aliases-package: diamondpick.dd_backend.Entity
 server:
-  port: 8080
+  port: 80
