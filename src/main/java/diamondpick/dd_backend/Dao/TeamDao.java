@@ -24,6 +24,6 @@ public interface TeamDao {
     TeamMessage selectTeam(int teamID);
     TeamMember selectUserByUserIdInTeam(String userID,int teamID);
     void registerNewMember(TeamMember teamMember);
-    String selectCaptainID(int teamID);
+    String selectCaptainID(String teamID);
     int selectTeamID(String captainID);
 }

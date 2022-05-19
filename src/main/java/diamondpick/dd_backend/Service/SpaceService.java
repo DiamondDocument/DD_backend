@@ -1,9 +1,10 @@
 package diamondpick.dd_backend.Service;
 
-import diamondpick.dd_backend.Entity.lyz.Space;
+import diamondpick.dd_backend.Entity.lyz.TeamRecycle;
+import diamondpick.dd_backend.Entity.lyz.TeamSpace;
+import diamondpick.dd_backend.Entity.lyz.UserRecycle;
+import diamondpick.dd_backend.Entity.lyz.UserSpace;
 import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
 
 @Service
 public interface SpaceService {
@@ -15,15 +16,9 @@ public interface SpaceService {
      */
     //////////////
     //返回类型改成对应的
-    public Space newUserSpace(String userId);
-    public Space newTeamSpace(String teamId);
-    public Space newUserRecycle(String userId);
-    public Space newTeamRecycle(String teamId);
+    public UserSpace newUserSpace(String userId);
+    public TeamSpace newTeamSpace(String teamId);
+    public UserRecycle newUserRecycle(String userId);
+    public TeamRecycle newTeamRecycle(String teamId);
 
-
-    public ArrayList<Space> getMySpace(String userId);
-    public ArrayList<Space> getTeamSpace(String teamId);
-    public ArrayList<Space> getCollectionSpace(String userId);
-    public ArrayList<Space> getRecycleSpace(String userId);
-    public ArrayList<Space> getLastSpace(String userId);
 }

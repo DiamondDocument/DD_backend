@@ -15,17 +15,22 @@ public interface MessageService {
     */
     //////////////
     //优先搞邀请的接口
-    public boolean newInviteMsg(String teamId, String receiverId);
-    public boolean newInviteDealMsg(boolean isAccept, String dealerId, String teamId);
-    public boolean newApplyDealMsg(boolean isAccept, String teamId, String receiverId);
     public boolean newApplyMsg(String senderId, String teamId);
+
+    public boolean newApplyDealMsg(boolean isAccept, String teamId, String receiverId);
+
+    public boolean newInviteMsg(String teamId, String receiverId);
+
+    public boolean newInviteDealMsg(boolean isAccept, String dealerId, String teamId);
+
+    public boolean newCommentMsg(String senderId, String docId, String receiverId);
+
     public boolean newAtMsg(String senderId, String docId, String receiverId);
-    public boolean newCommentMsg(String senderId, String docId);
-
-
 
     void sendNewMessage(Message sendMessage);
+
     ArrayList<Message> receiveMessageByUserId(String userId, int status);
+
     void changeMessageStatus(String userId, int preStatus, int postStatus);
 
     ArrayList<Message> listMessage(String userId);

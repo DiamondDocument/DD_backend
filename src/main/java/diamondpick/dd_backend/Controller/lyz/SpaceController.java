@@ -21,28 +21,28 @@ public class SpaceController {
     public Map<String, Object> mySpace(@RequestBody Map<String, String> requestMap) {
         String userId = requestMap.get("userId");
         Map<String, Object> map = new HashMap<>();
-        try {
-            ArrayList<Space> spaces = spaceService.getMySpace(userId);
-            if (spaces.size() == 0) {
-                map.put("error", 0);
-                map.put("message", "我的空间为空");
-            } else {
-                ArrayList<JSONObject> jsonList = new ArrayList<>();
-                JSONObject jsonObject = new JSONObject();
-                for (Space space : spaces) {
-                    jsonObject.put("spaceId", space.getSpaceId());
-                    jsonObject.put("spaceName", space.getSpaceName());
-                    jsonObject.put("creatorId", space.getCreatorId());
-                    jsonObject.put("createTime", space.getCreateTime());
-                }
-                map.put("error", 0);
-                map.put("mySpace", jsonList);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            map.put("error", -1);
-            map.put("message", "其他错误");
-        }
+//        try {
+//            ArrayList<Space> spaces = spaceService.getMySpace(userId);
+//            if (spaces.size() == 0) {
+//                map.put("error", 0);
+//                map.put("message", "我的空间为空");
+//            } else {
+//                ArrayList<JSONObject> jsonList = new ArrayList<>();
+//                JSONObject jsonObject = new JSONObject();
+//                for (Space space : spaces) {
+//                    jsonObject.put("spaceId", space.getSpaceId());
+//                    jsonObject.put("spaceName", space.getSpaceName());
+//                    jsonObject.put("creatorId", space.getCreatorId());
+//                    jsonObject.put("createTime", space.getCreateTime());
+//                }
+//                map.put("error", 0);
+//                map.put("mySpace", jsonList);
+//            }
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            map.put("error", -1);
+//            map.put("message", "其他错误");
+//        }
         return map;
     }
 
@@ -50,28 +50,28 @@ public class SpaceController {
     public Map<String, Object> teamSpace(@RequestBody Map<String, String> requestMap) {
         String teamId = requestMap.get("teamId");
         Map<String, Object> map = new HashMap<>();
-        try {
-            ArrayList<Space> spaces = spaceService.getTeamSpace(teamId);
-            if (spaces.size() == 0) {
-                map.put("error", 0);
-                map.put("message", "团队空间为空");
-            } else {
-                ArrayList<JSONObject> jsonList = new ArrayList<>();
-                JSONObject jsonObject = new JSONObject();
-                for (Space space : spaces) {
-                    jsonObject.put("spaceId", space.getSpaceId());
-                    jsonObject.put("spaceName", space.getSpaceName());
-                    jsonObject.put("creatorId", space.getCreatorId());
-                    jsonObject.put("createTime", space.getCreateTime());
-                }
-                map.put("error", 0);
-                map.put("teamSpace", jsonList);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            map.put("error", -1);
-            map.put("message", "其他错误");
-        }
+//        try {
+//            ArrayList<Space> spaces = spaceService.getTeamSpace(teamId);
+//            if (spaces.size() == 0) {
+//                map.put("error", 0);
+//                map.put("message", "团队空间为空");
+//            } else {
+//                ArrayList<JSONObject> jsonList = new ArrayList<>();
+//                JSONObject jsonObject = new JSONObject();
+//                for (Space space : spaces) {
+//                    jsonObject.put("spaceId", space.getSpaceId());
+//                    jsonObject.put("spaceName", space.getSpaceName());
+//                    jsonObject.put("creatorId", space.getCreatorId());
+//                    jsonObject.put("createTime", space.getCreateTime());
+//                }
+//                map.put("error", 0);
+//                map.put("teamSpace", jsonList);
+//            }
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            map.put("error", -1);
+//            map.put("message", "其他错误");
+//        }
         return map;
     }
 
@@ -79,28 +79,28 @@ public class SpaceController {
     public Map<String, Object> collectionSpace(@RequestBody Map<String, String> requestMap) {
         String userId = requestMap.get("userId");
         Map<String, Object> map = new HashMap<>();
-        try {
-            ArrayList<Space> spaces = spaceService.getCollectionSpace(userId);
-            if (spaces.size() == 0) {
-                map.put("error", 0);
-                map.put("message", "收藏空间为空");
-            } else {
-                ArrayList<JSONObject> jsonList = new ArrayList<>();
-                JSONObject jsonObject = new JSONObject();
-                for (Space space : spaces) {
-                    jsonObject.put("spaceId", space.getSpaceId());
-                    jsonObject.put("spaceName", space.getSpaceName());
-                    jsonObject.put("creatorId", space.getCreatorId());
-                    jsonObject.put("createTime", space.getCreateTime());
-                }
-                map.put("error", 0);
-                map.put("collectionSpace", jsonList);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            map.put("error", -1);
-            map.put("message", "其他错误");
-        }
+//        try {
+//            ArrayList<Space> spaces = spaceService.getCollectionSpace(userId);
+//            if (spaces.size() == 0) {
+//                map.put("error", 0);
+//                map.put("message", "收藏空间为空");
+//            } else {
+//                ArrayList<JSONObject> jsonList = new ArrayList<>();
+//                JSONObject jsonObject = new JSONObject();
+//                for (Space space : spaces) {
+//                    jsonObject.put("spaceId", space.getSpaceId());
+//                    jsonObject.put("spaceName", space.getSpaceName());
+//                    jsonObject.put("creatorId", space.getCreatorId());
+//                    jsonObject.put("createTime", space.getCreateTime());
+//                }
+//                map.put("error", 0);
+//                map.put("collectionSpace", jsonList);
+//            }
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            map.put("error", -1);
+//            map.put("message", "其他错误");
+//        }
         return map;
     }
 
@@ -108,28 +108,28 @@ public class SpaceController {
     public Map<String, Object> recycleSpace(@RequestBody Map<String, String> requestMap) {
         String userId = requestMap.get("userId");
         Map<String, Object> map = new HashMap<>();
-        try {
-            ArrayList<Space> spaces = spaceService.getRecycleSpace(userId);
-            if (spaces.size() == 0) {
-                map.put("error", 0);
-                map.put("message", "回收站为空");
-            } else {
-                ArrayList<JSONObject> jsonList = new ArrayList<>();
-                JSONObject jsonObject = new JSONObject();
-                for (Space space : spaces) {
-                    jsonObject.put("spaceId", space.getSpaceId());
-                    jsonObject.put("spaceName", space.getSpaceName());
-                    jsonObject.put("creatorId", space.getCreatorId());
-                    jsonObject.put("createTime", space.getCreateTime());
-                }
-                map.put("error", 0);
-                map.put("recycleSpace", jsonList);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            map.put("error", -1);
-            map.put("message", "其他错误");
-        }
+//        try {
+//            ArrayList<Space> spaces = spaceService.getRecycleSpace(userId);
+//            if (spaces.size() == 0) {
+//                map.put("error", 0);
+//                map.put("message", "回收站为空");
+//            } else {
+//                ArrayList<JSONObject> jsonList = new ArrayList<>();
+//                JSONObject jsonObject = new JSONObject();
+//                for (Space space : spaces) {
+//                    jsonObject.put("spaceId", space.getSpaceId());
+//                    jsonObject.put("spaceName", space.getSpaceName());
+//                    jsonObject.put("creatorId", space.getCreatorId());
+//                    jsonObject.put("createTime", space.getCreateTime());
+//                }
+//                map.put("error", 0);
+//                map.put("recycleSpace", jsonList);
+//            }
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            map.put("error", -1);
+//            map.put("message", "其他错误");
+//        }
         return map;
     }
 
@@ -137,28 +137,28 @@ public class SpaceController {
     public Map<String, Object> lastSpace(@RequestBody Map<String, String> requestMap) {
         String userId = requestMap.get("userId");
         Map<String, Object> map = new HashMap<>();
-        try {
-            ArrayList<Space> spaces = spaceService.getLastSpace(userId);
-            if (spaces.size() == 0) {
-                map.put("error", 0);
-                map.put("message", "最近访问为空");
-            } else {
-                ArrayList<JSONObject> jsonList = new ArrayList<>();
-                JSONObject jsonObject = new JSONObject();
-                for (Space space : spaces) {
-                    jsonObject.put("spaceId", space.getSpaceId());
-                    jsonObject.put("spaceName", space.getSpaceName());
-                    jsonObject.put("creatorId", space.getCreatorId());
-                    jsonObject.put("createTime", space.getCreateTime());
-                }
-                map.put("error", 0);
-                map.put("lastSpace", jsonList);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            map.put("error", -1);
-            map.put("message", "其他错误");
-        }
+//        try {
+//            ArrayList<Space> spaces = spaceService.getLastSpace(userId);
+//            if (spaces.size() == 0) {
+//                map.put("error", 0);
+//                map.put("message", "最近访问为空");
+//            } else {
+//                ArrayList<JSONObject> jsonList = new ArrayList<>();
+//                JSONObject jsonObject = new JSONObject();
+//                for (Space space : spaces) {
+//                    jsonObject.put("spaceId", space.getSpaceId());
+//                    jsonObject.put("spaceName", space.getSpaceName());
+//                    jsonObject.put("creatorId", space.getCreatorId());
+//                    jsonObject.put("createTime", space.getCreateTime());
+//                }
+//                map.put("error", 0);
+//                map.put("lastSpace", jsonList);
+//            }
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            map.put("error", -1);
+//            map.put("message", "其他错误");
+//        }
         return map;
     }
 
