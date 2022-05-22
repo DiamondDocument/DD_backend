@@ -14,16 +14,6 @@ public class DocumentController {
     @Autowired
     private DocumentService documentService;
 
-    public HashMap<String,Object> response(int code, String... key){
-        HashMap<String,Object> map = new HashMap<>();
-        map.put("code", code);
-        for(int i = 0; i < key.length; i+=2){
-            map.put((String)key[i], key[i+1]);
-        }
-        return map;
-    }
-
-
     static class CreateDocumentReq{
         String name;
         String userId;
@@ -39,16 +29,45 @@ public class DocumentController {
 //        return  response(0, "documentId", newDoc.getId());
         return null;
     }
-}
-class Response{
-    public Response(int code, String... key){
-
-        for(int i = 0; i < key.length; i++){
-            map.put(key[i],null);
-        }
+    static class CollectReq{
+        String userId;
+        String docId;
     }
+    @PostMapping("/api/document/like")
+    public HashMap<String,Object> collectDoc(@RequestBody CollectReq req){
+        Response res = new Response();
+        return res.set(documentService.collect(req.userId, req.docId));
+    }
+    @PostMapping("/api/document/dislike")
+    public HashMap<String,Object> discollectDoc(@RequestBody CollectReq req){
+        Response res = new Response();
+        return res.set(documentService.discollect(req.userId, req.docId));
+    }
+}
 
+class Response{
+    public Response(String... key){
+        this.keys = keys;
+//        for(int i = 0; i < key.length; i++){
+//            map.put(key[i],null);
+//        }
+    }
+    private String[] keys;
     private HashMap<String,Object> map;
+    public void generateKey(String... keys){
+        this.keys = keys;
+//        for(int i = 0; i < keys.length; i++){
+//            map.put(keys[i], null);
+//        }
+    }
+    public HashMap<String,Object> set(int code, Object... values){
+        HashMap<String,Object> map = new HashMap<>();
+        map.put("code", code);
+        for(int i = 0; i < keys.length; i++){
+            map.put(keys[i], values.length);
+        }
+        return map;
+    }
     public HashMap<String,Object> get(){
         return map;
     }

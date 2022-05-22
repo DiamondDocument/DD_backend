@@ -2,20 +2,26 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtdd/mybatis-3-mapper.dtd" >
 <mapper namespace="diamondpick.dd_backend.Dao.zzy.DocumentDao">
     <insert id="insertDoc">
-        insert into documents(doc_id,name,creator_id,self_auth,now_auth,parent_id)
-        values(#{param1},#{param2},#{param3},#{param4},#{param4},#{param5})
+        insert into documents(doc_id,name,creator_id,self_auth,now_auth,parent_id,space_id)
+        values(#{param1},#{param2},#{param3},#{param4},#{param4},#{param5}, #{param6})
     </insert>
-    <insert id="insertDocCollector">
-
-    </insert>
-
     <select id="numOfDoc" resultType="Integer">
         select count(*) from documents
     </select>
-
-    <select id="getParentId">
-        select parent_id from documents where doc_id = #{fileId}
+    <select id="selectCollection" resultType="Document">
+        select documents.name as name,
+        documents.doc_id as id,
+        documents.creator_id as creatorid,
+        documents.create_time as createtime,
+        documents.modifier_id as modifierid,
+        documents.self_auth as selfauth,
+        documents.now_auth as nowauth,
+        documents.is_editing as isediting
+        from documents join document_collector
+        on documents.doc_id = document_collector.doc_id
+        and collector_id = #{param1}
     </select>
+
 </mapper>
 
 

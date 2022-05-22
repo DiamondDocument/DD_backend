@@ -1,9 +1,7 @@
 package diamondpick.dd_backend.Dao.zzy;
 
 import diamondpick.dd_backend.Entity.zzy.Document;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Update;
+import org.apache.ibatis.annotations.*;
 
 import java.util.ArrayList;
 
@@ -13,28 +11,22 @@ public interface DocumentDao {
 
     public Document selectDoc(String docId);
     public void deleteDoc(String docId);
-    /**
-     *
-     * @param docId
-     * @param key 对应着Documents表中的相应字段
-     * @param value 对应着要更新的值
-     */
+
     @Update("update documents set ${key} = #{value} where doc_id = #{docId}")
     public void updateDoc(@Param("docId")String docId, @Param("key")String key, @Param("value")Object value);
 
+    @Insert("insert into document_collector values(#{param1}, #{param2}")
+    public void insertCollection(String docId, String collectorId);
+    @Delete("delete from document_collector where doc_id = #{param1} and collector_id = #{param2}")
+    public void deleteCollection(String docId, String collectorId);
+    @Select("select doc_id from document_collector where doc_id = #{param1} and collector_id = #{param2}")
+    public String selectCollection(String docId, String collectorId);
 
 
+    public ArrayList<Document> selectCollection(String userId);
 
+    public void insertDoc(String docId, String name, String creatorId, int authority, String parentId, String spaceId);
 
-
-    //////////////////////
-    ////个人
-    //////////////////////
-
-    public void insertDoc(String docId, String name, String creatorId, int authority, String parentId);
-
+    @Select("select count(*) from documents")
     public Integer numOfDoc();
-
-
-    String getParentId(String fileId);
 }

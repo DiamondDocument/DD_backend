@@ -14,7 +14,7 @@ public interface DocumentService {
      * @param parentId 父文件夹（或空间）id
      * @return 返回Document实体，如果为null意味着创建失败
      */
-    public Document newDoc(String name, String spaceId, String userId, int authority, String parentId);
+    public String newDoc(String name, String spaceId, String userId, int authority, String parentId);
 
     /**
      * 输入用户名，获得用户的收藏文档集合
@@ -31,8 +31,11 @@ public interface DocumentService {
     /**
      * 所有参数非空
      * @param userId
-     * @param documentId
+     * @param docId
      * @return 成功收藏为true
      */
-    public boolean collect(String userId,String documentId);
+    public int collect(String userId, String docId);
+
+    public int discollect(String userId, String docId);
+
 }

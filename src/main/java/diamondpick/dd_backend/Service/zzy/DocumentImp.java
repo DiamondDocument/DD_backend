@@ -12,7 +12,10 @@ import java.util.ArrayList;
 public class DocumentImp implements DocumentService {
     @Autowired
     DocumentDao documentDao;
-
+    int docNum = documentDao.numOfDoc();
+    String generateId(){
+        return "d" + Integer.toString((docNum++) + 100000);
+    }
 //    @Override
 //    public Document newDoc(String name, String userId, int authority, String fatherId) {
 ////        String id = "d" + (documentDao.numOfDoc() + 100000) ;
@@ -37,15 +40,21 @@ public class DocumentImp implements DocumentService {
 //    }
 
     @Override
-    public Document newDoc(String name, String spaceId, String userId, int authority, String parentId) {
-        return null;
+    public String newDoc(String name, String spaceId, String userId, int authority, String parentId) {
+        String docId = generateId();
+        try{
+            documentDao.insertDoc(docId,name,userId,authority,parentId,spaceId);
+        }catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
+        return docId;
     }
 
     @Override
     public ArrayList<Document> getCollection(String userId) {
-//        ArrayList<Document> ret = documentDao.selectByCollector(userId);
-//        return ret;
-        return null;
+        ArrayList<Document> ret = documentDao.selectCollection(userId);
+        return ret;
     }
 
     @Override
@@ -54,26 +63,41 @@ public class DocumentImp implements DocumentService {
     }
 
     @Override
-    public boolean collect(String userId, String documentId) {
-//        try {
-//            documentDao.insertDocCollector(documentId,userId);
-//        }catch (Exception e){
-//            e.printStackTrace();
-//            return false;
-//        }
-//        return true;
-        return false;
+    public int collect(String userId, String docId) {
+        if(documentDao.selectDoc(docId) == null) return -1;
+        if(documentDao.selectCollection(docId, userId) != null) return 1;
+        if(getAuth(docId, userId) < 2){
+            return 2;
+        }
+        try {
+            documentDao.insertCollection(docId,userId);
+        }catch (Exception e){
+            e.printStackTrace();
+            return -1;
+        }
+        return 0;
     }
 
-//    @Override
-//    public String getCreatorId(String documentId) {
-//        try {
-////            String ret = documentDao.findUIdByDId(documentId);
-////            return ret;
-//        }catch (Exception e){
-//            e.printStackTrace();
-//            return null;
-//        }
-//        return null;
-//    }
+    @Override
+    public int discollect(String userId, String docId) {
+        if(documentDao.selectDoc(docId) == null) return -1;
+        if(documentDao.selectCollection(docId, userId) == null) return 1;
+        if(getAuth(docId, userId) < 2){
+            return -1;
+        }
+        try {
+            documentDao.deleteCollection(docId,userId);
+        }catch (Exception e){
+            e.printStackTrace();
+            return -1;
+        }
+        return 0;
+    }
+
+    public int getAuth(String docId, String userId){
+        Document doc = documentDao.selectDoc(docId);
+        if(doc.getCreatorId().equals(userId)) return 5;
+        if(doc == null)return -1;
+        return doc.getNowAuth();
+    }
 }
