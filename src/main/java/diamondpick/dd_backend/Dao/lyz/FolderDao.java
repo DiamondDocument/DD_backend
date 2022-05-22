@@ -12,4 +12,8 @@ public interface FolderDao {
     ArrayList<Folder> openFolder(String folderId);
 
     String getParentId(String fileId);
+
+    ArrayList<Folder> getFolderBySpaceId(String spaceId);
+
+    ArrayList<Folder> getFolderByParentId(String parentId);
 }

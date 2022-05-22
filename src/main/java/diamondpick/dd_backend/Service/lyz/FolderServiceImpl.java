@@ -32,5 +32,15 @@ public class FolderServiceImpl implements FolderService {
         return folderDao.openFolder(folderId);
     }
 
+    @Override
+    public ArrayList<Folder> getFolderBySpaceId(String spaceId) {
+        return folderDao.getFolderBySpaceId(spaceId);
+    }
+
+    @Override
+    public ArrayList<Folder> getFolderByParentId(String parentId) {
+        return folderDao.getFolderByParentId(parentId);
+    }
+
 
 }

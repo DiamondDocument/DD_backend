@@ -3,6 +3,7 @@ package diamondpick.dd_backend.Dao.lyz;
 import diamondpick.dd_backend.Entity.lyz.Recycle;
 import diamondpick.dd_backend.Entity.lyz.Space;
 import diamondpick.dd_backend.Entity.lyz.TeamRecycle;
+import diamondpick.dd_backend.Entity.lyz.UserSpace;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -23,4 +24,9 @@ public interface SpaceDao {
     void newUserRecycle(Recycle recycle);
 
     void newTeamRecycle(TeamRecycle recycle);
+
+    String getSpaceIdByTeamId(@Param("teamId")  String teamId);
+    String getSpaceIdByUserId(@Param("userId")  String userId);
+
+    UserSpace getUserSpace(@Param("userId")  String userId);
 }

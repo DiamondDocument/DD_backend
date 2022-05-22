@@ -23,4 +23,5 @@ public interface SpaceService {
 
     public String getSpaceIdByTeamId(String teamId);
     public String getSpaceIdByUserId(String userId);
+    public UserSpace getUserSpace(String userId);
 }

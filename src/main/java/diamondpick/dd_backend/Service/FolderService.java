@@ -10,4 +10,8 @@ public interface FolderService {
     String newFolder(String folderName, String creatorId, String parentId, String spaceId, int auth);
 
     ArrayList<Folder> openFolder(String folderId);
+
+    ArrayList<Folder> getFolderBySpaceId(String spaceId);
+
+    ArrayList<Folder> getFolderByParentId(String parentId);
 }
