@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 @Mapper
 public interface FolderDao {
-    void createFolder(Folder folder);
+    void newFolder(Folder folder);
 
     ArrayList<Folder> openFolder(String folderId);
 

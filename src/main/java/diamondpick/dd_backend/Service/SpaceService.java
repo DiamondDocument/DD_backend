@@ -21,4 +21,6 @@ public interface SpaceService {
     public UserRecycle newUserRecycle(String fileId, String userId, String delId);
     public TeamRecycle newTeamRecycle(String fileId, String teamId, String delId);
 
+    public String getSpaceIdByTeamId(String teamId);
+    public String getSpaceIdByUserId(String userId);
 }

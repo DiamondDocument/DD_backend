@@ -12,7 +12,7 @@ public class Folder {
     private String creatorId;
     private Date createTime;
     private String parentId;
-
+    private String spaceId;
     // 文件生成时的权限
     private int selfAuth;
 
@@ -25,7 +25,7 @@ public class Folder {
     public Folder() {
     }
 
-    public Folder(String folderName, String creatorId, Date createTime, String parentId, int selfAuth, int nowAuth) {
+    public Folder(String folderName, String creatorId, Date createTime, String parentId, String spaceId, int selfAuth, int nowAuth) {
         String id = "f" + String.format("%06d", folderIdCounter);
         folderIdCounter++;
         this.folderId = id;
@@ -33,6 +33,7 @@ public class Folder {
         this.creatorId = creatorId;
         this.createTime = createTime;
         this.parentId = parentId;
+        this.spaceId = spaceId;
         this.selfAuth = selfAuth;
         this.nowAuth = nowAuth;
     }
@@ -71,6 +72,14 @@ public class Folder {
 
     public void setParentId(String parentId) {
         this.parentId = parentId;
+    }
+
+    public String getSpaceId() {
+        return spaceId;
+    }
+
+    public void setSpaceId(String spaceId) {
+        this.spaceId = spaceId;
     }
 
     public int getSelfAuth() {

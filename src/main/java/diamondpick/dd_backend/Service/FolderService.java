@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 @Service
 public interface FolderService {
-    void createFolder(Folder folder);
+    String newFolder(String folderName, String creatorId, String parentId, String spaceId, int auth);
 
     ArrayList<Folder> openFolder(String folderId);
 }

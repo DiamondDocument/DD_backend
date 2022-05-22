@@ -11,10 +11,10 @@
         <result column="now_authority" property="nowAuthority"/>
     </resultMap>
 
-    <!--    <insert id="createFolder">-->
-    <!--        INSERT INTO `Folder` (`id`, `f_name`, `c_uid`, `create_time`, `self_authority`, `now_authority`, `parent_id`)-->
-    <!--        VALUES (#{folderId}, #{folderName}, #{creatorId}, #{createTime}, #{selfAuthority}, #{nowAuthority}, #{parentId})-->
-    <!--    </insert>-->
+    <insert id="newFolder">
+        insert into `folder`(folder_id, folder_name, creator_id, create_time, parent_id, space_id, self_auth, now_auth)
+        values(#{folderId}, #{folderName}, #{creatorId}, #{createTime}, #{parentId}, #{spaceId}, #{selfAuth}, #{nowAuth})
+    </insert>
 
     <!--    <select id="openFolder" resultMap="FolderResultMap">-->
     <!--        SELECT *-->
