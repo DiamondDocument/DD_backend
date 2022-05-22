@@ -34,8 +34,9 @@ create table documents
     modify_time datetime,
     self_auth   int         not null,
     now_auth    int         not null,
-    is_editing  int         not null default 0,
+    is_editing  bool         not null default false,
     parent_id   char(7)     ,
+    space_id    char(7)     not null,
     foreign key (creator_id) references users (user_id),
     foreign key (modifier_id) references users (user_id)
 );
@@ -77,6 +78,7 @@ create table folder
     creator_id  varchar(20) not null,
     create_time datetime    not null,
     parent_id   char(7)     null,
+    space_id    char(7)     not null,
     self_auth   int         not null,
     now_auth    int         not null,
     foreign key (creator_id) references users (user_id)
