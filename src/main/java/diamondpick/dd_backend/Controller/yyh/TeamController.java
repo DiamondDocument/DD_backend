@@ -30,6 +30,7 @@ public class TeamController {
     private UserService userService;
     @PostMapping("/api/team/create")
     public Map<String,Object> teamCreate(@RequestBody Map<String,String> re_map){
+        String teamId = re_map.get("teamId");
         String teamName = re_map.get("teamName");
         String teamIntroductory = re_map.get("teamIntroductory");
         String userID = re_map.get("userID");
@@ -37,26 +38,22 @@ public class TeamController {
         try {
             User user = userService.selectUserByUserId(userID);
             if(user==null){
-                map.put("error", 2);
-                map.put("message", "队长id不存在");
+                map.put("code", 2);
             }
             else if(!checkTeamName(teamName)){
-                map.put("error", 1);
-                map.put("message", "团队名称不合规范");
+                map.put("code", 1);
             }
             else{
-                TeamMessage teamMessage = new TeamMessage(teamName,userID,teamIntroductory);
-                String teamID = teamMessage.getTeamID();
-                TeamMember teamMember = new TeamMember(teamID,userID,"队长");
+                TeamMessage teamMessage = new TeamMessage(teamId,teamName,userID,teamIntroductory);
+                TeamMember teamMember = new TeamMember(teamId,userID,"队长");
                 teamService.registerNewMember(teamMember);
+                teamService.registerNewTeam(teamMessage);
                 map.put("error", 0);
-                map.put("message", "团队创建成功");
             }
         }
         catch (Exception e){
             e.printStackTrace();
-            map.put("error",-1);
-            map.put("message","其他错误");
+            map.put("code",-1);
         }
         return map;
     }

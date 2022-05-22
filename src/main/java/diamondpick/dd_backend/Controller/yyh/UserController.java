@@ -1,10 +1,14 @@
 package diamondpick.dd_backend.Controller.yyh;
 
 import diamondpick.dd_backend.Entity.yyh.User;
+import diamondpick.dd_backend.Entity.yyh.TeamMessage;
 import diamondpick.dd_backend.Service.MailService;
 import diamondpick.dd_backend.Service.UserService;
+import diamondpick.dd_backend.Service.TeamService;
+import diamondpick.dd_backend.Service.FileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.thymeleaf.TemplateEngine;
 
 import javax.annotation.Resource;
@@ -19,6 +23,10 @@ public class UserController {
     private UserService userService;
     @Autowired
     private MailService mailService;
+    @Autowired
+    private TeamService teamService;
+    @Autowired
+    private FileService fileService;
 
     @Resource
     private TemplateEngine templateEngine;
@@ -248,7 +256,36 @@ public class UserController {
             map.put("code",1);
             return map;
         }
+        String[] teamIds = teamService.selectTeamByUserId(id);
+        int n = teamIds.length;
+        String name = "";
+        String intro = "";
+        for(int i = 0;i < n;++i){
+            TeamMessage teamMessage = teamService.selectTeamByTeamId(teamIds[i]);
+            name += teamMessage.getTeamName();
+            name += ' ';
+            intro += teamMessage.getTeamIntroductory();
+            intro += ' ';
+        }
+        map.put("code", 0);
+        map.put("name",name);
+        map.put("intro",intro);
+        return map;
+    }
+    @PostMapping("/api/user/modify/avatar ")
+    public Map<String, Object> modifyAvatar(@RequestParam MultipartFile file,@RequestParam String userId) {
+        Map<String, Object> map = new HashMap<>();
+        User user = userService.selectUserByUserId(userId);
+        if (user == null) {
+            map.put("code",1);
+            return map;
+        }
+        fileService.saveFile(userId,file);
         map.put("code", 0);
         return map;
+    }
+    @GetMapping(value="/api/user/avatar/{filename}")
+    public byte[] getDocument(@PathVariable String filename){
+        return fileService.getFile(filename);
     }
 }

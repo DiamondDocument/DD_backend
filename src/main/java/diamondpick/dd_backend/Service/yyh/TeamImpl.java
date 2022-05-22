@@ -24,6 +24,10 @@ public class TeamImpl implements TeamService {
         return teamDao.selectUserByUserIdInTeam(userID,teamID);
     }
     @Override
+    public String[] selectTeamByUserId(String userId){
+        return teamDao.selectTeamByUserId(userId);
+    }
+    @Override
     public void registerNewMember(TeamMember teamMember){
         teamDao.registerNewMember(teamMember);
     }

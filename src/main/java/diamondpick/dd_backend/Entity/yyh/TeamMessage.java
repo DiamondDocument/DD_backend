@@ -10,7 +10,8 @@ public class TeamMessage {
     private String captainID;
     private String teamName;
     private String teamIntroductory;
-    public TeamMessage(String teamName,String captainID,String teamIntroductory){
+    public TeamMessage(String teamID,String teamName,String captainID,String teamIntroductory){
+        this.teamID=teamID;
         this.teamName=teamName;
         this.teamIntroductory=teamIntroductory;
         this.captainID = captainID;

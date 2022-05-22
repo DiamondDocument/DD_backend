@@ -19,11 +19,11 @@ public interface TeamDao {
 
 
 
-
-    void registerNewTeam(TeamMessage teamMessage);
     TeamMessage selectTeam(String teamID);
+    void registerNewTeam(TeamMessage teamMessage);
     TeamMember selectUserByUserIdInTeam(String userID,String teamID);
     void registerNewMember(TeamMember teamMember);
     String selectCaptainID(String teamID);
-    int selectTeamID(String captainID);
+    String selectTeamID(String captainID);
+    String[] selectTeamByUserId(String userId);
 }

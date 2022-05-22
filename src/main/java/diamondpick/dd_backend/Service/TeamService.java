@@ -7,5 +7,6 @@ public interface TeamService {
     public void registerNewTeam(TeamMessage teamMessage);
     public TeamMessage selectTeamByTeamId(String teamID);
     public TeamMember selectUserByUserIdInTeam(String userID,String teamID);
+    public String[] selectTeamByUserId(String userId);
     public void registerNewMember(TeamMember teamMember);
 }
