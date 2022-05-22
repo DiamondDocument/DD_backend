@@ -1,4 +1,4 @@
-package diamondpick.dd_backend.Dao;
+package diamondpick.dd_backend.Dao.yyh;
 
 import diamondpick.dd_backend.Entity.zzy.RecentDocument;
 import org.apache.ibatis.annotations.Param;

@@ -5,7 +5,7 @@ import diamondpick.dd_backend.Entity.yyh.TeamMember;
 
 public interface TeamService {
     public void registerNewTeam(TeamMessage teamMessage);
-    public TeamMessage selectTeamByTeamId(int teamID);
-    public TeamMember selectUserByUserIdInTeam(String userID,int teamID);
+    public TeamMessage selectTeamByTeamId(String teamID);
+    public TeamMember selectUserByUserIdInTeam(String userID,String teamID);
     public void registerNewMember(TeamMember teamMember);
 }

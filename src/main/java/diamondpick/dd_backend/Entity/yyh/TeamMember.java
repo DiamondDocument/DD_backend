@@ -6,21 +6,21 @@ import javax.persistence.Id;
 @Entity
 public class TeamMember {
     @Id
-    private int teamID;
+    private String teamID;
     private String userID;
     private String user_rank;
     public TeamMember(){}
-    public TeamMember(int teamID,String userID,String user_rank){
+    public TeamMember(String teamID,String userID,String user_rank){
         this.teamID = teamID;
         this.userID = userID;
         this.user_rank = user_rank;
     }
 
-    public void setTeamID(int teamID) {
+    public void setTeamID(String teamID) {
         this.teamID = teamID;
     }
 
-    public int getTeamID() {
+    public String getTeamID() {
         return teamID;
     }
 

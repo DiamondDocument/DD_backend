@@ -1,6 +1,6 @@
 package diamondpick.dd_backend.Service.lyz;
 
-import diamondpick.dd_backend.Dao.TeamDao;
+import diamondpick.dd_backend.Dao.yyh.TeamDao;
 import diamondpick.dd_backend.Dao.lyz.MessageDao;
 import diamondpick.dd_backend.Entity.lyz.Message;
 import diamondpick.dd_backend.Service.MessageService;

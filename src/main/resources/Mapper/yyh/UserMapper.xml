@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <!--这是一个命名示例文件-->
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtdd/mybatis-3-mapper.dtd" >
-<mapper namespace="diamondpick.dd_backend.Dao.UserDao">
+<mapper namespace="diamondpick.dd_backend.Dao.yyh.UserDao">
     <select id="selectUserById" resultType="User">
         select * from user
         where id = #{id}

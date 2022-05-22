@@ -19,48 +19,59 @@ public class UserController {
     private UserService userService;
     @Autowired
     private MailService mailService;
-    @Autowired
-    private UserController userController;
 
     @Resource
     private TemplateEngine templateEngine;
 
-    @GetMapping("/api/login")
-    public Map<String, Object> login(@RequestParam(name = "email")String email, @RequestParam(name = "id")String userId, @RequestParam(name = "pwd")String password){
+    @RequestMapping(value = "/api/login", params = {"email", "userId", "pwd"}, method = RequestMethod.GET)
+    public @ResponseBody
+    Map<String, Object> login(@RequestParam String email, @RequestParam String userId, @RequestParam String password) {
         Map<String, Object> response = new HashMap<>();
-        response.put("error",0);
-        response.put("nickName",null);
         User loginUser;
-        if(password == null){
-            response.put("error", 2);
+        if (password == null) {
+            response.put("code", 2);
+            response.put("name", null);
+            response.put("nickName", null);
             return response;
         }
-        if(userId != null){
+        if (userId != null) {
             loginUser = userService.selectUserByUserId(userId);
-            if(loginUser == null){
-                response.put("error", 1);
+            if (loginUser == null) {
+                response.put("code", 1);
+                response.put("name", null);
+                response.put("nickName", null);
                 return response;
             }
-            if(!loginUser.getPassword().equals(password)){
-                response.put("error", 2);
+            if (!loginUser.getPassword().equals(password)) {
+                response.put("code", 2);
+                response.put("name", null);
+                response.put("nickName", null);
                 return response;
             }
+            response.put("code", 0);
+            response.put("name", userId);
             response.put("nickName", loginUser.getNickname());
-        }
-        else if(email != null){
+        } else if (email != null) {
             loginUser = userService.selectUserByEmail(email);
-            if(loginUser == null){
-                response.put("error", 1);
+            if (loginUser == null) {
+                response.put("code", 1);
+                response.put("name", null);
+                response.put("nickName", null);
                 return response;
             }
-            if(!loginUser.getPassword().equals(password)){
-                response.put("error", 2);
+            if (!loginUser.getPassword().equals(password)) {
+                response.put("code", 2);
+                response.put("name", null);
+                response.put("nickName", null);
                 return response;
             }
+            response.put("code", 0);
+            response.put("name", loginUser.getUser_id());
             response.put("nickName", loginUser.getNickname());
-        }
-        else{
-            response.put("error", -1);
+        } else {
+            response.put("code", -1);
+            response.put("name", null);
+            response.put("nickName", null);
             return response;
         }
         return response;
@@ -68,123 +79,176 @@ public class UserController {
 
 
     @PostMapping("/api/register")
-    public RegisterRes register(@RequestBody RegisterReq request) {
-        RegisterRes response = new RegisterRes(0);
-        if(request.userId == null && request.password == null)
-            return new RegisterRes(-1);
-        if(!userService.isLegalUserId(request.userId))
-            return new RegisterRes(4);
-        if(!userService.isLegalPassword(request.password))
-            return new RegisterRes(1);
-        if(request.nickname != null && !userService.isLegalNickname(request.nickname))
-            return new RegisterRes(4);
-        if(request.email != null && !userService.isLegalEmail(request.email))
-            return new RegisterRes(3);
-        if(userService.isUserIdExist(request.userId))
-            return new RegisterRes(2);
-        if(userService.isEmailExist(request.email))
-            return new RegisterRes(2);
+    public Map<String, Object> register(@RequestBody Map<String, String> re_map) {
+        Map<String, Object> map = new HashMap<>();
+        String userId = re_map.get("userId");
+        String password = re_map.get("password");
+        String nickname = re_map.get("nickname");
+        String email = re_map.get("email");
+        if (userId == null && password == null) {
+            map.put("code", -1);
+            return map;
+        }
+        if (!userService.isLegalUserId(userId)) {
+            map.put("code", -1);
+            return map;
+        }
+        if (!userService.isLegalPassword(password)) {
+            map.put("code", -1);
+            return map;
+        }
+        if (nickname != null && !userService.isLegalNickname(nickname)) {
+            map.put("code", -1);
+            return map;
+        }
+        if (email != null && !userService.isLegalEmail(email)) {
+            map.put("code", -1);
+            return map;
+        }
+        if (userService.isUserIdExist(userId)) {
+            map.put("code", -1);
+            return map;
+        }
+        if (userService.isEmailExist(email)) {
+            map.put("code", -1);
+            return map;
+        }
         User newUser = new User();
-        newUser.setUserId(request.userId);
-        newUser.setPassword(request.password);
-        if(request.email != null)
-            newUser.setUser_email(request.email);
-        if(request.nickname != null)
-            newUser.setNickname(request.nickname);
-        if(!userService.addUser(newUser)) return new RegisterRes(-1);
-        return new RegisterRes(0);
+        newUser.setUserId(userId);
+        newUser.setPassword(password);
+        if (email != null)
+            newUser.setUser_email(email);
+        if (nickname != null)
+            newUser.setNickname(nickname);
+        if (!userService.addUser(newUser)) {
+            map.put("code", -1);
+            return map;
+        }
+        map.put("code", 0);
+        return map;
     }
+
     @GetMapping("/api/user/send-identifying")
-    public Map<String,Object> identifying(@RequestParam(name = "email")String email){
-        Map<String,Object> map = new HashMap<>();
-        if(email == null || !userService.isLegalEmail(email)){
-            map.put("error",1);
-            map.put("message","邮箱格式错误");
+    public Map<String, Object> identifying(@RequestParam(name = "email") String email) {
+        Map<String, Object> map = new HashMap<>();
+        if (email == null || !userService.isLegalEmail(email)) {
+            map.put("code", 1);
+            map.put("identifyingCode", null);
             return map;
         }
         Random random = new Random();
-        String identifying="";
-        for (int i=0;i<6;i++){
-            identifying+=random.nextInt(10);
+        String identifying = "";
+        for (int i = 0; i < 5; i++) {
+            identifying += random.nextInt(10)+'0';
         }
-        mailService.sendSimpleMail(email,"注册验证码",identifying);
-        map.put("error",0);
-        map.put("message",identifying);
+        mailService.sendSimpleMail(email, "注册验证码", identifying);
+        map.put("error", 0);
+        map.put("identifyingCode", identifying);
         return map;
     }
 
     @GetMapping("/api/user/register/check-id")
-    public Map<String,Object> checkID(@RequestParam(name = "id")String id){
-        Map<String,Object> map = new HashMap<>();
-        if(userService.selectUserByUserId(id)==null){
-            map.put("error",1);
-            map.put("message","用户不存在");
-        }
-        else{
-            map.put("error",0);
-            map.put("message","用户存在");
+    public Map<String, Object> checkID(@RequestParam(name = "id") String id) {
+        Map<String, Object> map = new HashMap<>();
+        if (userService.selectUserByUserId(id) == null) {
+            map.put("code", 1);
+        } else {
+            map.put("code", 0);
         }
         return map;
     }
 
     @GetMapping("/api/user/information")
-    public getUserInformationRes getUserInformation(@RequestParam(name = "id") String id) {
+    public Map<String, Object> getUserInformation(@RequestParam(name = "id") String id) {
+        Map<String, Object> map = new HashMap<>();
         User user = userService.selectUserByUserId(id);
-        if(user == null)
-            return new getUserInformationRes(1);
-        return new getUserInformationRes(0,user.getNickname(),
-                user.getUser_introductory(),user.getUser_email());
-    }
-
-    @PostMapping("/api/user/modify/password ")
-    public Map<String,Object> modifyPassword(@RequestBody Map<String,String> re_map) {
-        Map<String,Object> map = new HashMap<>();
-        String id = re_map.get("userID");
-        String newPass = re_map.get("newPwd");
-        User user = userService.selectUserByUserId(id);
-        if(user==null){
-            map.put("error", 1);
-            map.put("message", "用户不存在");
+        if (user == null) {
+            map.put("code", 1);
+            map.put("nickName", null);
+            map.put("email", null);
+            map.put("introduction", null);
             return map;
         }
-        user.setPassword(newPass);
-        map.put("error", 0);
-        map.put("message", "修改成功");
+        map.put("code", 0);
+        map.put("nickName", user.getNickname());
+        map.put("email", user.getUser_email());
+        map.put("introduction", user.getUser_introductory());
         return map;
     }
 
-    class RegisterRes {
-        private Integer error;
-
-        public RegisterRes(Integer error) {
-            this.error = error;
+    @PostMapping("/api/user/modify/password ")
+    public Map<String, Object> modifyPassword(@RequestBody Map<String, String> re_map) {
+        Map<String, Object> map = new HashMap<>();
+        String id = re_map.get("userId");
+        String newPass = re_map.get("newPwd");
+        String oldPass = re_map.get("oldPwd");
+        User user = userService.selectUserByUserId(id);
+        if (user == null) {
+            map.put("code", -1);
+            return map;
         }
-
-        public Integer getError() {
-            return error;
+        String pwd = user.getPassword();
+        if (!pwd.equals(oldPass)) {
+            map.put("code", 1);
+            return map;
         }
+        user.setPassword(newPass);
+        map.put("code", 0);
+        return map;
     }
-    class RegisterReq {
-        String userId;
-        String nickname;
-        String password;
-        String email;
+
+    @PostMapping("/api/user/modify/email ")
+    public Map<String, Object> modifyEmail(@RequestBody Map<String, String> re_map) {
+        Map<String, Object> map = new HashMap<>();
+        String id = re_map.get("userId");
+        String newEmail = re_map.get("newEmail");
+        User user = userService.selectUserByUserId(id);
+        if (user == null) {
+            map.put("code",1);
+            return map;
+        }
+        user.setUser_email(newEmail);
+        map.put("code", 0);
+        return map;
     }
-    class getUserInformationRes {
-        private Integer error;
-        private String nickname;
-        //private String gender;
-        private String userIntroductory;
-        private String email;
-        public getUserInformationRes(Integer error, String nickname, String userIntroductory, String email) {
-            this.error = error;
-            this.nickname = nickname;
-            //this.gender = gender;
-            this.userIntroductory = userIntroductory;
-            this.email = email;
+    @PostMapping("/api/user/modify/nickname ")
+    public Map<String, Object> modifyNickname(@RequestBody Map<String, String> re_map) {
+        Map<String, Object> map = new HashMap<>();
+        String id = re_map.get("userId");
+        String newNick = re_map.get("newNick");
+        User user = userService.selectUserByUserId(id);
+        if (user == null) {
+            map.put("code",1);
+            return map;
         }
-        public getUserInformationRes(Integer error) {
-            this.error = error;
+        user.setNickname(newNick);
+        map.put("code", 0);
+        return map;
+    }
+    @PostMapping("/api/user/modify/introduction ")
+    public Map<String, Object> modifyIntro(@RequestBody Map<String, String> re_map) {
+        Map<String, Object> map = new HashMap<>();
+        String id = re_map.get("userId");
+        String newIntro = re_map.get("newIntro");
+        User user = userService.selectUserByUserId(id);
+        if (user == null) {
+            map.put("code",1);
+            return map;
         }
+        user.setUser_introductory(newIntro);
+        map.put("code", 0);
+        return map;
+    }
+    @PostMapping("/api/user/team ")
+    public Map<String, Object> userTeam(@RequestBody Map<String, String> re_map) {
+        Map<String, Object> map = new HashMap<>();
+        String id = re_map.get("userId");
+        User user = userService.selectUserByUserId(id);
+        if (user == null) {
+            map.put("code",1);
+            return map;
+        }
+        map.put("code", 0);
+        return map;
     }
 }
