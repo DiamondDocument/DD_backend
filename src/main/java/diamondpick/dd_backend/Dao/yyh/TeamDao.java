@@ -1,4 +1,4 @@
-package diamondpick.dd_backend.Dao;
+package diamondpick.dd_backend.Dao.yyh;
 
 import diamondpick.dd_backend.Entity.yyh.TeamMember;
 import diamondpick.dd_backend.Entity.yyh.TeamMessage;
@@ -14,15 +14,15 @@ public interface TeamDao {
     周五之前实现
      */
     //////////////
-    public TeamMessage selectTeam(@Param("teamId") String teamId);
+    //public TeamMessage selectTeam(@Param("teamId") String teamId);
     //////////////
 
 
 
 
     void registerNewTeam(TeamMessage teamMessage);
-    TeamMessage selectTeam(int teamID);
-    TeamMember selectUserByUserIdInTeam(String userID,int teamID);
+    TeamMessage selectTeam(String teamID);
+    TeamMember selectUserByUserIdInTeam(String userID,String teamID);
     void registerNewMember(TeamMember teamMember);
     String selectCaptainID(String teamID);
     int selectTeamID(String captainID);

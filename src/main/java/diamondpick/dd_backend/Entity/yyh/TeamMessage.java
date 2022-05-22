@@ -1,15 +1,12 @@
 package diamondpick.dd_backend.Entity.yyh;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class TeamMessage {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int teamID;
+    @Column(name = "id")
+    private String teamID;
     private String captainID;
     private String teamName;
     private String teamIntroductory;
@@ -20,7 +17,7 @@ public class TeamMessage {
     }
     public TeamMessage(){}
 
-    public int getTeamID() {
+    public String getTeamID() {
         return teamID;
     }
 
@@ -28,7 +25,7 @@ public class TeamMessage {
         return teamIntroductory;
     }
 
-    public void setTeamID(int teamID) {
+    public void setTeamID(String teamID) {
         this.teamID = teamID;
     }
 

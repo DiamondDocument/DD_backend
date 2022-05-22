@@ -46,8 +46,7 @@ public class TeamController {
             }
             else{
                 TeamMessage teamMessage = new TeamMessage(teamName,userID,teamIntroductory);
-                teamService.registerNewTeam(teamMessage);
-                int teamID = teamMessage.getTeamID();
+                String teamID = teamMessage.getTeamID();
                 TeamMember teamMember = new TeamMember(teamID,userID,"队长");
                 teamService.registerNewMember(teamMember);
                 map.put("error", 0);
@@ -63,7 +62,7 @@ public class TeamController {
     }
     @PostMapping("/api/team/join")
     public Map<String,Object> teamJoin(@RequestBody Map<String,String> re_map){
-        int teamID = Integer.parseInt(re_map.get("teamID"));
+        String teamID = re_map.get("teamID");
         String userID = re_map.get("userID");
         Map<String,Object> map = new HashMap<>();
         try {
