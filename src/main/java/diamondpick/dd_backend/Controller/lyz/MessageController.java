@@ -85,6 +85,7 @@ public class MessageController {
                     json.put("teamName", teamMessage.getTeamName());
                 }
                 if (message.getMsgType() == 6 || message.getMsgType() == 7) {
+                    // need: selectDocByDocId
                     Document document = documentService.selectDocByDocId(message.getMsgDocId());
                     json.put("msgDocName", document.getName());
                 }

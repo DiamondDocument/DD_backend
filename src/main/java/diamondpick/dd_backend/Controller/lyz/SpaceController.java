@@ -41,6 +41,7 @@ public class SpaceController {
             map.put("userspaceName", userspaceName);
 
             ArrayList<JSONObject> jsonList = new ArrayList<>();
+            // need: getDocumentBySpaceId
             ArrayList<Document> documents = documentService.getDocumentBySpaceId(userspaceId);
             for (Document document : documents) {
                 JSONObject json = new JSONObject();
@@ -66,6 +67,7 @@ public class SpaceController {
                 json.put("createTime", folder.getCreateTime());
                 if (folder.getFolderId().equals(folderId)) {
                     ArrayList<JSONObject> jsonListInFolder = new ArrayList<>();
+                    // need: getDocumentByDocumentId
                     ArrayList<Document> documentInFolder = documentService.getDocumentByParentId(folderId);
                     for (Document document : documentInFolder) {
                         JSONObject jsonInFolder = new JSONObject();
