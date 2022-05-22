@@ -33,7 +33,7 @@ public class UserController {
 
     @RequestMapping(value = "/api/login", params = {"email", "userId", "pwd"}, method = RequestMethod.GET)
     public @ResponseBody
-    Map<String, Object> login(@RequestParam String email, @RequestParam String userId, @RequestParam String password) {
+    Map<String, Object> login(@RequestParam(required = false) String email, @RequestParam(required = false) String userId, @RequestParam String password) {
         Map<String, Object> response = new HashMap<>();
         User loginUser;
         if (password == null) {
