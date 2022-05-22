@@ -2,12 +2,17 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="diamondpick.dd_backend.Dao.lyz.MessageDao">
     <resultMap id="MessageResultMap" type="diamondpick.dd_backend.Entity.lyz.Message">
-        <result column="messageID" property="messageID"/>
-        <result column="senderID" property="senderID"/>
-        <result column="receiverID" property="receiverID"/>
-        <result column="message" property="message"/>
-        <result column="status" property="status"/>
-        <result column="dateCreated" property="dateCreated"/>
+        <result column="msg_id" property="messageId"/>
+        <result column="sender_id" property="senderId"/>
+        <result column="receiver_id" property="receiverId"/>
+        <result column="send_time" property="sendTime"/>
+        <result column="receive_time" property="receiveTime"/>
+        <result column="msg_type" property="msgType"/>
+        <result column="msg_content" property="msgContent"/>
+        <result column="msg_status" property="msgStatus"/>
+        <result column="team_id" property="teamId"/>
+        <result column="msg_doc_id" property="msgDocId"/>
+        <result column="deal_status" property="dealStatus"/>
     </resultMap>
 
     <insert id="sendNewMessage">
@@ -31,9 +36,9 @@
 <!--          and `status` = #{preStatus}-->
 <!--    </update>-->
 
-<!--    <select id="listMessage" resultMap="MessageResultMap">-->
-<!--        select *-->
-<!--        from `Message`-->
-<!--        where `receiverID` = #{userId}-->
-<!--    </select>-->
+    <select id="listMessage" resultMap="MessageResultMap">
+        select *
+        from `Message`
+        where `receiver_id` = #{userId}
+    </select>
 </mapper>
