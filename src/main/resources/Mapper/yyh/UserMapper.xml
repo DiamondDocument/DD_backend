@@ -3,15 +3,15 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtdd/mybatis-3-mapper.dtd" >
 <mapper namespace="diamondpick.dd_backend.Dao.yyh.UserDao">
     <select id="selectUserById" resultType="User">
-        select * from user
+        select * from users
         where id = #{id}
     </select>
     <insert id="insertUser" >
-        insert into user (id, nickname, password, gender, user_introductory, user_email)
+        insert into users (id, nickname, password, gender, user_introductory, user_email)
         values (#{user_id}, #{nickname}, #{password}, #{gender}, #{user_introductory}, #{user_email})
     </insert>
     <select id="selectUserBy" resultType="User">
-        select * from user
+        select * from users
         where #{name} = #{value}
     </select>
 </mapper>

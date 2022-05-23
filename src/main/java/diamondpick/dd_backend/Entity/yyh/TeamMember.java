@@ -3,9 +3,7 @@ package diamondpick.dd_backend.Entity.yyh;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
-@Entity
 public class TeamMember {
-    @Id
     private String teamID;
     private String userID;
     private String user_rank;

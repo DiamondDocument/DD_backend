@@ -2,10 +2,7 @@ package diamondpick.dd_backend.Entity.yyh;
 
 import javax.persistence.*;
 
-@Entity
 public class TeamMessage {
-    @Id
-    @Column(name = "id")
     private String teamID;
     private String captainID;
     private String teamName;

@@ -6,10 +6,7 @@ import javax.persistence.*;
 import java.util.List;
 import java.util.Set;
 
-@Entity
 public class User {
-    @Id
-    @Column(name = "id")
     private String user_id;
     private String nickname;
     private String password;
