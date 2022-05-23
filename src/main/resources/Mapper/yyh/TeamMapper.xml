@@ -15,7 +15,7 @@
     <insert id="registerNewMember" parameterType="TeamMember">
         insert into `user_team`(`teamID`,`userID`,`rank`) value (#{teamID},#{userID},#{rank})
     </insert>
-    <select id="selectTeamByUserId" resultType="String[]">
+    <select id="selectTeamByUserId" resultType="String">
         select team_id from user_team where userID = #{userID}
     </select>
 </mapper>

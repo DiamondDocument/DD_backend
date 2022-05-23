@@ -5,10 +5,7 @@
         insert into documents(doc_id,name,creator_id,self_auth,now_auth,parent_id,space_id)
         values(#{param1},#{param2},#{param3},#{param4},#{param4},#{param5}, #{param6})
     </insert>
-    <select id="numOfDoc" resultType="Integer">
-        select count(*) from documents
-    </select>
-    <select id="selectCollection" resultType="Document">
+    <select id="selectCollections" resultType="Document">
         select documents.name as name,
         documents.doc_id as id,
         documents.creator_id as creatorid,

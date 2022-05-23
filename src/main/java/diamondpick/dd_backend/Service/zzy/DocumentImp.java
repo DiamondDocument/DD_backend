@@ -3,41 +3,29 @@ package diamondpick.dd_backend.Service.zzy;
 import diamondpick.dd_backend.Dao.zzy.DocumentDao;
 import diamondpick.dd_backend.Entity.zzy.Document;
 import diamondpick.dd_backend.Service.DocumentService;
+import diamondpick.dd_backend.Service.FileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 @Service
 public class DocumentImp implements DocumentService {
     @Autowired
     DocumentDao documentDao;
-    int docNum = documentDao.numOfDoc();
+
+    @Autowired
+    FileService fileService;
+
+    String baseLocation = "C:/Users/18389/Desktop/documents/";
+
+    int docNum = -1;
     String generateId(){
+        if(docNum == -1) docNum = documentDao.numOfDoc();
         return "d" + Integer.toString((docNum++) + 100000);
     }
-//    @Override
-//    public Document newDoc(String name, String userId, int authority, String fatherId) {
-////        String id = "d" + (documentDao.numOfDoc() + 100000) ;
-////        Document newDoc = new Document();
-////        newDoc.setName(name);
-////        newDoc.setId(id);
-//////        newDoc.setCreatorUId(userId);
-////        User user = new User();
-////        user.setUserId(userId);
-////        newDoc.setCreator(user);
-////        newDoc.setCreateTime(new Date());
-//////        newDoc.setFatherId(fatherId);
-////        newDoc.setNowAuthority(authority);
-////        newDoc.setSelfAuthority(authority);
-//        try{
-////            documentDao.insertDoc(newDoc,"123");
-//        }catch (Exception e){
-//            e.printStackTrace();
-//            return null;
-//        }
-//        return null;
-//    }
 
     @Override
     public String newDoc(String name, String spaceId, String userId, int authority, String parentId) {
@@ -48,12 +36,22 @@ public class DocumentImp implements DocumentService {
             e.printStackTrace();
             return null;
         }
+        File newDocFile = new File(baseLocation + docId + ".html");
+        if(newDocFile.exists() && newDocFile.isFile()) newDocFile.delete();
+        try{
+            newDocFile.createNewFile();
+        }catch (Exception e){
+            e.printStackTrace();
+            documentDao.deleteDoc(docId);
+            return null;
+        }
         return docId;
     }
 
+
     @Override
     public ArrayList<Document> getCollection(String userId) {
-        ArrayList<Document> ret = documentDao.selectCollection(userId);
+        ArrayList<Document> ret = documentDao.selectCollections(userId);
         return ret;
     }
 

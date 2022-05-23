@@ -67,35 +67,19 @@ public class SpaceServiceImpl implements SpaceService {
 
     @Override
     public TeamRecycle newTeamRecycle(String fileId, String teamId, String delId) {
-//        try {
-//            String preFolderId = null;
-//            if (fileId.charAt(0) == 'f') {
-//                preFolderId = folderDao.getParentId(fileId);
-//            } else if (fileId.charAt(0) == 'd') {
-//                preFolderId = documentDao.getParentId(fileId);
-//            }
-//            TeamRecycle recycle = new TeamRecycle(fileId, delId, preFolderId, teamId);
-//            spaceDao.newTeamRecycle(recycle);
-//            return recycle;
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            return null;
-//        }
-        return null;
-    }
-
-    @Override
-    public String getSpaceIdByTeamId(String teamId) {
-        return spaceDao.getSpaceIdByTeamId(teamId);
-    }
-
-    @Override
-    public String getSpaceIdByUserId(String userId) {
-        return spaceDao.getSpaceIdByUserId(userId);
-    }
-
-    @Override
-    public UserSpace getUserSpace(String userId) {
-        return spaceDao.getUserSpace(userId);
+        try {
+            String preFolderId = null;
+            if (fileId.charAt(0) == 'f') {
+                preFolderId = folderDao.getParentId(fileId);
+            } else if (fileId.charAt(0) == 'd') {
+                preFolderId = documentDao.getParentId(fileId);
+            }
+            TeamRecycle recycle = new TeamRecycle(fileId, delId, preFolderId, teamId);
+            spaceDao.newTeamRecycle(recycle);
+            return recycle;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 }

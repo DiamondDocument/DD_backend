@@ -12,6 +12,9 @@ import java.io.FileOutputStream;
 public class FileServiceImp implements FileService {
     static String FileRoot = "D:\\BUAA\\2down\\soft\\big_work";
     static String AvatarRoot = "D:\\BUAA\\2down\\soft\\big_work";
+
+
+
     public byte[] getFile(String path){
         FileInputStream stream = null;
         try{

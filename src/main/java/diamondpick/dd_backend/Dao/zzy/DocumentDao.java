@@ -10,6 +10,8 @@ import java.util.ArrayList;
 public interface DocumentDao {
 
     public Document selectDoc(String docId);
+
+    @Delete("delete from documents where doc_id = #{param1}")
     public void deleteDoc(String docId);
 
     @Update("update documents set ${key} = #{value} where doc_id = #{docId}")
@@ -23,10 +25,12 @@ public interface DocumentDao {
     public String selectCollection(String docId, String collectorId);
 
 
-    public ArrayList<Document> selectCollection(String userId);
+    public ArrayList<Document> selectCollections(String userId);
 
     public void insertDoc(String docId, String name, String creatorId, int authority, String parentId, String spaceId);
 
     @Select("select count(*) from documents")
     public Integer numOfDoc();
+
+
 }

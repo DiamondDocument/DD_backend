@@ -45,30 +45,4 @@ public class DocumentController {
     }
 }
 
-class Response{
-    public Response(String... key){
-        this.keys = keys;
-//        for(int i = 0; i < key.length; i++){
-//            map.put(key[i],null);
-//        }
-    }
-    private String[] keys;
-    private HashMap<String,Object> map;
-    public void generateKey(String... keys){
-        this.keys = keys;
-//        for(int i = 0; i < keys.length; i++){
-//            map.put(keys[i], null);
-//        }
-    }
-    public HashMap<String,Object> set(int code, Object... values){
-        HashMap<String,Object> map = new HashMap<>();
-        map.put("code", code);
-        for(int i = 0; i < keys.length; i++){
-            map.put(keys[i], values.length);
-        }
-        return map;
-    }
-    public HashMap<String,Object> get(){
-        return map;
-    }
-}
+

@@ -33,7 +33,7 @@ public class UserController {
 
     @RequestMapping(value = "/api/login", params = {"email", "userId", "pwd"}, method = RequestMethod.GET)
     public @ResponseBody
-    Map<String, Object> login(@RequestParam(required = false) String email, @RequestParam(required = false) String userId, @RequestParam String password) {
+    Map<String, Object> login(@RequestParam(required = false) String email, @RequestParam(required = false) String userId, @RequestParam(name="pwd") String password) {
         Map<String, Object> response = new HashMap<>();
         User loginUser;
         if (password == null) {
@@ -256,36 +256,7 @@ public class UserController {
             map.put("code",1);
             return map;
         }
-        String[] teamIds = teamService.selectTeamByUserId(id);
-        int n = teamIds.length;
-        String name = "";
-        String intro = "";
-        for(int i = 0;i < n;++i){
-            TeamMessage teamMessage = teamService.selectTeamByTeamId(teamIds[i]);
-            name += teamMessage.getTeamName();
-            name += ' ';
-            intro += teamMessage.getTeamIntroductory();
-            intro += ' ';
-        }
-        map.put("code", 0);
-        map.put("name",name);
-        map.put("intro",intro);
-        return map;
-    }
-    @PostMapping("/api/user/modify/avatar ")
-    public Map<String, Object> modifyAvatar(@RequestParam MultipartFile file,@RequestParam String userId) {
-        Map<String, Object> map = new HashMap<>();
-        User user = userService.selectUserByUserId(userId);
-        if (user == null) {
-            map.put("code",1);
-            return map;
-        }
-        fileService.saveFile(userId,file);
         map.put("code", 0);
         return map;
-    }
-    @GetMapping(value="/api/user/avatar/{filename}")
-    public byte[] getDocument(@PathVariable String filename){
-        return fileService.getFile(filename);
     }
 }
