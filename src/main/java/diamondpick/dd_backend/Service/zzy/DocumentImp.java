@@ -92,6 +92,16 @@ public class DocumentImp implements DocumentService {
         return 0;
     }
 
+    @Override
+    public ArrayList<Document> getDocumentBySpaceId(String userspaceId) {
+        return null;
+    }
+
+    @Override
+    public ArrayList<Document> getDocumentByParentId(String folderId) {
+        return null;
+    }
+
     public int getAuth(String docId, String userId){
         Document doc = documentDao.selectDoc(docId);
         if(doc.getCreatorId().equals(userId)) return 5;

@@ -72,7 +72,7 @@ public class SpaceServiceImpl implements SpaceService {
             if (fileId.charAt(0) == 'f') {
                 preFolderId = folderDao.getParentId(fileId);
             } else if (fileId.charAt(0) == 'd') {
-                preFolderId = documentDao.getParentId(fileId);
+                preFolderId = documentDao.selectDoc(fileId).getParentId();
             }
             TeamRecycle recycle = new TeamRecycle(fileId, delId, preFolderId, teamId);
             spaceDao.newTeamRecycle(recycle);
@@ -81,5 +81,20 @@ public class SpaceServiceImpl implements SpaceService {
             e.printStackTrace();
             return null;
         }
+    }
+
+    @Override
+    public String getSpaceIdByTeamId(String teamId) {
+        return null;
+    }
+
+    @Override
+    public String getSpaceIdByUserId(String userId) {
+        return null;
+    }
+
+    @Override
+    public UserSpace getUserSpace(String userId) {
+        return null;
     }
 }

@@ -38,4 +38,7 @@ public interface DocumentService {
 
     public int discollect(String userId, String docId);
 
+    ArrayList<Document> getDocumentBySpaceId(String userspaceId);
+
+    ArrayList<Document> getDocumentByParentId(String folderId);
 }
