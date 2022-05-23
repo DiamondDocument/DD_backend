@@ -41,4 +41,6 @@ public interface DocumentService {
     ArrayList<Document> getDocumentBySpaceId(String userspaceId);
 
     ArrayList<Document> getDocumentByParentId(String folderId);
+
+    Document selectDocByDocId(String msgDocId);
 }

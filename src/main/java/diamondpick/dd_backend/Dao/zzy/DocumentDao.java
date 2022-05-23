@@ -9,7 +9,12 @@ import java.util.ArrayList;
 @Mapper
 public interface DocumentDao {
 
+    @Select("select * from documents where doc_id = #{param1}")
     public Document selectDoc(String docId);
+
+    @Select("select * from documents where ${key} = #{value}")
+    @ResultType(Document.class)
+    public ArrayList<Document> selectDocs(@Param("key")String key, @Param("value")Object value);
 
     @Delete("delete from documents where doc_id = #{param1}")
     public void deleteDoc(String docId);

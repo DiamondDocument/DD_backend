@@ -14,7 +14,7 @@ public class Document {
     private int nowAuth;
     private boolean isEditing;
     private String parentId;
-
+    private String spaceId;
 
     
     public String getId() {

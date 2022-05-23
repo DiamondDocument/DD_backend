@@ -57,6 +57,7 @@ public class DocumentImp implements DocumentService {
 
     @Override
     public String getSize(String docId) {
+
         return null;
     }
 
@@ -92,20 +93,28 @@ public class DocumentImp implements DocumentService {
         return 0;
     }
 
-    @Override
-    public ArrayList<Document> getDocumentBySpaceId(String userspaceId) {
-        return null;
-    }
-
-    @Override
-    public ArrayList<Document> getDocumentByParentId(String folderId) {
-        return null;
-    }
-
     public int getAuth(String docId, String userId){
         Document doc = documentDao.selectDoc(docId);
         if(doc.getCreatorId().equals(userId)) return 5;
         if(doc == null)return -1;
         return doc.getNowAuth();
     }
+
+
+    @Override
+    public ArrayList<Document> getDocumentBySpaceId(String userspaceId) {
+        return documentDao.selectDocs("space_id", userspaceId);
+    }
+
+    @Override
+    public ArrayList<Document> getDocumentByParentId(String folderId) {
+        return documentDao.selectDocs("parent_id", folderId);
+    }
+
+    @Override
+    public Document selectDocByDocId(String msgDocId) {
+        return documentDao.selectDoc(msgDocId);
+    }
+
+
 }
