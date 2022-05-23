@@ -18,19 +18,7 @@ public class FileController {
 
 
 
-    @PostMapping(value = "api/document/img")
-    public HashMap<String,Object> postImage(@RequestParam()MultipartFile file){
-        Response res = new Response("errno", "message", "data");
-        Response data = new Response("url", "alt", "href");
-        if(fileService.saveFile( baseLocation + file.getOriginalFilename() ,file)){
-            return res.set(null, 0, null, data.set(null, "http://localhost/api/document/img/" + file.getOriginalFilename(), "失败？", "http://localhost/api/document/img/" + file.getOriginalFilename()));
-        }
-        return res.set(null, 1, "上传错误", null);
-    }
-    @GetMapping(value="/api/document/img/{filename}" , produces = "image/jpg")
-    public byte[] getImage(@PathVariable String filename){
-        return  fileService.getFile(baseLocation + filename);
-    }
+
 
 
     @GetMapping(value="/api/avatar/{filename}" ,produces = "image/png")
