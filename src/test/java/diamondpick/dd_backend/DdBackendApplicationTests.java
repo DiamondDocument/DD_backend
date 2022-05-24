@@ -1,6 +1,6 @@
 package diamondpick.dd_backend;
 
-import diamondpick.dd_backend.Dao.zzy.DocumentDao;
+import diamondpick.dd_backend.zzy.Dao.DocumentDao;
 import diamondpick.dd_backend.Service.DocumentService;
 import diamondpick.dd_backend.Service.UserService;
 import org.junit.jupiter.api.Test;
@@ -22,9 +22,7 @@ class DdBackendApplicationTests {
 
     @Test
     void newDoc(){
-
-        documentService.newDoc("空文件", "1234567", "123", 4, null);
-
+//        documentService.newDoc("空文件", "1234567", "123", 4, null);
     }
 //    void addUser(){
 //        User user = new User();

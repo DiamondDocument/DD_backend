@@ -2,7 +2,6 @@ package diamondpick.dd_backend.Controller.lyz;
 
 import com.alibaba.fastjson.JSONObject;
 import diamondpick.dd_backend.Entity.lyz.Folder;
-import diamondpick.dd_backend.Entity.zzy.Document;
 import diamondpick.dd_backend.Service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,7 +12,6 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Date;
 
 @RestController
 public class FolderController {

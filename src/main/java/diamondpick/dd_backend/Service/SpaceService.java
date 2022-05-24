@@ -4,7 +4,11 @@ import diamondpick.dd_backend.Entity.lyz.TeamRecycle;
 import diamondpick.dd_backend.Entity.lyz.TeamSpace;
 import diamondpick.dd_backend.Entity.lyz.UserRecycle;
 import diamondpick.dd_backend.Entity.lyz.UserSpace;
+import diamondpick.dd_backend.Entity.yyh.User;
+import diamondpick.dd_backend.zzy.Exception.SpaceNotExist;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
 
 @Service
 public interface SpaceService {
@@ -24,4 +28,7 @@ public interface SpaceService {
     public String getSpaceIdByTeamId(String teamId);
     public String getSpaceIdByUserId(String userId);
     public UserSpace getUserSpace(String userId);
+
+    public ArrayList<User> getSpaceOwner(String spaceId) throws SpaceNotExist;
+
 }

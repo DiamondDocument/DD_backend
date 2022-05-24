@@ -1,8 +1,6 @@
-package diamondpick.dd_backend.Entity.zzy;
+package diamondpick.dd_backend.zzy.Entity;
 
 import diamondpick.dd_backend.Entity.yyh.User;
-
-import javax.persistence.*;
 
 public class DocumentCollector {
     private int id;

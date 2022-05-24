@@ -2,14 +2,18 @@ package diamondpick.dd_backend.Service.lyz;
 
 import diamondpick.dd_backend.Dao.lyz.FolderDao;
 import diamondpick.dd_backend.Dao.lyz.SpaceDao;
-import diamondpick.dd_backend.Dao.zzy.DocumentDao;
+import diamondpick.dd_backend.Entity.yyh.User;
+import diamondpick.dd_backend.zzy.Dao.DocumentDao;
 import diamondpick.dd_backend.Entity.lyz.TeamRecycle;
 import diamondpick.dd_backend.Entity.lyz.TeamSpace;
 import diamondpick.dd_backend.Entity.lyz.UserRecycle;
 import diamondpick.dd_backend.Entity.lyz.UserSpace;
 import diamondpick.dd_backend.Service.SpaceService;
+import diamondpick.dd_backend.zzy.Exception.SpaceNotExist;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
 
 @Service
 public class SpaceServiceImpl implements SpaceService {
@@ -95,6 +99,11 @@ public class SpaceServiceImpl implements SpaceService {
 
     @Override
     public UserSpace getUserSpace(String userId) {
+        return null;
+    }
+
+    @Override
+    public ArrayList<User> getSpaceOwner(String spaceId) throws SpaceNotExist {
         return null;
     }
 }

@@ -1,4 +1,4 @@
-package diamondpick.dd_backend.Controller.zzy;
+package diamondpick.dd_backend.zzy;
 
 import java.util.HashMap;
 

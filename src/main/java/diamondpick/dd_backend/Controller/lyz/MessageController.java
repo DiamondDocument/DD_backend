@@ -3,7 +3,7 @@ package diamondpick.dd_backend.Controller.lyz;
 import com.alibaba.fastjson.JSONObject;
 import diamondpick.dd_backend.Entity.lyz.Message;
 import diamondpick.dd_backend.Entity.yyh.TeamMessage;
-import diamondpick.dd_backend.Entity.zzy.Document;
+import diamondpick.dd_backend.zzy.Entity.Document;
 import diamondpick.dd_backend.Service.DocumentService;
 import diamondpick.dd_backend.Service.MessageService;
 import diamondpick.dd_backend.Service.TeamService;

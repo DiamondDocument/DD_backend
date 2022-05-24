@@ -182,3 +182,4 @@ create table template_collector
     foreign key (temp_id) references templates (temp_id),
     primary key (temp_id, collector_id)
 );
+

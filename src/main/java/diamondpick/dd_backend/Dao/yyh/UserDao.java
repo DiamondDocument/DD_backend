@@ -2,14 +2,10 @@ package diamondpick.dd_backend.Dao.yyh;
 
 
 import diamondpick.dd_backend.Entity.lyz.Message;
-import diamondpick.dd_backend.Entity.yyh.TeamMessage;
 import diamondpick.dd_backend.Entity.yyh.User;
-import diamondpick.dd_backend.Entity.zzy.Document;
-import diamondpick.dd_backend.Entity.zzy.RecentDocument;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Mapper

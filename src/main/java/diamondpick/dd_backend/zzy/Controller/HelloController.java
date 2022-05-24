@@ -1,4 +1,4 @@
-package diamondpick.dd_backend.Controller.zzy;
+package diamondpick.dd_backend.zzy.Controller;
 
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;

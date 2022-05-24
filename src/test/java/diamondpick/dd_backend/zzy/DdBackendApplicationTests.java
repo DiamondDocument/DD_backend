@@ -1,15 +1,13 @@
 package diamondpick.dd_backend.zzy;
 
-import diamondpick.dd_backend.Dao.zzy.CollectionDao;
-import diamondpick.dd_backend.Dao.zzy.DocumentDao;
-import diamondpick.dd_backend.Entity.zzy.Document;
+import diamondpick.dd_backend.zzy.Dao.CollectionDao;
+import diamondpick.dd_backend.zzy.Dao.DocumentDao;
 import diamondpick.dd_backend.Service.DocumentService;
 import diamondpick.dd_backend.Service.UserService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.util.ArrayList;
 import java.util.Date;
 
 @SpringBootTest

@@ -1,17 +1,20 @@
 package diamondpick.dd_backend.Controller.yyh;
 
+import diamondpick.dd_backend.zzy.Response;
 import diamondpick.dd_backend.Entity.yyh.User;
-import diamondpick.dd_backend.Entity.yyh.TeamMessage;
 import diamondpick.dd_backend.Service.MailService;
 import diamondpick.dd_backend.Service.UserService;
 import diamondpick.dd_backend.Service.TeamService;
 import diamondpick.dd_backend.Service.FileService;
+import diamondpick.dd_backend.zzy.Exception.UserNotExist;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.thymeleaf.TemplateEngine;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
@@ -259,4 +262,29 @@ public class UserController {
         map.put("code", 0);
         return map;
     }
+
+    @PostMapping("/api/user/modify/avatar")
+    public Map<String, Object> modifyAvatar(@RequestParam MultipartFile file, @RequestParam String userId){
+        try {
+            fileService.saveAvatar(userId, file);
+        } catch (UserNotExist e){
+            e.printStackTrace();
+            return new Response().set(1);
+        } catch (Exception e){
+            return new Response().set(-1);
+        }
+        return new Response().set(0);
+    }
+    @GetMapping(value="/api/document/img/{userId}")
+    public @ResponseBody void getAvatar(@PathVariable String userId, HttpServletResponse response) throws IOException {
+        try{
+            response.reset();
+            response.setContentType(fileService.getAvatarContentType(userId));
+            response.getOutputStream().write(fileService.getAvatar(userId));
+        }catch(Exception e){
+            e.printStackTrace();
+            //加载失败
+        }
+    }
+
 }

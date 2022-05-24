@@ -1,6 +1,9 @@
 package diamondpick.dd_backend.Service;
 
-import diamondpick.dd_backend.Entity.zzy.Document;
+import diamondpick.dd_backend.zzy.Entity.Document;
+import diamondpick.dd_backend.zzy.Exception.CreateFail;
+import diamondpick.dd_backend.zzy.Exception.DocNotExist;
+import diamondpick.dd_backend.zzy.Exception.UserNotExist;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -14,7 +17,8 @@ public interface DocumentService {
      * @param parentId 父文件夹（或空间）id
      * @return 返回Document实体，如果为null意味着创建失败
      */
-    public String newDoc(String name, String spaceId, String userId, int authority, String parentId);
+    public String newDoc(String name, String spaceId, String userId, int authority, String parentId)throws CreateFail;
+    public String newDocByTemplate(String name, String spaceId, String userId, int authority, String parentId, String tempId)throws CreateFail;
 
     /**
      * 输入用户名，获得用户的收藏文档集合
@@ -42,5 +46,7 @@ public interface DocumentService {
 
     ArrayList<Document> getDocumentByParentId(String folderId);
 
-    Document selectDocByDocId(String msgDocId);
+    Document selectDocByDocId(String msgDocId) throws DocNotExist;
+
+    int checkAuth(String docId, String userId)throws DocNotExist, UserNotExist;
 }

@@ -3,7 +3,7 @@ package diamondpick.dd_backend.Controller.lyz;
 import com.alibaba.fastjson.JSONObject;
 import diamondpick.dd_backend.Entity.lyz.Folder;
 import diamondpick.dd_backend.Entity.lyz.UserSpace;
-import diamondpick.dd_backend.Entity.zzy.Document;
+import diamondpick.dd_backend.zzy.Entity.Document;
 import diamondpick.dd_backend.Service.DocumentService;
 import diamondpick.dd_backend.Service.FolderService;
 import diamondpick.dd_backend.Service.SpaceService;
