@@ -2,17 +2,16 @@ package diamondpick.dd_backend.Service;
 
 import diamondpick.dd_backend.Entity.yyh.Team;
 import diamondpick.dd_backend.Entity.yyh.User;
-import diamondpick.dd_backend.Exception.Illegal.EmailIllegal;
 import diamondpick.dd_backend.Exception.NotExist.*;
 import diamondpick.dd_backend.Exception.OperationFail;
 import org.springframework.stereotype.Service;
 
-import javax.management.openmbean.OpenDataException;
 import java.util.ArrayList;
 
 @Service
 public interface UserService {
 
+    public ArrayList<Team> selectTeams(String userId);
 
     //若为null则意味着不存在
     public User selectUserByUserId(String id)throws UserNotExist;
@@ -27,6 +26,6 @@ public interface UserService {
 
     public User selectUserByEmail(String email);
 
-    public ArrayList<Team> selectTeams(String userId);
+
 
 }

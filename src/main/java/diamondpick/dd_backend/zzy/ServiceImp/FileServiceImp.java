@@ -4,7 +4,6 @@ import diamondpick.dd_backend.Exception.NotExist.*;
 import diamondpick.dd_backend.Service.DocumentService;
 import diamondpick.dd_backend.Service.FileService;
 import diamondpick.dd_backend.Service.UserService;
-import diamondpick.dd_backend.Service.yyh.UserServiceImp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;

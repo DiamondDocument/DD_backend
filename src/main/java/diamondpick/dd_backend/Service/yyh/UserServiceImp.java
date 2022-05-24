@@ -14,8 +14,18 @@ import java.util.ArrayList;
 @Service
 public class UserServiceImp implements UserService {
 
+
+
     @Autowired
     private UserDao userDao;
+// ----------------------------------------------------------
+
+    @Override
+    public ArrayList<Team> selectTeams(String userId) {
+        throw new RuntimeException();
+    }
+
+// ----------------------------------------------------------
 
     @Override
     public User selectUserByUserId(String id) throws UserNotExist {
@@ -69,8 +79,5 @@ public class UserServiceImp implements UserService {
         return userDao.selectUserBy("email", email).get(0);
     }
 
-    @Override
-    public ArrayList<Team> selectTeams(String userId) {
-        return null;
-    }
+
 }

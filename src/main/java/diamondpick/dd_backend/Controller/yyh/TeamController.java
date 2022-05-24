@@ -47,7 +47,7 @@ public class TeamController {
                 Team team = new Team(teamId,teamName,userID,teamIntroductory);
                 TeamMember teamMember = new TeamMember(teamId,userID,"队长");
                 teamService.registerNewMember(teamMember);
-                teamService.registerNewTeam(team);
+//                teamService.addTeam(team);
                 map.put("error", 0);
             }
         }

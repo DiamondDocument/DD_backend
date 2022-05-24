@@ -8,7 +8,6 @@ import diamondpick.dd_backend.zzy.Response;
 import diamondpick.dd_backend.Entity.yyh.User;
 import diamondpick.dd_backend.Service.MailService;
 import diamondpick.dd_backend.Service.UserService;
-import diamondpick.dd_backend.Service.TeamService;
 import diamondpick.dd_backend.Service.FileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

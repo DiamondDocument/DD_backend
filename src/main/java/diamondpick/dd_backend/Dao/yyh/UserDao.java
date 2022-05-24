@@ -27,6 +27,7 @@ public interface UserDao {
     @ResultType(User.class)
     public List<User> selectUserBy(@Param("key") String key, @Param("value")Object value);
 
+
     public void InsertRecentBrowse(@Param("message_id") int message_id);
     public List<Message> selectRecentBrowse(@Param("user_id") String user_id);
 
