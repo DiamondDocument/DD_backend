@@ -1,6 +1,7 @@
 package diamondpick.dd_backend.Service;
 
 import diamondpick.dd_backend.Entity.yyh.User;
+import diamondpick.dd_backend.zzy.Exception.UserNotExist;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -8,7 +9,7 @@ public interface UserService {
 
 
     //若为null则意味着不存在
-    public User selectUserByUserId(String id);
+    public User selectUserByUserId(String id)throws UserNotExist;
     //插入失败则返回false
     public boolean addUser(User user);
     boolean isEmailExist(String email);
