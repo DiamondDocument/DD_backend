@@ -3,6 +3,7 @@ package diamondpick.dd_backend.Controller.yyh;
 import diamondpick.dd_backend.Dao.yyh.UserDao;
 import diamondpick.dd_backend.Entity.yyh.Team;
 import diamondpick.dd_backend.Exception.NotExist.UserNotExist;
+import diamondpick.dd_backend.Exception.OperationFail;
 import diamondpick.dd_backend.zzy.Response;
 import diamondpick.dd_backend.Entity.yyh.User;
 import diamondpick.dd_backend.Service.MailService;
@@ -27,9 +28,8 @@ public class UserController {
     @Autowired
     private MailService mailService;
     @Autowired
-    private TeamService teamService;
-    @Autowired
     private FileService fileService;
+    @Autowired
     private UserDao userDao;
 
     @Resource
@@ -53,7 +53,7 @@ public class UserController {
             if (!loginUser.getPassword().equals(pwd)) {
                 return res.set(2);
             }
-            return res.set(0, loginUser.getUser_id(), loginUser.getNickname());
+            return res.set(0, loginUser.getUserId(), loginUser.getNickname());
         }catch (UserNotExist e){
             return res.set(1);
         }catch (Exception e){
@@ -99,13 +99,12 @@ public class UserController {
         User newUser = new User();
         newUser.setUserId(userId);
         newUser.setPassword(password);
-        if (email != null)
-            newUser.setUser_email(email);
-        if (nickname != null)
-            newUser.setNickname(nickname);
-        if (!userService.addUser(newUser)) {
+        newUser.setEmail(email);
+        newUser.setNickname(nickname);
+        try{
+            userService.addUser(newUser);
+        }catch (OperationFail e){
             map.put("code", -1);
-            return map;
         }
         map.put("code", 0);
         return map;
@@ -114,15 +113,15 @@ public class UserController {
     @GetMapping("/api/user/send-identifying")
     public Map<String, Object> identifying(@RequestParam(name = "email") String email) {
         Map<String, Object> map = new HashMap<>();
-        if (email == null || !userService.isLegalEmail(email)) {
-            map.put("code", 1);
+        if (!userService.isLegalEmail(email)) {
+            map.put("code", -1);
             map.put("identifyingCode", null);
             return map;
         }
         Random random = new Random();
         String identifying = "";
         for (int i = 0; i < 5; i++) {
-            identifying += random.nextInt(10)+'0';
+            identifying += random.nextInt(10);
         }
         mailService.sendSimpleMail(email, "注册验证码", identifying);
         map.put("error", 0);
@@ -131,10 +130,10 @@ public class UserController {
     }
 
     @GetMapping("/api/user/register/check-id")
-    public Map<String, Object> checkID(@RequestParam(name = "id") String id) {
+    public Map<String, Object> checkID(@RequestParam String userId) {
         Map<String, Object> map = new HashMap<>();
         try{
-            userService.selectUserByUserId(id);
+            userService.selectUserByUserId(userId);
             map.put("code", 0);
         }catch (UserNotExist e){
             map.put("code", 1);
@@ -145,14 +144,14 @@ public class UserController {
     }
 
     @GetMapping("/api/user/information")
-    public Map<String, Object> getUserInformation(@RequestParam(name = "id") String id) {
+    public Map<String, Object> getUserInformation(@RequestParam String userId) {
         Map<String, Object> map = new HashMap<>();
         try{
-            User user = userService.selectUserByUserId(id);
+            User user = userService.selectUserByUserId(userId);
             map.put("code", 0);
             map.put("nickName", user.getNickname());
-            map.put("email", user.getUser_email());
-            map.put("introduction", user.getUser_introductory());
+            map.put("email", user.getEmail());
+            map.put("introduction", user.getIntro());
         }catch (UserNotExist e){
             map.put("code", 1);
         }catch (Exception e){
@@ -161,7 +160,7 @@ public class UserController {
         return map;
     }
 
-    @PostMapping("/api/user/modify/password ")
+    @PostMapping("/api/user/modify/password")
     public Map<String, Object> modifyPassword(@RequestBody Map<String, String> re_map) {
         Map<String, Object> map = new HashMap<>();
         String id = re_map.get("userId");
@@ -176,12 +175,13 @@ public class UserController {
             userDao.updateUser(id, "password", newPass);
             map.put("code", 0);
         }catch (Exception e){
+            e.printStackTrace();
             map.put("code", -1);
         }
         return map;
     }
 
-    @PostMapping("/api/user/modify/email ")
+    @PostMapping("/api/user/modify/email")
     public Map<String, Object> modifyEmail(@RequestBody Map<String, String> re_map) {
         Map<String, Object> map = new HashMap<>();
         String id = re_map.get("userId");
@@ -197,7 +197,7 @@ public class UserController {
         }
         return map;
     }
-    @PostMapping("/api/user/modify/nickname ")
+    @PostMapping("/api/user/modify/nickname")
     public Map<String, Object> modifyNickname(@RequestBody Map<String, String> re_map) {
         Map<String, Object> map = new HashMap<>();
         String id = re_map.get("userId");
@@ -213,7 +213,7 @@ public class UserController {
         }
         return map;
     }
-    @PostMapping("/api/user/modify/introduction ")
+    @PostMapping("/api/user/modify/introduction")
     public Map<String, Object> modifyIntro(@RequestBody Map<String, String> re_map) {
         Map<String, Object> map = new HashMap<>();
         String id = re_map.get("userId");
@@ -229,7 +229,7 @@ public class UserController {
         }
         return map;
     }
-    @GetMapping("/api/user/team ")
+    @GetMapping("/api/user/team")
     public Map<String, Object> userTeam(@RequestParam String userId) {
         Response res = new Response("teams");
         ArrayList<Map<String, Object>> arr = new ArrayList<>();
@@ -250,14 +250,14 @@ public class UserController {
         try {
             fileService.saveAvatar(userId, file);
         } catch (UserNotExist e){
-            e.printStackTrace();
             return new Response().set(1);
         } catch (Exception e){
+            e.printStackTrace();
             return new Response().set(-1);
         }
         return new Response().set(0);
     }
-    @GetMapping(value="/api/document/img/{userId}")
+    @GetMapping(value="/api/user/avatar/{userId}")
     public @ResponseBody void getAvatar(@PathVariable String userId, HttpServletResponse response) throws IOException {
         try{
             response.reset();

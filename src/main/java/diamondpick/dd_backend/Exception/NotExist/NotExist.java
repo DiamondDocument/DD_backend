@@ -1,5 +1,7 @@
 package diamondpick.dd_backend.Exception.NotExist;
 
-public class NotExist extends Exception {
+import diamondpick.dd_backend.Exception.OperationFail;
+
+public class NotExist extends OperationFail {
 
 }

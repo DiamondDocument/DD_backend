@@ -58,27 +58,27 @@ public class DocumentImp implements DocumentService {
     }
 
     @Override
-    public String newDoc(String name, String spaceId, String userId, int authority, String parentId)throws CreateFail {
+    public String newDoc(String name, String spaceId, String userId, int authority, String parentId)throws OperationFail {
         String docId = generateId();
         try{
             documentDao.insertDoc(docId,name,userId,authority,parentId,spaceId);
             fileService.saveDocument(docId, "");
         }catch (Exception e){
             e.printStackTrace();
-            throw new CreateFail();
+            throw new OperationFail();
         }
         return docId;
     }
 
     @Override
-    public String newDocByTemplate(String name, String spaceId, String userId, int authority, String parentId, String tempId) throws CreateFail {
+    public String newDocByTemplate(String name, String spaceId, String userId, int authority, String parentId, String tempId) throws OperationFail {
         String docId = generateId();
         try{
             documentDao.insertDoc(docId,name,userId,authority,parentId,spaceId);
             fileService.saveDocument(docId,fileService.getTemplate(tempId));
         }catch (Exception e){
             e.printStackTrace();
-            throw new CreateFail();
+            throw new OperationFail();
         }
         return docId;
     }
@@ -124,7 +124,7 @@ public class DocumentImp implements DocumentService {
         try{
             ArrayList<User> users = spaceService.getSpaceOwner(doc.getSpaceId());
             for(User u : users){
-                if(u.getUser_id().equals(userId)){
+                if(u.getUserId().equals(userId)){
                     return 5;
                 }
             }

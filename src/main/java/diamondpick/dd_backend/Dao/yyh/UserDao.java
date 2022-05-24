@@ -3,9 +3,7 @@ package diamondpick.dd_backend.Dao.yyh;
 
 import diamondpick.dd_backend.Entity.lyz.Message;
 import diamondpick.dd_backend.Entity.yyh.User;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Update;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
@@ -13,19 +11,22 @@ import java.util.List;
 public interface UserDao {
 
 
+    @Select("select * from users\n" +
+            "    where user_id = #{userId}")
     public User selectUser(@Param("userId") String userId);
-
-    //////////////
-
-
     @Update("update users set ${key} = #{value} where user_id = #{userId}")
     public void updateUser(@Param("userId")String userId, @Param("key")String key, @Param("value")Object value);
 
 
-    public void InsertNewUser(@Param("user") User user);
-
+    @Insert("insert into users (user_id, nickname, password, gender, intro, email)\n" +
+            "        values (#{userId}, #{nickname}, #{password}, #{gender}, #{intro}, #{email})")
     public void insertUser(User user);
-    public List<User> selectUserBy(@Param("name") String name, @Param("value")Object value);
+
+    @Select("select * from users\n" +
+            "    where ${key} = #{value}")
+    @ResultType(User.class)
+    public List<User> selectUserBy(@Param("key") String key, @Param("value")Object value);
+
     public void InsertRecentBrowse(@Param("message_id") int message_id);
     public List<Message> selectRecentBrowse(@Param("user_id") String user_id);
 

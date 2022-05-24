@@ -11,8 +11,8 @@ import java.util.ArrayList;
 @Service
 public interface DocumentService {
 
-    public String newDoc(String name, String spaceId, String userId, int authority, String parentId)throws CreateFail;
-    public String newDocByTemplate(String name, String spaceId, String userId, int authority, String parentId, String tempId)throws CreateFail;
+    public String newDoc(String name, String spaceId, String userId, int authority, String parentId)throws OperationFail;
+    public String newDocByTemplate(String name, String spaceId, String userId, int authority, String parentId, String tempId)throws OperationFail;
 
     public ArrayList<Document> getCollection(String userId)throws UserNotExist;
 

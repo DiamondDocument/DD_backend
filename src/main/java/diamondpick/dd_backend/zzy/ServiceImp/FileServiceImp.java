@@ -5,6 +5,7 @@ import diamondpick.dd_backend.Service.DocumentService;
 import diamondpick.dd_backend.Service.FileService;
 import diamondpick.dd_backend.Service.UserService;
 import diamondpick.dd_backend.Service.yyh.UserServiceImp;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -15,9 +16,10 @@ import java.security.MessageDigest;
 
 @Service
 public class FileServiceImp implements FileService {
-    private DocumentService documentService = new DocumentImp();
-    private UserService userService = new UserServiceImp();
-
+    @Autowired
+    private DocumentService documentService;
+    @Autowired
+    private UserService userService;
     private String baseLocation = "C:/Users/18389/Desktop/DD_file/";
 //    private String baseLocation = "/home/diamond/DD_file/";
     private String avatarLocation = baseLocation + "avatar/";
@@ -25,6 +27,18 @@ public class FileServiceImp implements FileService {
     private String imageLocation = baseLocation + "image/";
 
     private String baseUrl = "http://localhost/api/document/img/";
+
+    public FileServiceImp(){
+        File f = new File(baseLocation);
+        f.mkdir();
+        f = new File(avatarLocation);
+        f.mkdir();
+        f = new File(documentLocation);
+        f.mkdir();
+        f = new File(imageLocation);
+        f.mkdir();
+    }
+
 
     @Override
     public void saveTemplate(String tempId, String content) throws TempNotExist, IOException {
@@ -37,7 +51,7 @@ public class FileServiceImp implements FileService {
 
     @Override
     public void saveAvatar(String userId, MultipartFile file) throws UserNotExist, IOException {
-        if (userService.selectUserByUserId(userId) == null) throw new UserNotExist();
+        userService.selectUserByUserId(userId);
         //先删除后保存
         File dir = new File(avatarLocation);
         String[] fileNames = dir.list();
@@ -48,11 +62,12 @@ public class FileServiceImp implements FileService {
             }
         }
         //后缀不变，前缀改成用户名
-        String[] nameSplit = file.getOriginalFilename().split(".");
+        String[] nameSplit = file.getOriginalFilename().split("[.]");
         File newAvatar = new File(avatarLocation + userId + "." + nameSplit[nameSplit.length - 1]);
         newAvatar.createNewFile();
         FileOutputStream out = new FileOutputStream(newAvatar);
         out.write(file.getBytes());
+        out.close();
     }
 
     @Override
@@ -64,18 +79,20 @@ public class FileServiceImp implements FileService {
         doc.createNewFile();
         FileOutputStream out = new FileOutputStream(doc);
         out.write(content.getBytes());
+        out.close();
     }
 
     @Override
     public String saveDocumentImg(MultipartFile file) throws IOException{
         //保存为md5值
-        String[] nameSplit = file.getOriginalFilename().split(".");
+        String[] nameSplit = file.getOriginalFilename().split("[.]");
         String name = md5HSashCode(file.getInputStream()) + "." + nameSplit[nameSplit.length - 1];
         File newImage = new File(imageLocation + name);
         newImage.delete();
         newImage.createNewFile();
         FileOutputStream out = new FileOutputStream(newImage);
         out.write(file.getBytes());
+        out.close();
         return baseUrl + name;
     }
 
@@ -83,7 +100,7 @@ public class FileServiceImp implements FileService {
 
     @Override
     public byte[] getAvatar(String userId) throws UserNotExist, IOException{
-        if (userService.selectUserByUserId(userId) == null) throw new UserNotExist();
+        userService.selectUserByUserId(userId);
         //先删除后保存
         File dir = new File(avatarLocation);
         String[] fileNames = dir.list();
@@ -91,8 +108,9 @@ public class FileServiceImp implements FileService {
             if(name.matches(userId + ".*")){
                 File avatar = new File(avatarLocation + name);
                 FileInputStream out = new FileInputStream(avatar);
-                byte[] ret = null;
+                byte[] ret = new byte[(int)avatar.length()];
                 out.read(ret);
+                out.close();
                 return ret;
             }
         }
@@ -108,6 +126,7 @@ public class FileServiceImp implements FileService {
             FileInputStream out = new FileInputStream(doc);
             byte[] ret = null;
             out.read(ret);
+            out.close();
             return new String(ret);
         }catch (FileNotFoundException e){
             throw new DocNotExist();
@@ -119,9 +138,10 @@ public class FileServiceImp implements FileService {
         //先删除后保存
         File image = new File(imageLocation + fileName);
         try{
-            FileInputStream out = new FileInputStream(image);
+            FileInputStream in = new FileInputStream(image);
             byte[] ret = null;
-            out.read(ret);
+            in.read(ret);
+            in.close();
             return ret;
         }catch (FileNotFoundException e){
             throw new ImageNotExist();
