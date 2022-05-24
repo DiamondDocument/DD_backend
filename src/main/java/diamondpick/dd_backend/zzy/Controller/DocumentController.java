@@ -25,12 +25,24 @@ public class DocumentController {
     @PostMapping("/api/document/like")
     public HashMap<String,Object> collectDoc(@RequestBody CollectReq req){
         Response res = new Response();
-        return res.set(documentService.collect(req.userId, req.docId));
+        try{
+            documentService.collect(req.userId, req.docId);
+            return res.set(0);
+        }catch (Exception e){
+            return res.set(-1);
+        }
+
+
     }
     @PostMapping("/api/document/dislike")
     public HashMap<String,Object> discollectDoc(@RequestBody CollectReq req){
         Response res = new Response();
-        return res.set(documentService.discollect(req.userId, req.docId));
+        try{
+            documentService.discollect(req.userId, req.docId);
+            return res.set(0);
+        }catch (Exception e){
+            return res.set(-1);
+        }
     }
     @PostMapping(value = "/api/document/save")
     public HashMap<String,Object> saveDoc(@RequestParam String content, @RequestParam String userId, @RequestParam String docId){
@@ -59,7 +71,7 @@ public class DocumentController {
             if(documentService.checkAuth(docId, userId) < 2){
                 return res.set(2, "没有权限");
             }
-            return new Response().set(0, new String(fileService.getDocument(docId)));
+            return new Response().set(0, fileService.getDocument(docId));
         }catch (UserNotExist e){
             return res.set(2, "用户不存在");
         }

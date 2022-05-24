@@ -6,6 +6,7 @@ import diamondpick.dd_backend.Service.UserService;
 import diamondpick.dd_backend.Service.yyh.UserServiceImp;
 import diamondpick.dd_backend.zzy.Exception.DocNotExist;
 import diamondpick.dd_backend.zzy.Exception.ImageNotExist;
+import diamondpick.dd_backend.zzy.Exception.TempNotExist;
 import diamondpick.dd_backend.zzy.Exception.UserNotExist;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -73,6 +74,11 @@ public class FileServiceImp implements FileService {
     }
 
     @Override
+    public void saveTemplate(String tempId, String content) throws TempNotExist, IOException {
+
+    }
+
+    @Override
     public byte[] getAvatar(String userId) throws UserNotExist, IOException{
         if (userService.selectUserByUserId(userId) == null) throw new UserNotExist();
         //先删除后保存
@@ -91,7 +97,7 @@ public class FileServiceImp implements FileService {
     }
 
     @Override
-    public byte[] getDocument(String docId)throws DocNotExist, IOException{
+    public String getDocument(String docId)throws DocNotExist, IOException{
         documentService.selectDocByDocId(docId);
         //先删除后保存
         File doc = new File(documentLocation + docId + ".html");
@@ -99,7 +105,7 @@ public class FileServiceImp implements FileService {
             FileInputStream out = new FileInputStream(doc);
             byte[] ret = null;
             out.read(ret);
-            return ret;
+            return new String(ret);
         }catch (FileNotFoundException e){
             throw new DocNotExist();
         }
@@ -117,6 +123,11 @@ public class FileServiceImp implements FileService {
         }catch (FileNotFoundException e){
             throw new ImageNotExist();
         }
+    }
+
+    @Override
+    public String getTemplate(String tempId) throws TempNotExist, IOException {
+        return null;
     }
 
     @Override

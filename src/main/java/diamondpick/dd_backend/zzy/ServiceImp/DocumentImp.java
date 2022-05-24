@@ -8,13 +8,12 @@ import diamondpick.dd_backend.zzy.Dao.DocumentDao;
 import diamondpick.dd_backend.zzy.Entity.Document;
 import diamondpick.dd_backend.Service.DocumentService;
 import diamondpick.dd_backend.Service.FileService;
-import diamondpick.dd_backend.zzy.Exception.CreateFail;
-import diamondpick.dd_backend.zzy.Exception.DocNotExist;
-import diamondpick.dd_backend.zzy.Exception.UserNotExist;
+import diamondpick.dd_backend.zzy.Exception.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 @Service
@@ -32,6 +31,26 @@ public class DocumentImp implements DocumentService {
 
     private String baseLocation = "C:/Users/18389/Desktop/documents/";
 
+
+
+    @Override
+    public String getSize(String docId) throws DocNotExist{
+        String content;
+        try{
+            content = fileService.getDocument(docId);
+            if(content.length() < 1024){
+                return content.length() + "B";
+            }else if(content.length() < 1024*1024){
+                return content.length() / 1024.0 + "K";
+            }else {
+                return content.length() / (1024.0*1024) + "M";
+            }
+        }catch (IOException e){
+            e.printStackTrace();
+            return "NAN";
+        }
+    }
+
     int docNum = -1;
     String generateId(){
         if(docNum == -1) docNum = documentDao.numOfDoc();
@@ -43,79 +62,33 @@ public class DocumentImp implements DocumentService {
         String docId = generateId();
         try{
             documentDao.insertDoc(docId,name,userId,authority,parentId,spaceId);
+            fileService.saveDocument(docId, "");
         }catch (Exception e){
             e.printStackTrace();
             throw new CreateFail();
-        }
-        File newDocFile = new File(baseLocation + docId + ".html");
-        if(newDocFile.exists() && newDocFile.isFile()) newDocFile.delete();
-        try{
-            newDocFile.createNewFile();
-        }catch (Exception e){
-            e.printStackTrace();
-            documentDao.deleteDoc(docId);
-            return null;
         }
         return docId;
     }
 
     @Override
     public String newDocByTemplate(String name, String spaceId, String userId, int authority, String parentId, String tempId) throws CreateFail {
-        return null;
+        String docId = generateId();
+        try{
+            documentDao.insertDoc(docId,name,userId,authority,parentId,spaceId);
+            fileService.saveDocument(docId,fileService.getTemplate(tempId));
+        }catch (Exception e){
+            e.printStackTrace();
+            throw new CreateFail();
+        }
+        return docId;
     }
 
-
     @Override
-    public ArrayList<Document> getCollection(String userId) {
+    public ArrayList<Document> getCollection(String userId) throws UserNotExist {
+        userService.selectUserByUserId(userId);
         ArrayList<Document> ret = collectionDao.selectCollections(userId);
         return ret;
     }
-
-    @Override
-    public String getSize(String docId) {
-
-        return null;
-    }
-
-    @Override
-    public int collect(String userId, String docId) {
-        if(documentDao.selectDoc(docId) == null) return -1;
-        if(collectionDao.selectCollection(docId, userId) != null) return 1;
-        if(getAuth(docId, userId) < 2){
-            return 2;
-        }
-        try {
-            collectionDao.insertCollection(docId,userId);
-        }catch (Exception e){
-            e.printStackTrace();
-            return -1;
-        }
-        return 0;
-    }
-
-    @Override
-    public int discollect(String userId, String docId) {
-        if(documentDao.selectDoc(docId) == null) return -1;
-        if(collectionDao.selectCollection(docId, userId) == null) return 1;
-        if(getAuth(docId, userId) < 2){
-            return -1;
-        }
-        try {
-            collectionDao.deleteCollection(docId,userId);
-        }catch (Exception e){
-            e.printStackTrace();
-            return -1;
-        }
-        return 0;
-    }
-
-    public int getAuth(String docId, String userId){
-        Document doc = documentDao.selectDoc(docId);
-        if(doc.getCreatorId().equals(userId)) return 5;
-        if(doc == null)return -1;
-        return doc.getNowAuth();
-    }
-
 
     @Override
     public ArrayList<Document> getDocumentBySpaceId(String userspaceId) {
@@ -128,8 +101,8 @@ public class DocumentImp implements DocumentService {
     }
 
     @Override
-    public Document selectDocByDocId(String msgDocId)throws DocNotExist {
-        Document ret = documentDao.selectDoc(msgDocId);
+    public Document selectDocByDocId(String DocId)throws DocNotExist {
+        Document ret = documentDao.selectDoc(DocId);
         if(ret == null){
             throw new DocNotExist();
         }
@@ -160,6 +133,32 @@ public class DocumentImp implements DocumentService {
         }
         //最后说明userId并不是文档的所属者
         return doc.getNowAuth();
+    }
+    @Override
+    public void collect(String userId, String docId)throws UserNotExist, DocNotExist, AlreadyCollect, NoAuth {
+        selectDocByDocId(docId);
+        userService.selectUserByUserId(userId);
+        if(collectionDao.selectCollection(docId, userId) != null) throw new AlreadyCollect();
+        if(checkAuth(docId, userId) < 2){
+            throw new NoAuth();
+        }
+        try {
+            collectionDao.insertCollection(docId,userId);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void discollect(String userId, String docId)throws UserNotExist, DocNotExist, NotyetCollect {
+        selectDocByDocId(docId);
+        userService.selectUserByUserId(userId);
+        if(collectionDao.selectCollection(docId, userId) == null) throw new NotyetCollect();
+        try {
+            collectionDao.deleteCollection(docId,userId);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
 
