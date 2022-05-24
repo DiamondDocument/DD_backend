@@ -1,10 +1,13 @@
 package diamondpick.dd_backend.Service.yyh;
 
 import diamondpick.dd_backend.Dao.yyh.UserDao;
+import diamondpick.dd_backend.Entity.yyh.Team;
 import diamondpick.dd_backend.Entity.yyh.User;
 import diamondpick.dd_backend.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
 
 @Service
 public class UserServiceImp implements UserService {
@@ -59,5 +62,10 @@ public class UserServiceImp implements UserService {
     @Override
     public User selectUserByEmail(String email) {
         return userDao.selectUserBy("user_email", email).get(0);
+    }
+
+    @Override
+    public ArrayList<Team> selectTeams(String userId) {
+        userDao.
     }
 }

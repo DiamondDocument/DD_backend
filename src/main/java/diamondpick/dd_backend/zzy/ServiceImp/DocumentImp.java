@@ -1,6 +1,7 @@
 package diamondpick.dd_backend.zzy.ServiceImp;
 
 import diamondpick.dd_backend.Entity.yyh.User;
+import diamondpick.dd_backend.Exception.*;
 import diamondpick.dd_backend.Service.SpaceService;
 import diamondpick.dd_backend.Service.UserService;
 import diamondpick.dd_backend.zzy.Dao.CollectionDao;
@@ -12,7 +13,6 @@ import diamondpick.dd_backend.zzy.Exception.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -34,7 +34,7 @@ public class DocumentImp implements DocumentService {
 
 
     @Override
-    public String getSize(String docId) throws DocNotExist{
+    public String getSize(String docId) throws DocNotExist {
         String content;
         try{
             content = fileService.getDocument(docId);

@@ -5,6 +5,7 @@ import diamondpick.dd_backend.Entity.lyz.Message;
 import diamondpick.dd_backend.Entity.yyh.User;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Update;
 
 import java.util.List;
 
@@ -17,7 +18,8 @@ public interface UserDao {
     //////////////
 
 
-
+    @Update("update users set ${key} = #{value} where user_id = #{userId}")
+    public void updateUser(@Param("userId")String userId, @Param("key")String key, @Param("value")Object value);
 
 
     public void InsertNewUser(@Param("user") User user);

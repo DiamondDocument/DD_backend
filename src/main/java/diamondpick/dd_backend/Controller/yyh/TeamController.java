@@ -2,7 +2,7 @@ package diamondpick.dd_backend.Controller.yyh;
 
 
 import diamondpick.dd_backend.Entity.yyh.TeamMember;
-import diamondpick.dd_backend.Entity.yyh.TeamMessage;
+import diamondpick.dd_backend.Entity.yyh.Team;
 import diamondpick.dd_backend.Entity.yyh.User;
 import diamondpick.dd_backend.Service.TeamService;
 import diamondpick.dd_backend.Service.UserService;
@@ -44,10 +44,10 @@ public class TeamController {
                 map.put("code", 1);
             }
             else{
-                TeamMessage teamMessage = new TeamMessage(teamId,teamName,userID,teamIntroductory);
+                Team team = new Team(teamId,teamName,userID,teamIntroductory);
                 TeamMember teamMember = new TeamMember(teamId,userID,"队长");
                 teamService.registerNewMember(teamMember);
-                teamService.registerNewTeam(teamMessage);
+                teamService.registerNewTeam(team);
                 map.put("error", 0);
             }
         }
@@ -64,13 +64,13 @@ public class TeamController {
         Map<String,Object> map = new HashMap<>();
         try {
             User user = userService.selectUserByUserId(userID);
-            TeamMessage teamMessage = teamService.selectTeamByTeamId(teamID);
+            Team team = teamService.selectTeamByTeamId(teamID);
             TeamMember teamMember1 = teamService.selectUserByUserIdInTeam(userID,teamID);
             if(user==null){
                 map.put("error",1);
                 map.put("message","用户不存在");
             }
-            else if(teamMessage==null){
+            else if(team ==null){
                 map.put("error",2);
                 map.put("message","团队不存在");
             }

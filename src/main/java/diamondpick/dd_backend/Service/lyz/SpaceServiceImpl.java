@@ -9,7 +9,7 @@ import diamondpick.dd_backend.Entity.lyz.TeamSpace;
 import diamondpick.dd_backend.Entity.lyz.UserRecycle;
 import diamondpick.dd_backend.Entity.lyz.UserSpace;
 import diamondpick.dd_backend.Service.SpaceService;
-import diamondpick.dd_backend.zzy.Exception.SpaceNotExist;
+import SpaceNotExist;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

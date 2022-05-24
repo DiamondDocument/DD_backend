@@ -1,13 +1,10 @@
 package diamondpick.dd_backend.zzy.ServiceImp;
 
+import diamondpick.dd_backend.Exception.NotExist.*;
 import diamondpick.dd_backend.Service.DocumentService;
 import diamondpick.dd_backend.Service.FileService;
 import diamondpick.dd_backend.Service.UserService;
 import diamondpick.dd_backend.Service.yyh.UserServiceImp;
-import diamondpick.dd_backend.zzy.Exception.DocNotExist;
-import diamondpick.dd_backend.zzy.Exception.ImageNotExist;
-import diamondpick.dd_backend.zzy.Exception.TempNotExist;
-import diamondpick.dd_backend.zzy.Exception.UserNotExist;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -28,6 +25,15 @@ public class FileServiceImp implements FileService {
     private String imageLocation = baseLocation + "image/";
 
     private String baseUrl = "http://localhost/api/document/img/";
+
+    @Override
+    public void saveTemplate(String tempId, String content) throws TempNotExist, IOException {
+
+    }
+    @Override
+    public String getTemplate(String tempId) throws TempNotExist, IOException {
+        return null;
+    }
 
     @Override
     public void saveAvatar(String userId, MultipartFile file) throws UserNotExist, IOException {
@@ -73,10 +79,7 @@ public class FileServiceImp implements FileService {
         return baseUrl + name;
     }
 
-    @Override
-    public void saveTemplate(String tempId, String content) throws TempNotExist, IOException {
 
-    }
 
     @Override
     public byte[] getAvatar(String userId) throws UserNotExist, IOException{
@@ -125,10 +128,7 @@ public class FileServiceImp implements FileService {
         }
     }
 
-    @Override
-    public String getTemplate(String tempId) throws TempNotExist, IOException {
-        return null;
-    }
+
 
     @Override
     public String getAvatarContentType(String userId)throws UserNotExist {

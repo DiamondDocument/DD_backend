@@ -1,12 +1,14 @@
 package diamondpick.dd_backend.Controller.yyh;
 
+import diamondpick.dd_backend.Dao.yyh.UserDao;
+import diamondpick.dd_backend.Entity.yyh.Team;
+import diamondpick.dd_backend.Exception.NotExist.UserNotExist;
 import diamondpick.dd_backend.zzy.Response;
 import diamondpick.dd_backend.Entity.yyh.User;
 import diamondpick.dd_backend.Service.MailService;
 import diamondpick.dd_backend.Service.UserService;
 import diamondpick.dd_backend.Service.TeamService;
 import diamondpick.dd_backend.Service.FileService;
-import diamondpick.dd_backend.zzy.Exception.UserNotExist;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -15,9 +17,7 @@ import org.thymeleaf.TemplateEngine;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 
 @RestController
 public class UserController {
@@ -30,75 +30,47 @@ public class UserController {
     private TeamService teamService;
     @Autowired
     private FileService fileService;
+    private UserDao userDao;
 
     @Resource
     private TemplateEngine templateEngine;
 
-    @RequestMapping(value = "/api/login", params = {"email", "userId", "pwd"}, method = RequestMethod.GET)
+    @GetMapping("/api/login")
     public @ResponseBody
-    Map<String, Object> login(@RequestParam(required = false) String email, @RequestParam(required = false) String userId, @RequestParam(name="pwd") String password) {
+    Map<String, Object> login(@RequestParam(required = false) String email, @RequestParam(required = false) String userId, @RequestParam String pwd) {
         Map<String, Object> response = new HashMap<>();
+        Response res = new Response("userId", "nickName");
+        if(email == null && userId == null || email != null && userId != null){
+            return res.set(-1);
+        }
         User loginUser;
-        if (password == null) {
-            response.put("code", 2);
-            response.put("name", null);
-            response.put("nickName", null);
-            return response;
+        try{
+            if(email != null){
+                loginUser = userService.selectUserByEmail(email);
+            }else{
+                loginUser = userService.selectUserByUserId(userId);
+            }
+            if (!loginUser.getPassword().equals(pwd)) {
+                return res.set(2);
+            }
+            return res.set(0, loginUser.getUser_id(), loginUser.getNickname());
+        }catch (UserNotExist e){
+            return res.set(1);
+        }catch (Exception e){
+            return res.set(-1);
         }
-        if (userId != null) {
-            loginUser = userService.selectUserByUserId(userId);
-            if (loginUser == null) {
-                response.put("code", 1);
-                response.put("name", null);
-                response.put("nickName", null);
-                return response;
-            }
-            if (!loginUser.getPassword().equals(password)) {
-                response.put("code", 2);
-                response.put("name", null);
-                response.put("nickName", null);
-                return response;
-            }
-            response.put("code", 0);
-            response.put("name", userId);
-            response.put("nickName", loginUser.getNickname());
-        } else if (email != null) {
-            loginUser = userService.selectUserByEmail(email);
-            if (loginUser == null) {
-                response.put("code", 1);
-                response.put("name", null);
-                response.put("nickName", null);
-                return response;
-            }
-            if (!loginUser.getPassword().equals(password)) {
-                response.put("code", 2);
-                response.put("name", null);
-                response.put("nickName", null);
-                return response;
-            }
-            response.put("code", 0);
-            response.put("name", loginUser.getUser_id());
-            response.put("nickName", loginUser.getNickname());
-        } else {
-            response.put("code", -1);
-            response.put("name", null);
-            response.put("nickName", null);
-            return response;
-        }
-        return response;
     }
-
 
     @PostMapping("/api/register")
     public Map<String, Object> register(@RequestBody Map<String, String> re_map) {
+        Response res = new Response();
         Map<String, Object> map = new HashMap<>();
         String userId = re_map.get("userId");
-        String password = re_map.get("password");
-        String nickname = re_map.get("nickname");
+        String password = re_map.get("pwd");
+        String nickname = re_map.get("nickName");
         String email = re_map.get("email");
-        if (userId == null && password == null) {
-            map.put("code", -1);
-            return map;
+        if (userId == null || password == null || nickname == null || email == null) {
+            return res.set(-1);
         }
         if (!userService.isLegalUserId(userId)) {
             map.put("code", -1);
@@ -108,11 +80,11 @@ public class UserController {
             map.put("code", -1);
             return map;
         }
-        if (nickname != null && !userService.isLegalNickname(nickname)) {
+        if (!userService.isLegalNickname(nickname)) {
             map.put("code", -1);
             return map;
         }
-        if (email != null && !userService.isLegalEmail(email)) {
+        if (!userService.isLegalEmail(email)) {
             map.put("code", -1);
             return map;
         }
@@ -161,10 +133,13 @@ public class UserController {
     @GetMapping("/api/user/register/check-id")
     public Map<String, Object> checkID(@RequestParam(name = "id") String id) {
         Map<String, Object> map = new HashMap<>();
-        if (userService.selectUserByUserId(id) == null) {
-            map.put("code", 1);
-        } else {
+        try{
+            userService.selectUserByUserId(id);
             map.put("code", 0);
+        }catch (UserNotExist e){
+            map.put("code", 1);
+        }catch (Exception e){
+            map.put("code", -1);
         }
         return map;
     }
@@ -172,18 +147,17 @@ public class UserController {
     @GetMapping("/api/user/information")
     public Map<String, Object> getUserInformation(@RequestParam(name = "id") String id) {
         Map<String, Object> map = new HashMap<>();
-        User user = userService.selectUserByUserId(id);
-        if (user == null) {
+        try{
+            User user = userService.selectUserByUserId(id);
+            map.put("code", 0);
+            map.put("nickName", user.getNickname());
+            map.put("email", user.getUser_email());
+            map.put("introduction", user.getUser_introductory());
+        }catch (UserNotExist e){
             map.put("code", 1);
-            map.put("nickName", null);
-            map.put("email", null);
-            map.put("introduction", null);
-            return map;
+        }catch (Exception e){
+            map.put("code", -1);
         }
-        map.put("code", 0);
-        map.put("nickName", user.getNickname());
-        map.put("email", user.getUser_email());
-        map.put("introduction", user.getUser_introductory());
         return map;
     }
 
@@ -193,18 +167,17 @@ public class UserController {
         String id = re_map.get("userId");
         String newPass = re_map.get("newPwd");
         String oldPass = re_map.get("oldPwd");
-        User user = userService.selectUserByUserId(id);
-        if (user == null) {
+        try{
+            User user = userService.selectUserByUserId(id);
+            if (!user.getPassword().equals(oldPass)) {
+                map.put("code", 1);
+                return map;
+            }
+            userDao.updateUser(id, "password", newPass);
+            map.put("code", 0);
+        }catch (Exception e){
             map.put("code", -1);
-            return map;
         }
-        String pwd = user.getPassword();
-        if (!pwd.equals(oldPass)) {
-            map.put("code", 1);
-            return map;
-        }
-        user.setPassword(newPass);
-        map.put("code", 0);
         return map;
     }
 
@@ -213,13 +186,15 @@ public class UserController {
         Map<String, Object> map = new HashMap<>();
         String id = re_map.get("userId");
         String newEmail = re_map.get("newEmail");
-        User user = userService.selectUserByUserId(id);
-        if (user == null) {
-            map.put("code",1);
-            return map;
+        try{
+            userService.selectUserByUserId(id);
+            userDao.updateUser(id, "email", newEmail);
+            map.put("code", 0);
+        }catch (UserNotExist e){
+            map.put("code", 1);
+        }catch (Exception e){
+            map.put("code", -1);
         }
-        user.setUser_email(newEmail);
-        map.put("code", 0);
         return map;
     }
     @PostMapping("/api/user/modify/nickname ")
@@ -227,13 +202,15 @@ public class UserController {
         Map<String, Object> map = new HashMap<>();
         String id = re_map.get("userId");
         String newNick = re_map.get("newNick");
-        User user = userService.selectUserByUserId(id);
-        if (user == null) {
-            map.put("code",1);
-            return map;
+        try{
+            userService.selectUserByUserId(id);
+            userDao.updateUser(id, "nickname", newNick);
+            map.put("code", 0);
+        }catch (UserNotExist e){
+            map.put("code", 1);
+        }catch (Exception e){
+            map.put("code", -1);
         }
-        user.setNickname(newNick);
-        map.put("code", 0);
         return map;
     }
     @PostMapping("/api/user/modify/introduction ")
@@ -241,26 +218,31 @@ public class UserController {
         Map<String, Object> map = new HashMap<>();
         String id = re_map.get("userId");
         String newIntro = re_map.get("newIntro");
-        User user = userService.selectUserByUserId(id);
-        if (user == null) {
-            map.put("code",1);
-            return map;
+        try{
+            userService.selectUserByUserId(id);
+            userDao.updateUser(id, "intro", newIntro);
+            map.put("code", 0);
+        }catch (UserNotExist e){
+            map.put("code", 1);
+        }catch (Exception e){
+            map.put("code", -1);
         }
-        user.setUser_introductory(newIntro);
-        map.put("code", 0);
         return map;
     }
-    @PostMapping("/api/user/team ")
-    public Map<String, Object> userTeam(@RequestBody Map<String, String> re_map) {
-        Map<String, Object> map = new HashMap<>();
-        String id = re_map.get("userId");
-        User user = userService.selectUserByUserId(id);
-        if (user == null) {
-            map.put("code",1);
-            return map;
+    @GetMapping("/api/user/team ")
+    public Map<String, Object> userTeam(@RequestParam String userId) {
+        Response res = new Response("teams");
+        ArrayList<Map<String, Object>> arr = new ArrayList<>();
+        Response res2 = new Response("name", "intro", "teamId");
+        try{
+            AbstractList<Team> teams = userService.selectTeams(userId);
+            for(Team t : teams){
+                arr.add(res2.set(0, t.getTeamName(), t.getTeamIntroductory(), t.getTeamID()));
+            }
+            return res.set(0, arr);
+        }catch (Exception e){
+            return res.set(-1);
         }
-        map.put("code", 0);
-        return map;
     }
 
     @PostMapping("/api/user/modify/avatar")

@@ -2,7 +2,7 @@ package diamondpick.dd_backend.Controller.lyz;
 
 import com.alibaba.fastjson.JSONObject;
 import diamondpick.dd_backend.Entity.lyz.Message;
-import diamondpick.dd_backend.Entity.yyh.TeamMessage;
+import diamondpick.dd_backend.Entity.yyh.Team;
 import diamondpick.dd_backend.zzy.Entity.Document;
 import diamondpick.dd_backend.Service.DocumentService;
 import diamondpick.dd_backend.Service.MessageService;
@@ -81,8 +81,8 @@ public class MessageController {
                 json.put("senderName", userService.selectUserByUserId(message.getSenderId()).getNickname());
                 json.put("sendTime", message.getSendTime());
                 if (message.getMsgType() == 2 || message.getMsgType() == 3 || message.getMsgType() == 4 || message.getMsgType() == 5) {
-                    TeamMessage teamMessage = teamService.selectTeamByTeamId(message.getTeamId());
-                    json.put("teamName", teamMessage.getTeamName());
+                    Team team = teamService.selectTeamByTeamId(message.getTeamId());
+                    json.put("teamName", team.getTeamName());
                 }
                 if (message.getMsgType() == 6 || message.getMsgType() == 7) {
                     Document document = documentService.selectDocByDocId(message.getMsgDocId());

@@ -1,6 +1,7 @@
 package diamondpick.dd_backend.Service;
 
-import diamondpick.dd_backend.zzy.Exception.*;
+import diamondpick.dd_backend.Exception.*;
+import diamondpick.dd_backend.Exception.NotExist.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 

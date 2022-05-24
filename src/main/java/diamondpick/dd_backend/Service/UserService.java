@@ -1,8 +1,11 @@
 package diamondpick.dd_backend.Service;
 
+import diamondpick.dd_backend.Entity.yyh.Team;
 import diamondpick.dd_backend.Entity.yyh.User;
-import diamondpick.dd_backend.zzy.Exception.UserNotExist;
+import diamondpick.dd_backend.Exception.NotExist.*;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
 
 @Service
 public interface UserService {
@@ -20,4 +23,7 @@ public interface UserService {
     boolean isLegalUserId(String userId);
 
     User selectUserByEmail(String email);
+
+    public ArrayList<Team> selectTeams(String userId);
+
 }

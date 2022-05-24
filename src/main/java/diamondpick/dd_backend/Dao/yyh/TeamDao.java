@@ -1,9 +1,10 @@
 package diamondpick.dd_backend.Dao.yyh;
 
 import diamondpick.dd_backend.Entity.yyh.TeamMember;
-import diamondpick.dd_backend.Entity.yyh.TeamMessage;
+import diamondpick.dd_backend.Entity.yyh.Team;
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
+
+import java.util.ArrayList;
 
 @Mapper
 public interface TeamDao {
@@ -18,12 +19,11 @@ public interface TeamDao {
     //////////////
 
 
-
-    TeamMessage selectTeam(String teamID);
-    void registerNewTeam(TeamMessage teamMessage);
+    Team selectTeam(String teamID);
+    void registerNewTeam(Team team);
     TeamMember selectUserByUserIdInTeam(String userID,String teamID);
     void registerNewMember(TeamMember teamMember);
     String selectCaptainID(String teamID);
     String selectTeamID(String captainID);
-    String[] selectTeamByUserId(String userId);
+    ArrayList<Team> selectTeamByUserId(String userId);
 }
