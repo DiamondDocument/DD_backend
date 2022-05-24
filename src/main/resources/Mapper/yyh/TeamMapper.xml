@@ -3,10 +3,10 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="diamondpick.dd_backend.Dao.yyh.TeamDao">
-    <insert id="registerNewTeam" parameterType="TeamMessage">
+    <insert id="registerNewTeam" parameterType="Team">
         insert into `teams`(`teamName`,`teamIntroductory`) value (#{teamName},#{teamIntroductory})
     </insert>
-    <select id="selectTeamByTeamId" resultType="TeamMessage">
+    <select id="selectTeamByTeamId" resultType="Team">
         select * from teams where teamID = #{teamID}
     </select>
     <select id="selectUserByUserIdInTeam" resultType="TeamMember">

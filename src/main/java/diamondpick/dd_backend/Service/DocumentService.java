@@ -2,8 +2,8 @@ package diamondpick.dd_backend.Service;
 
 import diamondpick.dd_backend.Exception.*;
 import diamondpick.dd_backend.Exception.NotExist.NotExist;
+import diamondpick.dd_backend.Exception.NotExist.*;
 import diamondpick.dd_backend.zzy.Entity.Document;
-import diamondpick.dd_backend.zzy.Exception.*;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;

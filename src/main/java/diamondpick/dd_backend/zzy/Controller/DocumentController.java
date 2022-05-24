@@ -1,11 +1,10 @@
 package diamondpick.dd_backend.zzy.Controller;
 
+import diamondpick.dd_backend.Exception.NotExist.*;
 import diamondpick.dd_backend.Service.DocumentService;
 import diamondpick.dd_backend.Service.FileService;
 import diamondpick.dd_backend.zzy.ServiceImp.DocumentImp;
 import diamondpick.dd_backend.zzy.ServiceImp.FileServiceImp;
-import DocNotExist;
-import UserNotExist;
 import diamondpick.dd_backend.zzy.Response;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;

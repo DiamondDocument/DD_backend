@@ -2,6 +2,7 @@ package diamondpick.dd_backend.zzy.ServiceImp;
 
 import diamondpick.dd_backend.Entity.yyh.User;
 import diamondpick.dd_backend.Exception.*;
+import diamondpick.dd_backend.Exception.NotExist.*;
 import diamondpick.dd_backend.Service.SpaceService;
 import diamondpick.dd_backend.Service.UserService;
 import diamondpick.dd_backend.zzy.Dao.CollectionDao;
@@ -9,7 +10,6 @@ import diamondpick.dd_backend.zzy.Dao.DocumentDao;
 import diamondpick.dd_backend.zzy.Entity.Document;
 import diamondpick.dd_backend.Service.DocumentService;
 import diamondpick.dd_backend.Service.FileService;
-import diamondpick.dd_backend.zzy.Exception.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

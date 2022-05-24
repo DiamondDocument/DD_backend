@@ -5,7 +5,7 @@ import diamondpick.dd_backend.Entity.lyz.TeamSpace;
 import diamondpick.dd_backend.Entity.lyz.UserRecycle;
 import diamondpick.dd_backend.Entity.lyz.UserSpace;
 import diamondpick.dd_backend.Entity.yyh.User;
-import SpaceNotExist;
+import diamondpick.dd_backend.Exception.NotExist.*;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;

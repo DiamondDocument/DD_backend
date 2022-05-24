@@ -66,6 +66,6 @@ public class UserServiceImp implements UserService {
 
     @Override
     public ArrayList<Team> selectTeams(String userId) {
-        userDao.
+        return null;
     }
 }
