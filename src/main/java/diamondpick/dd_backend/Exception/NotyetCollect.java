@@ -1,4 +1,4 @@
-package diamondpick.dd_backend.zzy.Exception;
+package diamondpick.dd_backend.Exception;
 
 public class NotyetCollect extends Exception{
 }
