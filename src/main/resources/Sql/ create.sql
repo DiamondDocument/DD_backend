@@ -15,14 +15,13 @@ create table teams
     captain_id varchar(20)         not null,
     foreign key (captain_id) references users (user_id)
 );
-create table user_team
+create table team_member
 (
     team_id   char(5)     not null,
-    user_id   varchar(20) not null,
-    user_rank char(2)     not null,
-    foreign key (user_id) references users (user_id),
+    member_id   varchar(20) not null,
+    foreign key (member_id) references users (user_id),
     foreign key (team_id) references teams (team_id),
-    primary key (team_id, user_id)
+    primary key (team_id, member_id)
 );
 create table documents
 (

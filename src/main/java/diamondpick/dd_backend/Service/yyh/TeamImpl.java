@@ -5,9 +5,13 @@ import diamondpick.dd_backend.Dao.yyh.UserDao;
 import diamondpick.dd_backend.Entity.yyh.TeamMember;
 import diamondpick.dd_backend.Entity.yyh.Team;
 import diamondpick.dd_backend.Entity.yyh.User;
+import diamondpick.dd_backend.Exception.Team.AlreadyCaption;
 import diamondpick.dd_backend.Exception.Illegal.TeamNameIllegal;
 import diamondpick.dd_backend.Exception.NotExist.TeamNotExist;
+import diamondpick.dd_backend.Exception.Team.AlreadyMember;
+import diamondpick.dd_backend.Exception.Team.NotMember;
 import diamondpick.dd_backend.Exception.OperationFail;
+import diamondpick.dd_backend.Exception.Team.NotYetDeal;
 import diamondpick.dd_backend.Service.TeamService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,6 +26,11 @@ public class TeamImpl implements TeamService {
 
     @Override
     public void addTeam(String name, String intro, String captainId) throws OperationFail, TeamNameIllegal {
+
+    }
+
+    @Override
+    public void dismissTeam(String teamId, String captainId) throws OperationFail {
 
     }
 
@@ -46,12 +55,24 @@ public class TeamImpl implements TeamService {
     }
 
     @Override
-    public TeamMember selectUserByUserIdInTeam(String userID,String teamID){
-        return teamDao.selectUserByUserIdInTeam(userID,teamID);
+    public void removeMember(String teamId, String captainId, String memberId) throws NotMember, OperationFail {
+
     }
 
     @Override
-    public void registerNewMember(TeamMember teamMember){
-        teamDao.registerNewMember(teamMember);
+    public void transferRank(String teamId, String oldCaptainId, String newCaptainId) throws NotMember, AlreadyCaption, OperationFail {
+
     }
+
+    @Override
+    public void InviteMember(String teamId, String userId) throws NotYetDeal, AlreadyMember {
+
+    }
+
+    @Override
+    public void ApplyJoinTeam(String userId, String teamId) throws NotYetDeal, AlreadyMember {
+
+    }
+
+
 }
