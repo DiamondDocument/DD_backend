@@ -1,6 +1,9 @@
 package diamondpick.dd_backend.Service;
 
+import diamondpick.dd_backend.Entity.lyz.Folder;
 import diamondpick.dd_backend.Exception.*;
+import diamondpick.dd_backend.Exception.Document.AlreadyCollect;
+import diamondpick.dd_backend.Exception.Document.NotyetCollect;
 import diamondpick.dd_backend.Exception.NotExist.NotExist;
 import diamondpick.dd_backend.Exception.NotExist.*;
 import diamondpick.dd_backend.zzy.Entity.Document;
@@ -15,8 +18,8 @@ public interface DocumentService {
     public String newDoc(String name, String spaceId, String userId, int authority, String parentId)throws OperationFail;
     public String newDocByTemplate(String name, String spaceId, String userId, int authority, String parentId, String tempId)throws OperationFail;
 
-    public List<Document> getRootDocumentInSpace(String spaceId);
-    public List<Document> getDocumentInFolder(String folderId);
+    public List<Document> getRootDocInSpace(String spaceId)throws SpaceNotExist;
+    public List<Folder> getDocInFolder(String folderId)throws FolderNotExist;
 
 
     public ArrayList<Document> getCollection(String userId)throws UserNotExist;
@@ -30,11 +33,14 @@ public interface DocumentService {
 
     public void discollect(String userId, String docId)throws UserNotExist, DocNotExist, NotyetCollect;
 
-    ArrayList<Document> getDocumentBySpaceId(String userspaceId)throws NotExist;
+    public ArrayList<Document> getDocumentBySpaceId(String userspaceId)throws SpaceNotExist;
 
-    ArrayList<Document> getDocumentByParentId(String folderId)throws NotExist;
+    public ArrayList<Document> getDocumentByFId(String folderId)throws FolderNotExist;
 
-    Document selectDocByDocId(String DocId) throws DocNotExist;
+    public Document selectDocByDocId(String DocId) throws DocNotExist;
 
-    int checkAuth(String docId, String userId)throws DocNotExist, UserNotExist;
+    public int checkAuth(String docId, String userId)throws DocNotExist, UserNotExist;
+
+    public void changeAuth(String docId, int newAuth)throws OperationFail;
+
 }

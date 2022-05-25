@@ -14,8 +14,7 @@ public interface SpaceService {
     //返回新空间的id
     public String newSpace();
 
-    public List<Document> getRootDocumentInSpace();
-    public List<Folder> getRootFolderInSpace();
+
 
 
 
