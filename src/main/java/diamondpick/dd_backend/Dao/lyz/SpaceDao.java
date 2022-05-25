@@ -11,6 +11,11 @@ import java.util.ArrayList;
 
 @Mapper
 public interface SpaceDao {
+
+    public void insertSpace(String spaceId);
+
+
+
     ArrayList<Space> getMySpace(@Param("userId")  String userId);
     ArrayList<Space> getTeamSpace(@Param("teamId")  String teamId);
     ArrayList<Space> getCollectionSpace(@Param("userId")  String userId);

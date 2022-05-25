@@ -4,9 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import java.sql.Date;
 
-@Entity
 public class RecentBrowse {
-    @Id
     private String u_id;
     private int d_id;
     private Date browseTime;

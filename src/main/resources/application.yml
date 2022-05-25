@@ -9,6 +9,8 @@ spring:
 #    hibernate:
 #      ddl-auto: create
 mybatis:
+  configuration:
+    map-underscore-to-camel-case: true
   mapper-locations:
     - classpath:Mapper/zzy/*.xml
     - classpath:Mapper/lyz/*.xml

@@ -1,16 +1,22 @@
 package diamondpick.dd_backend.Service;
 
+import diamondpick.dd_backend.Entity.yyh.Team;
 import diamondpick.dd_backend.Entity.yyh.User;
+import diamondpick.dd_backend.Exception.NotExist.*;
+import diamondpick.dd_backend.Exception.OperationFail;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
 
 @Service
 public interface UserService {
 
+    public ArrayList<Team> selectTeams(String userId);
 
     //若为null则意味着不存在
-    public User selectUserByUserId(String id);
-    //插入失败则返回false
-    public boolean addUser(User user);
+    public User selectUserByUserId(String id)throws UserNotExist;
+    //向数据库中添加User记录
+    public void addUser(User user)throws OperationFail;
     boolean isEmailExist(String email);
     boolean isUserIdExist(String userId);
     boolean isLegalNickname(String nickname);
@@ -18,5 +24,8 @@ public interface UserService {
     boolean isLegalPassword(String password);
     boolean isLegalUserId(String userId);
 
-    User selectUserByEmail(String email);
+    public User selectUserByEmail(String email);
+
+
+
 }

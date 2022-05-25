@@ -1,4 +1,4 @@
-package diamondpick.dd_backend.Entity.zzy;
+package diamondpick.dd_backend.zzy.Entity;
 
 import java.util.Date;
 

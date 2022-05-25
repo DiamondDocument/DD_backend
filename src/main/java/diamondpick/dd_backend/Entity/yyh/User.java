@@ -1,25 +1,17 @@
 package diamondpick.dd_backend.Entity.yyh;
 
 
-
-import javax.persistence.*;
-import java.util.List;
-import java.util.Set;
-
-@Entity
 public class User {
-    @Id
-    @Column(name = "id")
-    private String user_id;
+    private String userId;
     private String nickname;
     private String password;
     private String gender;
-    private String user_introductory;
-    private String user_email;
+    private String intro;
+    private String email;
 
 
-    public String getUser_id() {
-        return user_id;
+    public String getUserId() {
+        return userId;
     }
 
     public String getNickname() {
@@ -34,47 +26,38 @@ public class User {
         return gender;
     }
 
-    public String getUser_introductory() {
-        return user_introductory;
+    public String getIntro() {
+        return intro;
     }
 
-    public String getUser_email() {
-        return user_email;
+    public String getEmail() {
+        return email;
     }
 
-    public boolean setUserId(String user_id) {
-        if(!user_id.matches("[A-Z]|[a-z]|[0-9]*")) return false;
-        this.user_id = user_id;
-        return true;
+    public void setIntro(String intro) {
+        this.intro = intro;
     }
 
-    public boolean setNickname(String nickname) {
-        if(!nickname.matches("[A-Z]|[a-z]|[0-9]|[\u4E00-\u9FA5]*")) return false;
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public void setNickname(String nickname) {
         this.nickname = nickname;
-        return true;
     }
 
-    public boolean setPassword(String password) {
-        if(!password.matches("[A_Z]|[a-z]|[0-9]*")) return false;
+    public void setPassword(String password) {
         this.password = password;
-        return true;
     }
 
-    public boolean setGender(String gender) {
-        if(!gender.matches("[男]|[女]|[未知]")) return false;
+    public void setGender(String gender) {
         this.gender = gender;
-        return true;
     }
 
-    public boolean setUser_introductory(String user_introductory) {
-        this.user_introductory = user_introductory;
-        return true;
-    }
 
-    public boolean setUser_email(String user_email) {
-        if(!user_email.matches("[A-Z]|[a-z]|[0-9]*@[A-Z]|[a-z]|[0-9]*.[A-Z]|[a-z]|[0-9]")) return false;
-        this.user_email = user_email;
-        return true;
-    }
 
 }

@@ -1,5 +1,7 @@
-package diamondpick.dd_backend.Controller.zzy;
+package diamondpick.dd_backend.zzy.Controller;
 
+import diamondpick.dd_backend.zzy.JsonArray;
+import diamondpick.dd_backend.zzy.Response;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -7,7 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestController
-public class HelloController {
+public class TestController {
 
     @GetMapping("api/hello")
     public Map<String, Object> helloWorld(@RequestParam(required = false) String userId){
@@ -24,5 +26,15 @@ public class HelloController {
     @PostMapping("api/file")
     public String file(@RequestParam MultipartFile file){
         return "获得文件"+file.getName();
+    }
+
+    @GetMapping("api/getarr")
+    public Map<String, Object> getArr(){
+        Response res = new Response("people");
+        JsonArray arr = new JsonArray("name", "intro");
+        arr.add("赵正阳", "一个buaaer");
+        arr.add("giao哥", "一给我里给i奥");
+        arr.add("V", "欢迎来到夜之城");
+        return res.get(0,arr.get());
     }
 }

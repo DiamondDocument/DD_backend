@@ -63,6 +63,7 @@ jobs:
             sudo git pull 
             sudo mvn -B package --file pom.xml -Dmaven.test.skip=true 
             cd target/ 
+            sudo fuser -k 80/tcp
             sudo java -jar DD_backend-0.0.1-SNAPSHOT.jar &
           host: ${{ secrets.HOST }}
           user: ${{ secrets.SSH_USER }}

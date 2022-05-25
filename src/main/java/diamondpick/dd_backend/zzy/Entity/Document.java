@@ -1,4 +1,4 @@
-package diamondpick.dd_backend.Entity.zzy;
+package diamondpick.dd_backend.zzy.Entity;
 
 import java.util.Date;
 
@@ -14,7 +14,7 @@ public class Document {
     private int nowAuth;
     private boolean isEditing;
     private String parentId;
-
+    private String spaceId;
 
     
     public String getId() {
@@ -95,6 +95,14 @@ public class Document {
 
     public void setParentId(String parentId) {
         this.parentId = parentId;
+    }
+
+    public String getSpaceId() {
+        return spaceId;
+    }
+
+    public void setSpaceId(String spaceId) {
+        this.spaceId = spaceId;
     }
 }
 

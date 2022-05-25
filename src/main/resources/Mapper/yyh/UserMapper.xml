@@ -2,16 +2,16 @@
 <!--这是一个命名示例文件-->
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtdd/mybatis-3-mapper.dtd" >
 <mapper namespace="diamondpick.dd_backend.Dao.yyh.UserDao">
-    <select id="selectUserById" resultType="User">
-        select * from user
-        where id = #{id}
-    </select>
-    <insert id="insertUser" >
-        insert into user (id, nickname, password, gender, user_introductory, user_email)
-        values (#{user_id}, #{nickname}, #{password}, #{gender}, #{user_introductory}, #{user_email})
-    </insert>
-    <select id="selectUserBy" resultType="User">
-        select * from user
-        where #{name} = #{value}
-    </select>
+<!--    <select id="selectUser" resultType="User">-->
+<!--        select * from users-->
+<!--        where id = #{param1}-->
+<!--    </select>-->
+<!--    <insert id="insertUser" >-->
+<!--        insert into users (id, nickname, password, gender, intro, email)-->
+<!--        values (#{userId}, #{nickname}, #{password}, #{gender}, #{intro}, #{email})-->
+<!--    </insert>-->
+<!--    <select id="selectUserBy" resultType="User">-->
+<!--        select * from users-->
+<!--        where #{name} = #{value}-->
+<!--    </select>-->
 </mapper>
