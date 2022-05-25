@@ -1,25 +1,24 @@
 package diamondpick.dd_backend.Service;
 
-import diamondpick.dd_backend.Entity.lyz.TeamRecycle;
-import diamondpick.dd_backend.Entity.lyz.TeamSpace;
-import diamondpick.dd_backend.Entity.lyz.UserRecycle;
-import diamondpick.dd_backend.Entity.lyz.UserSpace;
+import diamondpick.dd_backend.Entity.lyz.*;
 import diamondpick.dd_backend.Entity.yyh.User;
 import diamondpick.dd_backend.Exception.NotExist.*;
+import diamondpick.dd_backend.zzy.Entity.Document;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public interface SpaceService {
+    //返回新空间的id
+    public String newSpace();
 
-     /*
-    周五之前实现
-    周五之前实现
-    周五之前实现
-     */
-    //////////////
-    //返回类型改成对应的
+    public List<Document> getRootDocumentInSpace();
+    public List<Folder> getRootFolderInSpace();
+
+
+
     public UserSpace newUserSpace(String userId, String userSpaceName);
     public TeamSpace newTeamSpace(String teamId, String teamSpaceName);
     public UserRecycle newUserRecycle(String fileId, String userId, String delId);

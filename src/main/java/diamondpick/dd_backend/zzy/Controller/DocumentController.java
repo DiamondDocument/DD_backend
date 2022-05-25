@@ -26,9 +26,9 @@ public class DocumentController {
         Response res = new Response();
         try{
             documentService.collect(req.userId, req.docId);
-            return res.set(0);
+            return res.get(0);
         }catch (Exception e){
-            return res.set(-1);
+            return res.get(-1);
         }
 
 
@@ -38,9 +38,9 @@ public class DocumentController {
         Response res = new Response();
         try{
             documentService.discollect(req.userId, req.docId);
-            return res.set(0);
+            return res.get(0);
         }catch (Exception e){
-            return res.set(-1);
+            return res.get(-1);
         }
     }
     @PostMapping(value = "/api/document/save")
@@ -49,18 +49,18 @@ public class DocumentController {
         try{
             //检查权限
             if(documentService.checkAuth(docId, userId) < 4){
-                return res.set(2);
+                return res.get(2);
             }
             fileService.saveDocument(docId, content);
-            return new Response().set(0);
+            return new Response().get(0);
         }catch (UserNotExist e){
-            return res.set(2);
+            return res.get(2);
         }
         catch (DocNotExist e){
-            return res.set(1);
+            return res.get(1);
         }
         catch(Exception e){
-            return res.set(-1);
+            return res.get(-1);
         }
     }
     @GetMapping(value="/api/document")
@@ -68,26 +68,26 @@ public class DocumentController {
         Response res = new Response("content");
         try{
             if(documentService.checkAuth(docId, userId) < 2){
-                return res.set(2, "没有权限");
+                return res.get(2, "没有权限");
             }
-            return new Response().set(0, fileService.getDocument(docId));
+            return new Response().get(0, fileService.getDocument(docId));
         }catch (UserNotExist e){
-            return res.set(2, "用户不存在");
+            return res.get(2, "用户不存在");
         }
         catch (DocNotExist e){
-            return res.set(1, "文档不存在");
+            return res.get(1, "文档不存在");
         }
         catch(Exception e){
-            return res.set(-1, null);
+            return res.get(-1, null);
         }
     }
     @PostMapping(value = "/api/document/img")
     public HashMap<String,Object> postImage(@RequestParam MultipartFile file){
         Response res = new Response("url");
         try{
-            return res.set(0, fileService.saveDocumentImg(file));
+            return res.get(0, fileService.saveDocumentImg(file));
         }catch(Exception e){
-            return res.set(-1, "上传错误");
+            return res.get(-1, "上传错误");
         }
     }
     @GetMapping(value="/api/document/img/{filename}")

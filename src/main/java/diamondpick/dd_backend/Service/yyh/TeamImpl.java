@@ -5,13 +5,11 @@ import diamondpick.dd_backend.Dao.yyh.UserDao;
 import diamondpick.dd_backend.Entity.yyh.TeamMember;
 import diamondpick.dd_backend.Entity.yyh.Team;
 import diamondpick.dd_backend.Entity.yyh.User;
-import diamondpick.dd_backend.Exception.Team.AlreadyCaption;
+import diamondpick.dd_backend.Exception.NotExist.NotExist;
+import diamondpick.dd_backend.Exception.Team.*;
 import diamondpick.dd_backend.Exception.Illegal.TeamNameIllegal;
 import diamondpick.dd_backend.Exception.NotExist.TeamNotExist;
-import diamondpick.dd_backend.Exception.Team.AlreadyMember;
-import diamondpick.dd_backend.Exception.Team.NotMember;
 import diamondpick.dd_backend.Exception.OperationFail;
-import diamondpick.dd_backend.Exception.Team.NotYetDeal;
 import diamondpick.dd_backend.Service.TeamService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -72,6 +70,21 @@ public class TeamImpl implements TeamService {
     @Override
     public void ApplyJoinTeam(String userId, String teamId) throws NotYetDeal, AlreadyMember {
 
+    }
+
+    @Override
+    public void dealInvite(String teamId, String userId) throws AlreadyDeal, OperationFail {
+
+    }
+
+    @Override
+    public void dealApply(String teamId, String userId) throws AlreadyDeal, OperationFail {
+
+    }
+
+    @Override
+    public statusUtoT checkStatus(String teamId, String userId) throws NotExist {
+        return null;
     }
 
 

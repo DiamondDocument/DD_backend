@@ -34,13 +34,31 @@ public class UserController {
     @Resource
     private TemplateEngine templateEngine;
 
+    //-------------------------------------------------
+    @GetMapping("/api/user/team")
+    public Map<String, Object> userTeam(@RequestParam String userId) {
+        Response res = new Response("teams");
+        ArrayList<Map<String, Object>> arr = new ArrayList<>();
+        Response res2 = new Response("name", "intro", "teamId");
+        try{
+            AbstractList<Team> teams = userService.selectTeams(userId);
+            for(Team t : teams){
+                arr.add(res2.get(0, t.getTeamName(), t.getTeamIntroductory(), t.getTeamID()));
+            }
+            return res.get(0, arr);
+        }catch (Exception e){
+            return res.get(-1);
+        }
+    }
+    //-------------------------------------------------
+
     @GetMapping("/api/login")
     public @ResponseBody
     Map<String, Object> login(@RequestParam(required = false) String email, @RequestParam(required = false) String userId, @RequestParam String pwd) {
         Map<String, Object> response = new HashMap<>();
         Response res = new Response("userId", "nickName");
         if(email == null && userId == null || email != null && userId != null){
-            return res.set(-1);
+            return res.get(-1);
         }
         User loginUser;
         try{
@@ -50,13 +68,13 @@ public class UserController {
                 loginUser = userService.selectUserByUserId(userId);
             }
             if (!loginUser.getPassword().equals(pwd)) {
-                return res.set(2);
+                return res.get(2);
             }
-            return res.set(0, loginUser.getUserId(), loginUser.getNickname());
+            return res.get(0, loginUser.getUserId(), loginUser.getNickname());
         }catch (UserNotExist e){
-            return res.set(1);
+            return res.get(1);
         }catch (Exception e){
-            return res.set(-1);
+            return res.get(-1);
         }
     }
 
@@ -69,7 +87,7 @@ public class UserController {
         String nickname = re_map.get("nickName");
         String email = re_map.get("email");
         if (userId == null || password == null || nickname == null || email == null) {
-            return res.set(-1);
+            return res.get(-1);
         }
         if (!userService.isLegalUserId(userId)) {
             map.put("code", -1);
@@ -228,33 +246,19 @@ public class UserController {
         }
         return map;
     }
-    @GetMapping("/api/user/team")
-    public Map<String, Object> userTeam(@RequestParam String userId) {
-        Response res = new Response("teams");
-        ArrayList<Map<String, Object>> arr = new ArrayList<>();
-        Response res2 = new Response("name", "intro", "teamId");
-        try{
-            AbstractList<Team> teams = userService.selectTeams(userId);
-            for(Team t : teams){
-                arr.add(res2.set(0, t.getTeamName(), t.getTeamIntroductory(), t.getTeamID()));
-            }
-            return res.set(0, arr);
-        }catch (Exception e){
-            return res.set(-1);
-        }
-    }
+
 
     @PostMapping("/api/user/modify/avatar")
     public Map<String, Object> modifyAvatar(@RequestParam MultipartFile file, @RequestParam String userId){
         try {
             fileService.saveAvatar(userId, file);
         } catch (UserNotExist e){
-            return new Response().set(1);
+            return new Response().get(1);
         } catch (Exception e){
             e.printStackTrace();
-            return new Response().set(-1);
+            return new Response().get(-1);
         }
-        return new Response().set(0);
+        return new Response().get(0);
     }
     @GetMapping(value="/api/user/avatar/{userId}")
     public @ResponseBody void getAvatar(@PathVariable String userId, HttpServletResponse response) throws IOException {

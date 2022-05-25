@@ -2,13 +2,11 @@ package diamondpick.dd_backend.Service;
 
 import diamondpick.dd_backend.Entity.yyh.Team;
 import diamondpick.dd_backend.Entity.yyh.User;
-import diamondpick.dd_backend.Exception.Team.AlreadyCaption;
+import diamondpick.dd_backend.Exception.NotExist.NotExist;
+import diamondpick.dd_backend.Exception.Team.*;
 import diamondpick.dd_backend.Exception.Illegal.TeamNameIllegal;
 import diamondpick.dd_backend.Exception.NotExist.TeamNotExist;
-import diamondpick.dd_backend.Exception.Team.NotMember;
 import diamondpick.dd_backend.Exception.OperationFail;
-import diamondpick.dd_backend.Exception.Team.AlreadyMember;
-import diamondpick.dd_backend.Exception.Team.NotYetDeal;
 
 import java.util.ArrayList;
 
@@ -28,12 +26,22 @@ public interface TeamService {
 
     //申请邀请部分
     //申请或者邀请未处理前或者因为在团队里，则无法再次邀请或者申请
-    public void InviteMember(String teamId, String userId) throws NotYetDeal, AlreadyMember;
-    public void ApplyJoinTeam(String userId, String teamId) throws NotYetDeal, AlreadyMember;
+    public void InviteMember(String teamId, String userId) throws NotYetDeal, AlreadyMember, OperationFail;
+    public void ApplyJoinTeam(String userId, String teamId) throws NotYetDeal, AlreadyMember, OperationFail;
 
 
-    public void dealInvite(String teamId, String userId);
 
-    public void dealApply(String teamId, String userId);
+    public void dealInvite(String teamId, String userId)throws AlreadyDeal, OperationFail;
+    public void dealApply(String teamId, String userId)throws AlreadyDeal, OperationFail;
+
+
+    static enum statusUtoT{
+        captain,
+        member,
+        applying,
+        inviting,
+        other
+    }
+    public statusUtoT checkStatus(String teamId, String userId)throws NotExist;
 
 }

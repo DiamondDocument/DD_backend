@@ -47,7 +47,7 @@ public class TeamController {
             else{
                 Team team = new Team(teamId,teamName,userID,teamIntroductory);
                 TeamMember teamMember = new TeamMember(teamId,userID,"队长");
-                teamService.registerNewMember(teamMember);
+//                teamService.registerNewMember(teamMember);
 //                teamService.addTeam(team);
                 map.put("error", 0);
             }
@@ -60,36 +60,36 @@ public class TeamController {
     }
     @PostMapping("/api/team/join")
     public Map<String,Object> teamJoin(@RequestBody Map<String,String> re_map){
-        String teamID = re_map.get("teamID");
-        String userID = re_map.get("userID");
-        Map<String,Object> map = new HashMap<>();
-        try {
-            User user = userService.selectUserByUserId(userID);
-            Team team = teamService.selectTeamByTeamId(teamID);
-            TeamMember teamMember1 = teamService.selectUserByUserIdInTeam(userID,teamID);
-            if(user==null){
-                map.put("error",1);
-                map.put("message","用户不存在");
-            }
-            else if(team ==null){
-                map.put("error",2);
-                map.put("message","团队不存在");
-            }
-            else if(teamMember1!=null){
-                map.put("error",3);
-                map.put("message","用户已加入团队");
-            }
-            else{
-                TeamMember teamMember = new TeamMember(teamID,userID,"队员");
-                teamService.registerNewMember(teamMember);
-                map.put("error",0);
-                map.put("message","加入团队成功");
-            }
-        }catch (Exception e){
-            e.printStackTrace();
-            map.put("error",-1);
-            map.put("message","其他错误");
-        }
-        return map;
+//        String teamID = re_map.get("teamID");
+//        String userID = re_map.get("userID");
+//        Map<String,Object> map = new HashMap<>();
+//        try {
+//            User user = userService.selectUserByUserId(userID);
+//            Team team = teamService.selectTeamByTeamId(teamID);
+////            TeamMember teamMember1 = teamService.selectUserByUserIdInTeam(userID,teamID);
+//            if(user==null){
+//                map.put("error",1);
+//                map.put("message","用户不存在");
+//            }
+//            else if(team ==null){
+//                map.put("error",2);
+//                map.put("message","团队不存在");
+//            }
+//            else if(teamMember1!=null){
+//                map.put("error",3);
+//                map.put("message","用户已加入团队");
+//            }
+//            else{
+//                TeamMember teamMember = new TeamMember(teamID,userID,"队员");
+//                teamService.registerNewMember(teamMember);
+//                map.put("error",0);
+//                map.put("message","加入团队成功");
+//            }
+//        }catch (Exception e){
+//            e.printStackTrace();
+//            map.put("error",-1);
+//            map.put("message","其他错误");
+//        }
+        return null;
     }
 }

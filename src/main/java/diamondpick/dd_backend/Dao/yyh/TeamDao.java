@@ -43,4 +43,5 @@ public interface TeamDao {
     public void deleteTeamMember(String teamId, String memberId);
 
 
+    String selectCaptainID(String teamId);
 }

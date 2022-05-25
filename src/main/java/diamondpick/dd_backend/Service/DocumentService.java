@@ -7,12 +7,17 @@ import diamondpick.dd_backend.zzy.Entity.Document;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public interface DocumentService {
 
     public String newDoc(String name, String spaceId, String userId, int authority, String parentId)throws OperationFail;
     public String newDocByTemplate(String name, String spaceId, String userId, int authority, String parentId, String tempId)throws OperationFail;
+
+    public List<Document> getRootDocumentInSpace(String spaceId);
+    public List<Document> getDocumentInFolder(String folderId);
+
 
     public ArrayList<Document> getCollection(String userId)throws UserNotExist;
 
