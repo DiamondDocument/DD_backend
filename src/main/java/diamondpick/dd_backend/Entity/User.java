@@ -1,14 +1,23 @@
-package diamondpick.dd_backend.Entity.yyh;
+package diamondpick.dd_backend.Entity;
 
 
 public class User {
+
     private String userId;
     private String nickname;
     private String password;
     private String gender;
     private String intro;
     private String email;
+    private int spaceId;
 
+    public int getSpaceId() {
+        return spaceId;
+    }
+
+    public void setSpaceId(int spaceId) {
+        this.spaceId = spaceId;
+    }
 
     public String getUserId() {
         return userId;

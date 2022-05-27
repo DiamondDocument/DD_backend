@@ -1,7 +1,7 @@
 package diamondpick.dd_backend.Service;
 
-import diamondpick.dd_backend.Entity.yyh.Team;
-import diamondpick.dd_backend.Entity.yyh.User;
+import diamondpick.dd_backend.Entity.Team;
+import diamondpick.dd_backend.Entity.User;
 import diamondpick.dd_backend.Exception.NotExist.NotExist;
 import diamondpick.dd_backend.Exception.Team.*;
 import diamondpick.dd_backend.Exception.Illegal.TeamNameIllegal;
@@ -11,7 +11,7 @@ import diamondpick.dd_backend.Exception.OperationFail;
 import java.util.ArrayList;
 
 public interface TeamService {
-    public void addTeam(String name, String intro, String captainId)throws OperationFail, TeamNameIllegal;
+    public void newTeam(String name, String intro, String captainId)throws OperationFail, TeamNameIllegal;
     public void dismissTeam(String teamId, String captainId) throws OperationFail;
 
     public Team selectTeamByTeamId(String teamId) throws TeamNotExist;
@@ -30,10 +30,8 @@ public interface TeamService {
     public void ApplyJoinTeam(String userId, String teamId) throws NotYetDeal, AlreadyMember, OperationFail;
 
 
-
     public void dealInvite(String teamId, String userId)throws AlreadyDeal, OperationFail;
     public void dealApply(String teamId, String userId)throws AlreadyDeal, OperationFail;
-
 
     static enum statusUtoT{
         captain,

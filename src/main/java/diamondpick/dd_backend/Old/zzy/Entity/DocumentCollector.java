@@ -1,6 +1,7 @@
-package diamondpick.dd_backend.zzy.Entity;
+package diamondpick.dd_backend.Old.zzy.Entity;
 
-import diamondpick.dd_backend.Entity.yyh.User;
+import diamondpick.dd_backend.Entity.Document;
+import diamondpick.dd_backend.Entity.User;
 
 public class DocumentCollector {
     private int id;

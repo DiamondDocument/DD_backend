@@ -4,9 +4,8 @@ import diamondpick.dd_backend.Entity.lyz.Folder;
 import diamondpick.dd_backend.Exception.*;
 import diamondpick.dd_backend.Exception.Document.AlreadyCollect;
 import diamondpick.dd_backend.Exception.Document.NotyetCollect;
-import diamondpick.dd_backend.Exception.NotExist.NotExist;
 import diamondpick.dd_backend.Exception.NotExist.*;
-import diamondpick.dd_backend.zzy.Entity.Document;
+import diamondpick.dd_backend.Entity.Document;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -43,4 +42,5 @@ public interface DocumentService {
 
     public void changeAuth(String docId, int newAuth)throws OperationFail;
 
+    List<Document> getDocumentByParentId(String folderId);
 }

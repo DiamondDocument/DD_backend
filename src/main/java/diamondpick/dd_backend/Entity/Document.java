@@ -1,8 +1,9 @@
-package diamondpick.dd_backend.zzy.Entity;
+package diamondpick.dd_backend.Entity;
 
 import java.util.Date;
 
 public class Document {
+    //需要创建者名称和修改者名称
 
     private String id;
     private String name;
@@ -15,8 +16,9 @@ public class Document {
     private boolean isEditing;
     private String parentId;
     private String spaceId;
+    private String creatorName;
+    private String modifierName;
 
-    
     public String getId() {
         return id;
     }

@@ -1,10 +1,9 @@
 package diamondpick.dd_backend.Service.yyh;
 
-import diamondpick.dd_backend.Dao.yyh.TeamDao;
-import diamondpick.dd_backend.Dao.yyh.UserDao;
-import diamondpick.dd_backend.Entity.yyh.TeamMember;
-import diamondpick.dd_backend.Entity.yyh.Team;
-import diamondpick.dd_backend.Entity.yyh.User;
+import diamondpick.dd_backend.Dao.TeamDao;
+import diamondpick.dd_backend.Dao.UserDao;
+import diamondpick.dd_backend.Entity.Team;
+import diamondpick.dd_backend.Entity.User;
 import diamondpick.dd_backend.Exception.NotExist.NotExist;
 import diamondpick.dd_backend.Exception.Team.*;
 import diamondpick.dd_backend.Exception.Illegal.TeamNameIllegal;
@@ -16,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 
+/*
 @Service
 public class TeamImpl implements TeamService {
     @Autowired
@@ -23,7 +23,7 @@ public class TeamImpl implements TeamService {
     private UserDao userDao;
 
     @Override
-    public void addTeam(String name, String intro, String captainId) throws OperationFail, TeamNameIllegal {
+    public void newTeam(String name, String intro, String captainId) throws OperationFail, TeamNameIllegal {
 
     }
 
@@ -89,3 +89,6 @@ public class TeamImpl implements TeamService {
 
 
 }
+
+
+ */

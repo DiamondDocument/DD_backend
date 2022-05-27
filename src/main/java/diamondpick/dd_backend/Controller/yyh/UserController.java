@@ -1,24 +1,6 @@
 package diamondpick.dd_backend.Controller.yyh;
 
-import diamondpick.dd_backend.Dao.yyh.UserDao;
-import diamondpick.dd_backend.Entity.yyh.Team;
-import diamondpick.dd_backend.Exception.NotExist.UserNotExist;
-import diamondpick.dd_backend.Exception.OperationFail;
-import diamondpick.dd_backend.zzy.Response;
-import diamondpick.dd_backend.Entity.yyh.User;
-import diamondpick.dd_backend.Service.MailService;
-import diamondpick.dd_backend.Service.UserService;
-import diamondpick.dd_backend.Service.FileService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-import org.thymeleaf.TemplateEngine;
-
-import javax.annotation.Resource;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.util.*;
-
+/*
 @RestController
 public class UserController {
 
@@ -43,7 +25,7 @@ public class UserController {
         try{
             AbstractList<Team> teams = userService.selectTeams(userId);
             for(Team t : teams){
-                arr.add(res2.get(0, t.getTeamName(), t.getTeamIntroductory(), t.getTeamID()));
+                arr.add(res2.get(0, t.getName(), t.getIntro(), t.getTeamId()));
             }
             return res.get(0, arr);
         }catch (Exception e){
@@ -273,3 +255,6 @@ public class UserController {
     }
 
 }
+
+
+ */

@@ -1,8 +1,8 @@
 package diamondpick.dd_backend.Service.yyh;
 
-import diamondpick.dd_backend.Dao.yyh.UserDao;
-import diamondpick.dd_backend.Entity.yyh.Team;
-import diamondpick.dd_backend.Entity.yyh.User;
+import diamondpick.dd_backend.Dao.UserDao;
+import diamondpick.dd_backend.Entity.Team;
+import diamondpick.dd_backend.Entity.User;
 import diamondpick.dd_backend.Exception.NotExist.UserNotExist;
 import diamondpick.dd_backend.Exception.OperationFail;
 import diamondpick.dd_backend.Service.UserService;
@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 
+/*
 @Service
 public class UserServiceImp implements UserService {
 
@@ -37,7 +38,7 @@ public class UserServiceImp implements UserService {
     @Override
     public void addUser(User user)throws OperationFail {
         try{
-            userDao.insertUser(user);
+//            userDao.insertUser(user);
         }catch (Exception e){
             e.printStackTrace();
             throw new OperationFail();
@@ -46,7 +47,7 @@ public class UserServiceImp implements UserService {
 
     @Override
     public boolean isEmailExist(String email) {
-        return userDao.selectUserBy("email", email).size() == 1;
+//        return userDao.selectUserBy("email", email).size() == 1;
     }
 
     @Override
@@ -81,3 +82,6 @@ public class UserServiceImp implements UserService {
 
 
 }
+
+
+ */

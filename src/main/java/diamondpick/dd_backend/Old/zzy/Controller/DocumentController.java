@@ -1,18 +1,8 @@
-package diamondpick.dd_backend.zzy.Controller;
+package diamondpick.dd_backend.Old.zzy.Controller;
 
-import diamondpick.dd_backend.Exception.NotExist.*;
-import diamondpick.dd_backend.Service.DocumentService;
-import diamondpick.dd_backend.Service.FileService;
-import diamondpick.dd_backend.zzy.ServiceImp.DocumentImp;
 import diamondpick.dd_backend.zzy.ServiceImp.FileServiceImp;
-import diamondpick.dd_backend.zzy.Response;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.util.HashMap;
-
+/*
 @RestController
 public class DocumentController {
     private DocumentService documentService = new DocumentImp();
@@ -118,4 +108,6 @@ public class DocumentController {
 //    }
 }
 
+
+ */
 

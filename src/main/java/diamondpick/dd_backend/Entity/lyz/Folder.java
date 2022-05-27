@@ -6,6 +6,7 @@ import java.util.Date;
 
 @Entity
 public class Folder {
+    //加个创建者名称
     @Id
     private String folderId;
     private String folderName;

@@ -4,12 +4,10 @@ import diamondpick.dd_backend.Entity.lyz.Recycle;
 import diamondpick.dd_backend.Entity.lyz.Space;
 import diamondpick.dd_backend.Entity.lyz.TeamRecycle;
 import diamondpick.dd_backend.Entity.lyz.UserSpace;
-import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.ArrayList;
 
-@Mapper
 public interface SpaceDao {
 
     public void insertSpace(String spaceId);

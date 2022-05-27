@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+/*
 @RestController
 public class FolderController {
     @Autowired
@@ -128,3 +129,6 @@ public class FolderController {
         return map;
     }
 }
+
+
+ */

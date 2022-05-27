@@ -1,6 +1,6 @@
 package diamondpick.dd_backend;
 
-import diamondpick.dd_backend.zzy.Dao.DocumentDao;
+import diamondpick.dd_backend.Dao.DocumentDao;
 import diamondpick.dd_backend.Service.DocumentService;
 import diamondpick.dd_backend.Service.UserService;
 import org.junit.jupiter.api.Test;
@@ -19,6 +19,10 @@ class DdBackendApplicationTests {
     @Autowired
     UserService userService;
 
+    @Test
+    void userTest(){
+
+    }
 
     @Test
     void newDoc(){
