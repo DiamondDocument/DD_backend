@@ -1,36 +1,33 @@
 package diamondpick.dd_backend.Service;
 
+import diamondpick.dd_backend.Exception.Duplicate.DuplicateId;
+import diamondpick.dd_backend.Exception.Illegal.Illegal;
+import diamondpick.dd_backend.Exception.Illegal.NameIllegal;
+import diamondpick.dd_backend.Exception.Illegal.PwdIllegal;
+import diamondpick.dd_backend.Exception.User.PwdError;
+import diamondpick.dd_backend.Exception.User.verificationFail;
 import diamondpick.dd_backend.Old.yyh.Entity.Team;
 import diamondpick.dd_backend.Old.yyh.Entity.User;
 import diamondpick.dd_backend.Exception.NotExist.*;
 import diamondpick.dd_backend.Exception.OperationFail;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public interface UserService {
-/*
-    public void newUser();
-    public void login();
-    public void modify();
 
+    public void newUser(String userId, String nickname, String password, String email)throws Illegal, DuplicateId;
 
- */
+    public void login(String userId, String password)throws PwdError, NotExist;
 
-    public ArrayList<Team> selectTeams(String userId);
+    public void modifyNickname(String userId, String newNickname)throws Illegal, NotExist;
+    public void modifyPassword(String userId, String newPwd)throws Illegal, NotExist;
+    public void modifyEmail(String userId, String newEmail)throws Illegal, NotExist, verificationFail;
+    public void modifyIntro(String userId, String newIntro)throws Illegal, NotExist;
 
-    //若为null则意味着不存在
-    public User selectUserByUserId(String id)throws UserNotExist;
-    //向数据库中添加User记录
-    public void addUser(User user)throws OperationFail;
-    boolean isEmailExist(String email);
-    boolean isUserIdExist(String userId);
-    boolean isLegalNickname(String nickname);
-    boolean isLegalEmail(String email);
-    boolean isLegalPassword(String password);
-    boolean isLegalUserId(String userId);
-
-    public User selectUserByEmail(String email);
+    public List<Team> selectTeams(String userId)throws NotExist;
 
 }

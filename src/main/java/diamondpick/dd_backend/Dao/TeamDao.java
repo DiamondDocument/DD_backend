@@ -30,6 +30,6 @@ public interface TeamDao {
     List<Team> selectTeamByMember(String memberId);
 
 
-    Team selectTeamByCaptain(String captainId);
+    List<Team> selectTeamByCaptain(String captainId);
 
 }
