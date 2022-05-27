@@ -3,9 +3,8 @@ package diamondpick.dd_backend.Entity;
 import java.util.Date;
 
 public class Document {
-    //需要创建者名称和修改者名称
 
-    private String id;
+    private String docId;
     private String name;
     private String creatorId;
     private Date createTime;
@@ -16,15 +15,19 @@ public class Document {
     private boolean isEditing;
     private String parentId;
     private String spaceId;
+    private String isDelete;
+    private String deleterId;
+    private Date   deleteTime;
     private String creatorName;
     private String modifierName;
+    private String deleterName;
 
-    public String getId() {
-        return id;
+    public String getDocId() {
+        return docId;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setDocId(String docId) {
+        this.docId = docId;
     }
 
     public String getName() {
@@ -105,6 +108,54 @@ public class Document {
 
     public void setSpaceId(String spaceId) {
         this.spaceId = spaceId;
+    }
+
+    public String getIsDelete() {
+        return isDelete;
+    }
+
+    public void setIsDelete(String isDelete) {
+        this.isDelete = isDelete;
+    }
+
+    public String getDeleterId() {
+        return deleterId;
+    }
+
+    public void setDeleterId(String deleterId) {
+        this.deleterId = deleterId;
+    }
+
+    public Date getDeleteTime() {
+        return deleteTime;
+    }
+
+    public void setDeleteTime(Date deleteTime) {
+        this.deleteTime = deleteTime;
+    }
+
+    public String getCreatorName() {
+        return creatorName;
+    }
+
+    public void setCreatorName(String creatorName) {
+        this.creatorName = creatorName;
+    }
+
+    public String getModifierName() {
+        return modifierName;
+    }
+
+    public void setModifierName(String modifierName) {
+        this.modifierName = modifierName;
+    }
+
+    public String getDeleterName() {
+        return deleterName;
+    }
+
+    public void setDeleterName(String deleterName) {
+        this.deleterName = deleterName;
     }
 }
 

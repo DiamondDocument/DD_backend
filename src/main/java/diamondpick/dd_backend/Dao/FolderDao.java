@@ -36,4 +36,10 @@ public interface FolderDao {
      */
     public List<Folder> selectRootDirInTSpace(String teamId);
 
+    /**@return 返回delete为1的某用户空间的所有文件夹*/
+    public List<Folder> selectDeletedInUSpace(String userId);
+
+    /**@return 返回delete为1的某团队空间的所有文件夹，需要删除者名称*/
+    public List<Folder> selectDeletedInTSpace(String teamId);
+
 }

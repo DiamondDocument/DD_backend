@@ -1,6 +1,6 @@
 create table spaces
 (
-    space_id    int     not null primary key auto_increment,
+    space_id    int         not null primary key auto_increment,
     space_name  varchar(20) null,
     create_time datetime default now()
 );
@@ -12,7 +12,7 @@ create table users
     gender   char(5),
     intro    varchar(255),
     email    varchar(50) unique      not null,
-    space_id int                 not null,
+    space_id int                     not null,
     foreign key (space_id) references spaces (space_id)
 );
 create table teams
@@ -42,10 +42,10 @@ create table folders
     creator_id  varchar(20) not null,
     create_time datetime    not null default now(),
     parent_id   char(7)     null,
-    space_id    int     not null,
+    space_id    int         not null,
     self_auth   int         not null check ( self_auth between 1 and 4),
     now_auth    int         not null check ( now_auth between 1 and 4),
-    is_delete   bool        not null,
+    is_delete   bool        not null default false,
     deleter_id  varchar(20) null,
     delete_time datetime    null,
     foreign key (deleter_id) references users (user_id),
@@ -66,8 +66,8 @@ create table documents
     now_auth    int         not null check ( now_auth between 1 and 4),
     is_editing  bool        not null default false,
     parent_id   char(7),
-    space_id    int     not null,
-    is_delete   bool        not null,
+    space_id    int         not null,
+    is_delete   bool        not null default false,
     deleter_id  varchar(20),
     delete_time datetime,
     foreign key (deleter_id) references users (user_id),
@@ -82,8 +82,8 @@ create table user_recent
     doc_id      char(7)     not null,
     user_id     varchar(20) not null,
     browse_time datetime    not null default now(),
-    foreign key (user_id)   references users (user_id),
-    foreign key (doc_id)    references documents (doc_id),
+    foreign key (user_id) references users (user_id),
+    foreign key (doc_id) references documents (doc_id),
     primary key (doc_id, user_id)
 );
 create table team_deal
