@@ -1,7 +1,5 @@
-package diamondpick.dd_backend.Controller.yyh;
 
 
-import diamondpick.dd_backend.Entity.yyh.TeamMember;
 import diamondpick.dd_backend.Entity.Team;
 import diamondpick.dd_backend.Entity.User;
 import diamondpick.dd_backend.Service.TeamService;

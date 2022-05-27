@@ -2,7 +2,6 @@ package diamondpick.dd_backend.Service.lyz;
 
 import diamondpick.dd_backend.Dao.TeamDao;
 import diamondpick.dd_backend.Dao.MessageDao;
-import diamondpick.dd_backend.Entity.lyz.Message;
 import diamondpick.dd_backend.Service.MessageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

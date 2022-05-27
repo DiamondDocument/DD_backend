@@ -1,7 +1,6 @@
 package diamondpick.dd_backend.Controller.lyz;
 
 import com.alibaba.fastjson.JSONObject;
-import diamondpick.dd_backend.Entity.lyz.Folder;
 import diamondpick.dd_backend.Entity.lyz.UserSpace;
 import diamondpick.dd_backend.Entity.Document;
 import diamondpick.dd_backend.Service.DocumentService;
