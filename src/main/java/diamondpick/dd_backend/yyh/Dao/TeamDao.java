@@ -1,7 +1,6 @@
-package diamondpick.dd_backend.Dao;
+package diamondpick.dd_backend.yyh.Dao;
 
-import diamondpick.dd_backend.Entity.Team;
-import org.apache.ibatis.annotations.Mapper;
+import diamondpick.dd_backend.yyh.Entity.Team;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.jdbc.BadSqlGrammarException;

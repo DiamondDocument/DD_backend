@@ -1,17 +1,3 @@
-
-
-import diamondpick.dd_backend.Entity.Team;
-import diamondpick.dd_backend.Entity.User;
-import diamondpick.dd_backend.Service.TeamService;
-import diamondpick.dd_backend.Service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
-
-import java.util.HashMap;
-import java.util.Map;
-
 /*
 @RestController
 public class TeamController {

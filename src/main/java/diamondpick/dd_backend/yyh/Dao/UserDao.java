@@ -1,13 +1,12 @@
-package diamondpick.dd_backend.Dao;
+package diamondpick.dd_backend.yyh.Dao;
 
 
-import diamondpick.dd_backend.Entity.User;
+import diamondpick.dd_backend.yyh.Entity.User;
 import org.apache.ibatis.annotations.*;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.jdbc.BadSqlGrammarException;
 
-import java.util.DuplicateFormatFlagsException;
 import java.util.List;
 
 public interface UserDao {

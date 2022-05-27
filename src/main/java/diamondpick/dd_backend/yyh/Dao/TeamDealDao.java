@@ -1,7 +1,6 @@
-package diamondpick.dd_backend.Dao;
+package diamondpick.dd_backend.yyh.Dao;
 
-import diamondpick.dd_backend.Entity.TeamDeal;
-import org.apache.ibatis.annotations.Mapper;
+import diamondpick.dd_backend.yyh.Entity.TeamDeal;
 import org.springframework.dao.DataIntegrityViolationException;
 
 
