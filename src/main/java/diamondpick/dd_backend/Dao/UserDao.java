@@ -15,7 +15,7 @@ public interface UserDao {
 
     @Insert("insert into users (user_id, nickname, password, intro, email, space_id)\n" +
             "        values (#{param1}, #{param2}, #{param3}, #{param4}, #{param5}, #{param6})")
-    public void insertUser(String userId, String nickname, String password, String intro, String email, String spaceId)throws DuplicateKeyException, DataIntegrityViolationException;
+    public void insertUser(String userId, String nickname, String password, String intro, String email, int spaceId)throws DuplicateKeyException, DataIntegrityViolationException;
 
     @Update("update users set ${param2} = #{param3} where user_id = #{param1}")
     public void updateUser(String userId, String key, Object value)throws DataIntegrityViolationException, BadSqlGrammarException;

@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface TeamDao {
 
-    public void insertTeam(String teamId, String name, String intro, String captainId)throws DataIntegrityViolationException, DuplicateKeyException;
+    public void insertTeam(String teamId, String name, String intro, String captainId, int spaceId)throws DataIntegrityViolationException, DuplicateKeyException;
     public void insertMember(String teamId, String memberId)throws DataIntegrityViolationException;
 
     public void deleteTeam(String teamId);
