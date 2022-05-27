@@ -18,6 +18,8 @@ public interface FolderDao {
 
     public void updateFolder(String folderId, String key, Object newValue)throws DataIntegrityViolationException, BadSqlGrammarException;
 
+    /**将文件夹设置为删除状态，注意更新delete_time*/
+    public void updateDelete(String folderId, String deleterId);
 
     /**
      * @return 注意这里包括有创建者名称
