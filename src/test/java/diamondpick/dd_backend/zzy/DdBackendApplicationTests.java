@@ -1,7 +1,7 @@
 package diamondpick.dd_backend.zzy;
 
-import diamondpick.dd_backend.zzy.Dao.CollectionDao;
-import diamondpick.dd_backend.zzy.Dao.DocumentDao;
+import diamondpick.dd_backend.Old.zzy.Dao.CollectionDao;
+import diamondpick.dd_backend.Dao.DocumentDao;
 import diamondpick.dd_backend.Service.DocumentService;
 import diamondpick.dd_backend.Service.UserService;
 import org.junit.jupiter.api.Test;

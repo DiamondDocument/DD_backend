@@ -1,7 +1,7 @@
-package diamondpick.dd_backend.zzy.Controller;
+package diamondpick.dd_backend.Old.zzy.Controller;
 
-import diamondpick.dd_backend.zzy.JsonArray;
-import diamondpick.dd_backend.zzy.Response;
+import diamondpick.dd_backend.Old.zzy.JsonArray;
+import diamondpick.dd_backend.Old.zzy.Response;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 

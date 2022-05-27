@@ -1,12 +1,10 @@
 package diamondpick.dd_backend.Entity.lyz;
 
 import javax.persistence.Entity;
-import javax.persistence.Id;
 import java.util.Date;
-
-@Entity
+/*
 public class Folder {
-    @Id
+    //加个创建者名称
     private String folderId;
     private String folderName;
     private String creatorId;
@@ -98,3 +96,6 @@ public class Folder {
         this.nowAuth = nowAuth;
     }
 }
+
+
+ */

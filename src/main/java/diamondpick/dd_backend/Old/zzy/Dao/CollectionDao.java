@@ -1,6 +1,6 @@
-package diamondpick.dd_backend.zzy.Dao;
+package diamondpick.dd_backend.Old.zzy.Dao;
 
-import diamondpick.dd_backend.zzy.Entity.Document;
+import diamondpick.dd_backend.Entity.Document;
 import org.apache.ibatis.annotations.*;
 
 import java.util.ArrayList;

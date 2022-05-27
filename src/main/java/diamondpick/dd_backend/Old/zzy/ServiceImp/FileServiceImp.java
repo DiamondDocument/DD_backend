@@ -1,4 +1,4 @@
-package diamondpick.dd_backend.zzy.ServiceImp;
+package diamondpick.dd_backend.Old.zzy.ServiceImp;
 
 import diamondpick.dd_backend.Exception.NotExist.*;
 import diamondpick.dd_backend.Service.DocumentService;
@@ -13,6 +13,7 @@ import java.math.BigInteger;
 import java.net.URLConnection;
 import java.security.MessageDigest;
 
+/*
 @Service
 public class FileServiceImp implements FileService {
     @Autowired
@@ -192,3 +193,6 @@ public class FileServiceImp implements FileService {
         }
     }
 }
+
+
+ */

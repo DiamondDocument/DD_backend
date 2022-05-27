@@ -1,23 +1,6 @@
-package diamondpick.dd_backend.zzy.ServiceImp;
+package diamondpick.dd_backend.Old.zzy.ServiceImp;
 
-import diamondpick.dd_backend.yyh.Entity.User;
-import diamondpick.dd_backend.Exception.*;
-import diamondpick.dd_backend.Exception.Document.AlreadyCollect;
-import diamondpick.dd_backend.Exception.Document.NotyetCollect;
-import diamondpick.dd_backend.Exception.NotExist.*;
-import diamondpick.dd_backend.Service.SpaceService;
-import diamondpick.dd_backend.Service.UserService;
-import diamondpick.dd_backend.zzy.Dao.CollectionDao;
-import diamondpick.dd_backend.zzy.Dao.DocumentDao;
-import diamondpick.dd_backend.zzy.Entity.Document;
-import diamondpick.dd_backend.Service.DocumentService;
-import diamondpick.dd_backend.Service.FileService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import java.io.IOException;
-import java.util.ArrayList;
-
+/*
 @Service
 public class DocumentImp implements DocumentService {
     @Autowired
@@ -86,21 +69,36 @@ public class DocumentImp implements DocumentService {
     }
 
     @Override
+    public List<Document> getRootDocInSpace(String spaceId) throws SpaceNotExist {
+        return null;
+    }
+
+    @Override
+    public List<Folder> getDocInFolder(String folderId) throws FolderNotExist {
+        return null;
+    }
+
+    @Override
     public ArrayList<Document> getCollection(String userId) throws UserNotExist {
         userService.selectUserByUserId(userId);
         ArrayList<Document> ret = collectionDao.selectCollections(userId);
         return ret;
     }
 
-    @Override
-    public ArrayList<Document> getDocumentBySpaceId(String userspaceId) {
-        return documentDao.selectDocs("space_id", userspaceId);
-    }
+//    @Override
+//    public List<Document> getDocumentBySpaceId(String userspaceId) {
+//        return documentDao.selectDocBy("space_id", userspaceId);
+//    }
 
     @Override
-    public ArrayList<Document> getDocumentByParentId(String folderId) {
-        return documentDao.selectDocs("parent_id", folderId);
+    public ArrayList<Document> getDocumentByFId(String folderId) throws FolderNotExist {
+        return null;
     }
+
+//    @Override
+//    public List<Document> getDocumentByParentId(String folderId) {
+//        return documentDao.selectDocBy("parent_id", folderId);
+//    }
 
     @Override
     public Document selectDocByDocId(String DocId)throws DocNotExist {
@@ -136,6 +134,17 @@ public class DocumentImp implements DocumentService {
         //最后说明userId并不是文档的所属者
         return doc.getNowAuth();
     }
+
+    @Override
+    public void changeAuth(String docId, int newAuth) throws OperationFail {
+
+    }
+
+    @Override
+    public List<Document> getDocumentByParentId(String folderId) {
+        return null;
+    }
+
     @Override
     public void collect(String userId, String docId)throws UserNotExist, DocNotExist, AlreadyCollect, NoAuth {
         selectDocByDocId(docId);
@@ -163,5 +172,13 @@ public class DocumentImp implements DocumentService {
         }
     }
 
+    @Override
+    public ArrayList<Document> getDocumentBySpaceId(String userspaceId) throws SpaceNotExist {
+        return null;
+    }
+
 
 }
+
+
+ */

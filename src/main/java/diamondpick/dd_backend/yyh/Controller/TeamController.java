@@ -1,9 +1,9 @@
-package diamondpick.dd_backend.yyh.Controller;
+package diamondpick.dd_backend.Controller.yyh;
 
 
-import diamondpick.dd_backend.yyh.Entity.TeamMember;
-import diamondpick.dd_backend.yyh.Entity.Team;
-import diamondpick.dd_backend.yyh.Entity.User;
+import diamondpick.dd_backend.Entity.yyh.TeamMember;
+import diamondpick.dd_backend.Entity.Team;
+import diamondpick.dd_backend.Entity.User;
 import diamondpick.dd_backend.Service.TeamService;
 import diamondpick.dd_backend.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.HashMap;
 import java.util.Map;
 
+/*
 @RestController
 public class TeamController {
     public boolean checkTeamName(String teamName){
@@ -93,3 +94,6 @@ public class TeamController {
         return null;
     }
 }
+
+
+ */

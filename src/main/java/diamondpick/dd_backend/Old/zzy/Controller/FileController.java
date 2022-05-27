@@ -1,4 +1,4 @@
-package diamondpick.dd_backend.zzy.Controller;
+package diamondpick.dd_backend.Old.zzy.Controller;
 
 import diamondpick.dd_backend.Service.FileService;
 import org.springframework.beans.factory.annotation.Autowired;

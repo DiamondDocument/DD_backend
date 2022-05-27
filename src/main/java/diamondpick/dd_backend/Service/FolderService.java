@@ -1,16 +1,14 @@
 package diamondpick.dd_backend.Service;
 
-import diamondpick.dd_backend.Entity.lyz.Folder;
+import diamondpick.dd_backend.Entity.Folder;
 import diamondpick.dd_backend.Exception.NoAuth;
-import diamondpick.dd_backend.Exception.NotExist.DocNotExist;
 import diamondpick.dd_backend.Exception.NotExist.FolderNotExist;
 import diamondpick.dd_backend.Exception.NotExist.SpaceNotExist;
 import diamondpick.dd_backend.Exception.NotExist.UserNotExist;
 import diamondpick.dd_backend.Exception.OperationFail;
-import diamondpick.dd_backend.zzy.Entity.Document;
+import diamondpick.dd_backend.Entity.Document;
 import org.springframework.stereotype.Service;
 
-import javax.naming.spi.ObjectFactory;
 import java.util.ArrayList;
 import java.util.List;
 

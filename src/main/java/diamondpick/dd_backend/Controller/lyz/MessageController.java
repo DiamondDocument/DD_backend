@@ -2,8 +2,8 @@ package diamondpick.dd_backend.Controller.lyz;
 
 import com.alibaba.fastjson.JSONObject;
 import diamondpick.dd_backend.Entity.lyz.Message;
-import diamondpick.dd_backend.yyh.Entity.Team;
-import diamondpick.dd_backend.zzy.Entity.Document;
+import diamondpick.dd_backend.Entity.Team;
+import diamondpick.dd_backend.Entity.Document;
 import diamondpick.dd_backend.Service.DocumentService;
 import diamondpick.dd_backend.Service.MessageService;
 import diamondpick.dd_backend.Service.TeamService;
@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+/*
 @RestController
 public class MessageController {
     @Autowired
@@ -82,7 +83,7 @@ public class MessageController {
                 json.put("sendTime", message.getSendTime());
                 if (message.getMsgType() == 2 || message.getMsgType() == 3 || message.getMsgType() == 4 || message.getMsgType() == 5) {
                     Team team = teamService.selectTeamByTeamId(message.getTeamId());
-                    json.put("teamName", team.getTeamName());
+                    json.put("teamName", team.getName());
                 }
                 if (message.getMsgType() == 6 || message.getMsgType() == 7) {
                     Document document = documentService.selectDocByDocId(message.getMsgDocId());
@@ -129,3 +130,6 @@ public class MessageController {
         return map;
     }
 }
+
+
+ */

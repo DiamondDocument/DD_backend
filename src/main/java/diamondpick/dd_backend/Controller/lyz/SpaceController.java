@@ -3,7 +3,7 @@ package diamondpick.dd_backend.Controller.lyz;
 import com.alibaba.fastjson.JSONObject;
 import diamondpick.dd_backend.Entity.lyz.Folder;
 import diamondpick.dd_backend.Entity.lyz.UserSpace;
-import diamondpick.dd_backend.zzy.Entity.Document;
+import diamondpick.dd_backend.Entity.Document;
 import diamondpick.dd_backend.Service.DocumentService;
 import diamondpick.dd_backend.Service.FolderService;
 import diamondpick.dd_backend.Service.SpaceService;
@@ -13,8 +13,10 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+/*
 @RestController
 public class SpaceController {
     @Autowired
@@ -65,8 +67,8 @@ public class SpaceController {
                 json.put("creatorName", userService.selectUserByUserId(folder.getCreatorId()).getNickname());
                 json.put("createTime", folder.getCreateTime());
                 if (folder.getFolderId().equals(folderId)) {
-                    ArrayList<JSONObject> jsonListInFolder = new ArrayList<>();
-                    ArrayList<Document> documentInFolder = documentService.getDocumentByParentId(folderId);
+                    List<JSONObject> jsonListInFolder = new ArrayList<>();
+                    List<Document> documentInFolder = documentService.getDocumentByParentId(folderId);
                     for (Document document : documentInFolder) {
                         JSONObject jsonInFolder = new JSONObject();
                         jsonInFolder.put("fileId", document.getId());
@@ -227,3 +229,6 @@ public class SpaceController {
         return map;
     }
 }
+
+
+ */
