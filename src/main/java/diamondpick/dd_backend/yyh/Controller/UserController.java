@@ -1,11 +1,11 @@
-package diamondpick.dd_backend.Controller.yyh;
+package diamondpick.dd_backend.yyh.Controller;
 
-import diamondpick.dd_backend.Dao.yyh.UserDao;
-import diamondpick.dd_backend.Entity.yyh.Team;
+import diamondpick.dd_backend.yyh.Dao.UserDao;
+import diamondpick.dd_backend.yyh.Entity.Team;
 import diamondpick.dd_backend.Exception.NotExist.UserNotExist;
 import diamondpick.dd_backend.Exception.OperationFail;
 import diamondpick.dd_backend.zzy.Response;
-import diamondpick.dd_backend.Entity.yyh.User;
+import diamondpick.dd_backend.yyh.Entity.User;
 import diamondpick.dd_backend.Service.MailService;
 import diamondpick.dd_backend.Service.UserService;
 import diamondpick.dd_backend.Service.FileService;

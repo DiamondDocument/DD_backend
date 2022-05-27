@@ -1,4 +1,4 @@
-package diamondpick.dd_backend.Entity.yyh;
+package diamondpick.dd_backend.yyh.Entity;
 
 
 public class User {

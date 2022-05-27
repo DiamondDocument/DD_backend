@@ -1,29 +1,29 @@
-package diamondpick.dd_backend.Entity.yyh;
+package diamondpick.dd_backend.yyh.Entity;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import java.sql.Date;
 
 public class RecentBrowse {
-    private String u_id;
-    private int d_id;
+    private String uId;
+    private int dId;
     private Date browseTime;
     public Date getBrowseTime() {
         return browseTime;
     }
     public int getM_id() {
-        return d_id;
+        return dId;
     }
     public String getU_id() {
-        return u_id;
+        return uId;
     }
     public void setBrowseTime(Date browseTime) {
         this.browseTime = browseTime;
     }
     public void setM_id(int m_id) {
-        this.d_id = d_id;
+        this.dId = dId;
     }
     public void setU_id(String u_id) {
-        this.u_id = u_id;
+        this.uId = uId;
     }
 }

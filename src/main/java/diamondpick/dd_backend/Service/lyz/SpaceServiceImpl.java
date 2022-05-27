@@ -2,7 +2,7 @@ package diamondpick.dd_backend.Service.lyz;
 
 import diamondpick.dd_backend.Dao.lyz.FolderDao;
 import diamondpick.dd_backend.Dao.lyz.SpaceDao;
-import diamondpick.dd_backend.Entity.yyh.User;
+import diamondpick.dd_backend.yyh.Entity.User;
 import diamondpick.dd_backend.Exception.NotExist.*;
 import diamondpick.dd_backend.zzy.Dao.DocumentDao;
 import diamondpick.dd_backend.Entity.lyz.TeamRecycle;

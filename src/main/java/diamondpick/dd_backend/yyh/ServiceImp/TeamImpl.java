@@ -1,10 +1,9 @@
-package diamondpick.dd_backend.Service.yyh;
+package diamondpick.dd_backend.yyh.ServiceImp;
 
-import diamondpick.dd_backend.Dao.yyh.TeamDao;
-import diamondpick.dd_backend.Dao.yyh.UserDao;
-import diamondpick.dd_backend.Entity.yyh.TeamMember;
-import diamondpick.dd_backend.Entity.yyh.Team;
-import diamondpick.dd_backend.Entity.yyh.User;
+import diamondpick.dd_backend.yyh.Dao.TeamDao;
+import diamondpick.dd_backend.yyh.Dao.UserDao;
+import diamondpick.dd_backend.yyh.Entity.Team;
+import diamondpick.dd_backend.yyh.Entity.User;
 import diamondpick.dd_backend.Exception.NotExist.NotExist;
 import diamondpick.dd_backend.Exception.Team.*;
 import diamondpick.dd_backend.Exception.Illegal.TeamNameIllegal;

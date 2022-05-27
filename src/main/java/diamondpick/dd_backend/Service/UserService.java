@@ -1,7 +1,7 @@
 package diamondpick.dd_backend.Service;
 
-import diamondpick.dd_backend.Entity.yyh.Team;
-import diamondpick.dd_backend.Entity.yyh.User;
+import diamondpick.dd_backend.yyh.Entity.Team;
+import diamondpick.dd_backend.yyh.Entity.User;
 import diamondpick.dd_backend.Exception.NotExist.*;
 import diamondpick.dd_backend.Exception.OperationFail;
 import org.springframework.stereotype.Service;

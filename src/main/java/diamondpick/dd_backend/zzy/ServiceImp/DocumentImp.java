@@ -1,6 +1,6 @@
 package diamondpick.dd_backend.zzy.ServiceImp;
 
-import diamondpick.dd_backend.Entity.yyh.User;
+import diamondpick.dd_backend.yyh.Entity.User;
 import diamondpick.dd_backend.Exception.*;
 import diamondpick.dd_backend.Exception.Document.AlreadyCollect;
 import diamondpick.dd_backend.Exception.Document.NotyetCollect;

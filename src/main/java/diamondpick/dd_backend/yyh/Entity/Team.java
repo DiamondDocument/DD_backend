@@ -1,28 +1,28 @@
-package diamondpick.dd_backend.Entity.yyh;
+package diamondpick.dd_backend.yyh.Entity;
 
 public class Team {
-    private String teamID;
-    private String captainID;
+    private String teamId;
+    private String captainId;
     private String teamName;
     private String teamIntroductory;
-    public Team(String teamID, String teamName, String captainID, String teamIntroductory){
-        this.teamID=teamID;
+    public Team(String teamId, String teamName, String captainId, String teamIntroductory){
+        this.teamId=teamId;
         this.teamName=teamName;
         this.teamIntroductory=teamIntroductory;
-        this.captainID = captainID;
+        this.captainId = captainId;
     }
     public Team(){}
 
     public String getTeamID() {
-        return teamID;
+        return teamId;
     }
 
     public String getTeamIntroductory() {
         return teamIntroductory;
     }
 
-    public void setTeamID(String teamID) {
-        this.teamID = teamID;
+    public void setTeamID(String teamId) {
+        this.teamId = teamId;
     }
 
     public String getTeamName() {

@@ -1,8 +1,8 @@
-package diamondpick.dd_backend.Dao.yyh;
+package diamondpick.dd_backend.yyh.Dao;
 
 
 import diamondpick.dd_backend.Entity.lyz.Message;
-import diamondpick.dd_backend.Entity.yyh.User;
+import diamondpick.dd_backend.yyh.Entity.User;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;

@@ -1,13 +1,11 @@
 package diamondpick.dd_backend.Service;
 
 import diamondpick.dd_backend.Entity.lyz.*;
-import diamondpick.dd_backend.Entity.yyh.User;
+import diamondpick.dd_backend.yyh.Entity.User;
 import diamondpick.dd_backend.Exception.NotExist.*;
-import diamondpick.dd_backend.zzy.Entity.Document;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.List;
 
 @Service
 public interface SpaceService {
