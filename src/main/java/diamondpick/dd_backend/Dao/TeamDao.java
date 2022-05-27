@@ -1,4 +1,4 @@
-package diamondpick.dd_backend.yyh.Dao;
+package diamondpick.dd_backend.Dao;
 
 import diamondpick.dd_backend.yyh.Entity.Team;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -16,6 +16,11 @@ public interface TeamDao {
     public void deleteMember(String teamId, String memberId);
 
 
+    /**
+     * @param key 表中对应的字段名
+     * @param newValue key要更新为的值
+     * @throws BadSqlGrammarException 仅当key输入错误会抛出
+     */
     public void updateTeam(String teamId, String key, String newValue)throws DataIntegrityViolationException, BadSqlGrammarException;
 
 

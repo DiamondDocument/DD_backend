@@ -1,4 +1,4 @@
-package diamondpick.dd_backend.yyh.Dao;
+package diamondpick.dd_backend.Dao;
 
 
 import diamondpick.dd_backend.yyh.Entity.User;
@@ -24,20 +24,10 @@ public interface UserDao {
             "    where user_id = #{param1}")
     public User selectUser(String userId);
 
-    /**
-     * @return 返回的User对象中只要求有用户名和用户昵称。
-     */
     public User selectUserByEmail(String email);
 
-    /**
-     * @return 返回的User对象中只要求有用户名和用户昵称。
-     */
     List<User> selectMember(String teamId);
 
-
-    /**
-     * @return 返回的User对象中只要求有用户名和用户昵称。
-     */
     User selectCaption(String teamId);
 
 

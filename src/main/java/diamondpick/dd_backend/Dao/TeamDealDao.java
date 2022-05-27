@@ -1,4 +1,4 @@
-package diamondpick.dd_backend.yyh.Dao;
+package diamondpick.dd_backend.Dao;
 
 import diamondpick.dd_backend.yyh.Entity.TeamDeal;
 import org.springframework.dao.DataIntegrityViolationException;
