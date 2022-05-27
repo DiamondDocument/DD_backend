@@ -26,14 +26,10 @@ public interface TeamDao {
 
     Team selectTeam(String teamId);
 
-    /**
-     * @return 返回的Team对象中只要求有团队id和团队名称。
-     */
+
     List<Team> selectTeamByMember(String memberId);
 
-    /**
-     * @return 返回的Team对象中只要求有团队id和团队名称。
-     */
+
     Team selectTeamByCaptain(String captainId);
 
 }
