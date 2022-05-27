@@ -1,7 +1,7 @@
 create table spaces
 (
     space_id    int         not null primary key auto_increment,
-    space_name  varchar(20) null,
+    name  varchar(20) null,
     create_time datetime default now()
 );
 create table users
@@ -38,7 +38,7 @@ create table team_member
 create table folders
 (
     folder_id   char(7)     not null primary key,
-    folder_name varchar(20) not null,
+    name varchar(20) not null,
     creator_id  varchar(20) not null,
     create_time datetime    not null default now(),
     parent_id   char(7)     null,
@@ -93,7 +93,7 @@ create table team_deal
     user_id     varchar(20) not null,
     deal_type   int         not null check ( deal_type between 1 and 2),
     create_time datetime    not null default now(),
-    deal_status int         not null default 0 check ( deal_type between 0 and 2),
+    deal_status int         not null default 0 check ( deal_status between 0 and 2),
     foreign key (user_id) references users (user_id),
     foreign key (team_id) references teams (team_id)
 );
