@@ -12,8 +12,6 @@ import diamondpick.dd_backend.Old.yyh.Entity.User;
 import diamondpick.dd_backend.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
-
-import java.util.ArrayList;
 import java.util.List;
 
 public class UserImp implements UserService {

@@ -9,6 +9,7 @@ import org.springframework.jdbc.BadSqlGrammarException;
 
 import java.util.List;
 
+@Mapper
 public interface UserDao {
 
 
