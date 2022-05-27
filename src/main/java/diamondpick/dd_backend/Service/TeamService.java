@@ -2,11 +2,12 @@ package diamondpick.dd_backend.Service;
 
 import diamondpick.dd_backend.Exception.Illegal.Illegal;
 import diamondpick.dd_backend.Exception.OtherFail;
-import diamondpick.dd_backend.Old.yyh.Entity.User;
+import diamondpick.dd_backend.Entity.User;
 import diamondpick.dd_backend.Exception.NotExist.NotExist;
 import diamondpick.dd_backend.Exception.Team.*;
 import diamondpick.dd_backend.Exception.Illegal.TeamNameIllegal;
 import diamondpick.dd_backend.Exception.OperationFail;
+import diamondpick.dd_backend.Tool.UserStatusToTeam;
 
 import java.util.List;
 
@@ -54,13 +55,7 @@ public interface TeamService {
      */
     public void dealApply(String teamId, String userId, boolean isAgree)throws NoDealTodo, OtherFail;
 
-    static enum statusUtoT{
-        captain,
-        member,
-        applying,
-        inviting,
-        other
-    }
-    public statusUtoT checkStatus(String teamId, String userId)throws OperationFail;
+
+    public UserStatusToTeam checkStatus(String teamId, String userId)throws OperationFail;
 
 }

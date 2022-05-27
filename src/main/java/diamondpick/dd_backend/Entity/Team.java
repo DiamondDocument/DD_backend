@@ -1,4 +1,4 @@
-package diamondpick.dd_backend.Old.yyh.Entity;
+package diamondpick.dd_backend.Entity;
 
 public class Team {
 

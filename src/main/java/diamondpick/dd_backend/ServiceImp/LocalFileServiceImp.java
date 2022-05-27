@@ -4,9 +4,7 @@ import diamondpick.dd_backend.Dao.DocumentDao;
 import diamondpick.dd_backend.Dao.UserDao;
 import diamondpick.dd_backend.Exception.NotExist.*;
 import diamondpick.dd_backend.Exception.OtherFail;
-import diamondpick.dd_backend.Service.DocumentService;
-import diamondpick.dd_backend.Service.FileService;
-import diamondpick.dd_backend.Service.UserService;
+import diamondpick.dd_backend.Service.LocalFileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -19,7 +17,7 @@ import java.security.MessageDigest;
 
 
 @Service
-public class FileServiceImp implements FileService {
+public class LocalFileServiceImp implements LocalFileService {
     @Autowired
     private UserDao userDao;
     @Autowired
@@ -34,7 +32,7 @@ public class FileServiceImp implements FileService {
 
     private String imgBaseUrl = "http://43.138.71.108/api/document/img/";
 
-    public FileServiceImp() {
+    public LocalFileServiceImp() {
         File workDir = new File("");
         baseLocation = workDir.getAbsolutePath() + "/DD_file";
         if(System.getenv().get("IS_SERVICE") == null){

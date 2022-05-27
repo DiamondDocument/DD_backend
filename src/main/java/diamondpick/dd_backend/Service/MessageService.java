@@ -4,34 +4,25 @@ import diamondpick.dd_backend.Entity.Message;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public interface MessageService {
+    //todo 添加定义
+    public void newApplyMsg(String senderId, String teamId);
 
-    /*
-   周五之前实现邀请相关
-   周五之前实现邀请相关
-   周五之前实现邀请相关
-    */
-    //////////////
-    //优先搞邀请的接口
-    public boolean newApplyMsg(String senderId, String teamId);
+    public void newApplyDealMsg(boolean isAccept, String teamId, String receiverId);
 
-    public boolean newApplyDealMsg(boolean isAccept, String teamId, String receiverId);
+    public void newInviteMsg(String teamId, String receiverId);
 
-    public boolean newInviteMsg(String teamId, String receiverId);
+    public void newInviteDealMsg(boolean isAccept, String dealerId, String teamId);
 
-    public boolean newInviteDealMsg(boolean isAccept, String dealerId, String teamId);
+    public void newCommentMsg(String senderId, String docId, String receiverId, String comment);
 
-    public boolean newCommentMsg(String senderId, String docId, String receiverId);
+    public void newAtMsg(String senderId, String docId, String receiverId);
 
-    public boolean newAtMsg(String senderId, String docId, String receiverId);
+    List<Message> getMsg(String userId, boolean isOnlyUnread);
 
-    void sendNewMessage(Message sendMessage);
+    public void setMsgToRead(String msgId);
 
-    ArrayList<Message> receiveMessageByUserId(String userId, int status);
-
-    void changeMessageStatus(String userId, int preStatus, int postStatus);
-
-    ArrayList<Message> listMessage(String userId);
 }

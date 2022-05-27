@@ -2,18 +2,12 @@ package diamondpick.dd_backend.Service;
 
 import diamondpick.dd_backend.Exception.Duplicate.DuplicateId;
 import diamondpick.dd_backend.Exception.Illegal.Illegal;
-import diamondpick.dd_backend.Exception.Illegal.NameIllegal;
-import diamondpick.dd_backend.Exception.Illegal.PwdIllegal;
 import diamondpick.dd_backend.Exception.User.PwdError;
 import diamondpick.dd_backend.Exception.User.verificationFail;
-import diamondpick.dd_backend.Old.yyh.Entity.Team;
-import diamondpick.dd_backend.Old.yyh.Entity.User;
+import diamondpick.dd_backend.Entity.Team;
 import diamondpick.dd_backend.Exception.NotExist.*;
-import diamondpick.dd_backend.Exception.OperationFail;
-import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service

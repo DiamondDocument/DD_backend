@@ -7,13 +7,16 @@ import diamondpick.dd_backend.Exception.Duplicate.DuplicateId;
 import diamondpick.dd_backend.Exception.Illegal.Illegal;
 import diamondpick.dd_backend.Exception.NotExist.NotExist;
 import diamondpick.dd_backend.Exception.User.PwdError;
-import diamondpick.dd_backend.Old.yyh.Entity.Team;
-import diamondpick.dd_backend.Old.yyh.Entity.User;
+import diamondpick.dd_backend.Entity.Team;
+import diamondpick.dd_backend.Entity.User;
 import diamondpick.dd_backend.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.stereotype.Service;
+
 import java.util.List;
 
+@Service
 public class UserImp implements UserService {
 
     @Autowired

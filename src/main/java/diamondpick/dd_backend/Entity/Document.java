@@ -1,8 +1,14 @@
 package diamondpick.dd_backend.Entity;
 
+import diamondpick.dd_backend.Exception.NotExist.DocNotExist;
+import diamondpick.dd_backend.Service.DocumentService;
+import org.springframework.beans.factory.annotation.Autowired;
+
 import java.util.Date;
 
-public class Document {
+public class Document implements File{
+    @Autowired
+    DocumentService documentService;
 
     private String docId;
     private String name;
@@ -30,8 +36,18 @@ public class Document {
         this.docId = docId;
     }
 
+    @Override
+    public int getType() {
+        return 1;
+    }
+
     public String getName() {
         return name;
+    }
+
+    @Override
+    public String getFileId() {
+        return getDeleterId();
     }
 
     public void setName(String name) {
@@ -48,6 +64,16 @@ public class Document {
 
     public Date getCreateTime() {
         return createTime;
+    }
+
+    @Override
+    public String getSize()  {
+        try{
+            return documentService.getSize(getDocId());
+        }catch (DocNotExist e ){
+            System.out.println("不可能");
+            return "不可能！";
+        }
     }
 
     public void setCreateTime(Date createTime) {

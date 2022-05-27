@@ -1,12 +1,14 @@
 package diamondpick.dd_backend.Dao;
 
-import diamondpick.dd_backend.Old.yyh.Entity.Team;
+import diamondpick.dd_backend.Entity.Team;
+import org.apache.ibatis.annotations.Mapper;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.jdbc.BadSqlGrammarException;
 
 import java.util.List;
 
+@Mapper
 public interface TeamDao {
 
     public void insertTeam(String teamId, String name, String intro, String captainId, int spaceId)throws DataIntegrityViolationException, DuplicateKeyException;

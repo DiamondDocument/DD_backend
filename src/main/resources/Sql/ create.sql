@@ -1,7 +1,8 @@
 create table spaces
 (
     space_id    int         not null primary key auto_increment,
-    name  varchar(20) null,
+    auth        int         not null default 2 check ( auth between 1 and 4),
+    name        varchar(20) null,
     create_time datetime default now()
 );
 create table users
@@ -38,13 +39,13 @@ create table team_member
 create table folders
 (
     folder_id   char(7)     not null primary key,
-    name varchar(20) not null,
+    name        varchar(20) not null,
     creator_id  varchar(20) not null,
     create_time datetime    not null default now(),
     parent_id   char(7)     null,
     space_id    int         not null,
-    self_auth   int         not null check ( self_auth between 1 and 4),
-    now_auth    int         not null check ( now_auth between 1 and 4),
+    self_auth   int         not null default 2 check ( self_auth between 1 and 4),
+    now_auth    int         not null default 2 check ( now_auth between 1 and 4),
     is_delete   bool        not null default false,
     deleter_id  varchar(20) null,
     delete_time datetime    null,
@@ -62,8 +63,8 @@ create table documents
     create_time datetime    not null default now(),
     modifier_id varchar(20),
     modify_time datetime,
-    self_auth   int         not null check ( self_auth between 1 and 4),
-    now_auth    int         not null check ( now_auth between 1 and 4),
+    self_auth   int         not null default 2 check ( self_auth between 1 and 4),
+    now_auth    int         not null default 2 check ( now_auth between 1 and 4),
     is_editing  bool        not null default false,
     parent_id   char(7),
     space_id    int         not null,

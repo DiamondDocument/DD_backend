@@ -13,9 +13,9 @@ import java.util.List;
 
 @Mapper
 public interface DocumentDao {
-    @Insert("insert into documents(doc_id,name,creator_id,self_auth,now_auth,parent_id,space_id)\n" +
-            "    values(#{param1},#{param2},#{param3},#{param4},#{param4},#{param5}, #{param6})")
-    public void insertDoc(String docId, String name, String creatorId, int authority, String parentId, String spaceId)throws DuplicateKeyException, DataIntegrityViolationException;
+    @Insert("insert into documents(doc_id,name,creator_id,parent_id,space_id)\n" +
+            "    values(#{param1},#{param2},#{param3},#{param4}, #{param5})")
+    public void insertDoc(String docId, String name, String creatorId, String parentId, String spaceId)throws DuplicateKeyException, DataIntegrityViolationException;
 
     @Insert("insert into document_collector values(#{param2}, #{param1})")
     public void insertCollection(String collectorId, String docId)throws DataIntegrityViolationException;
@@ -40,6 +40,13 @@ public interface DocumentDao {
     /** 更新parentId代表的文件夹的子目录下的所有文件的now_auth（取自身的和输入参数中的最小值）*/
     @Update("update documents set now_auth = min(#{param2}, self_auth) where parent_id = #{param1}")
     public void updateSubDirAuth(String parentId, int newAuth)throws DataIntegrityViolationException;
+
+    //todo
+    /** 更新某空间根目录下的所有文件夹的now_auth（取自身的和输入参数中的最小值）
+     * @param type 可以是"team"和"user"的一种，表示是团队空间还是用户空间
+     * @param spaceOwnerId 空间所有者的id（可能是团队id或者用户id）
+     */
+    public void updateRootDirAuth(String type, String spaceOwnerId, int newAuth)throws DataIntegrityViolationException;
 
     /** 更新浏览时间至现在时间 */
     @Update("update user_recent set browse_time = now() where user_id = #{param1} and doc_id = #{param2}")
