@@ -1,7 +1,7 @@
 package diamondpick.dd_backend.Dao;
 
 
-import diamondpick.dd_backend.yyh.Entity.User;
+import diamondpick.dd_backend.Old.yyh.Entity.User;
 import org.apache.ibatis.annotations.*;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.DuplicateKeyException;

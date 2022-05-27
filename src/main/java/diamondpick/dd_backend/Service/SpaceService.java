@@ -1,7 +1,10 @@
 package diamondpick.dd_backend.Service;
 
-import diamondpick.dd_backend.Entity.lyz.*;
-import diamondpick.dd_backend.yyh.Entity.User;
+import diamondpick.dd_backend.Old.lyz.Entity.TeamRecycle;
+import diamondpick.dd_backend.Old.lyz.Entity.TeamSpace;
+import diamondpick.dd_backend.Old.lyz.Entity.UserRecycle;
+import diamondpick.dd_backend.Old.lyz.Entity.UserSpace;
+import diamondpick.dd_backend.Old.yyh.Entity.User;
 import diamondpick.dd_backend.Exception.NotExist.*;
 import org.springframework.stereotype.Service;
 

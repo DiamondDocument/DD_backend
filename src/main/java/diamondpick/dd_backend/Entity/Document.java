@@ -15,7 +15,7 @@ public class Document {
     private boolean isEditing;
     private String parentId;
     private String spaceId;
-    private String isDelete;
+    private boolean isDelete;
     private String deleterId;
     private Date   deleteTime;
     private String creatorName;
@@ -110,11 +110,11 @@ public class Document {
         this.spaceId = spaceId;
     }
 
-    public String getIsDelete() {
+    public boolean isDelete() {
         return isDelete;
     }
 
-    public void setIsDelete(String isDelete) {
+    public void setIsDelete(boolean isDelete) {
         this.isDelete = isDelete;
     }
 

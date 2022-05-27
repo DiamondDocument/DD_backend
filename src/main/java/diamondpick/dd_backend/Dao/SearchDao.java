@@ -1,8 +1,8 @@
 package diamondpick.dd_backend.Dao;
 
 import diamondpick.dd_backend.Entity.Document;
-import diamondpick.dd_backend.yyh.Entity.Team;
-import diamondpick.dd_backend.yyh.Entity.User;
+import diamondpick.dd_backend.Old.yyh.Entity.Team;
+import diamondpick.dd_backend.Old.yyh.Entity.User;
 import diamondpick.dd_backend.Entity.Folder;
 
 import java.util.List;
