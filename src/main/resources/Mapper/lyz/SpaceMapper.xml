@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="diamondpick.dd_backend.Dao.lyz.SpaceDao">
-    <!--    <resultMap id="spaceResultMap" type="diamondpick.dd_backend.Entity.lyz.Space">-->
+<mapper namespace="diamondpick.dd_backend.Dao.SpaceDao">
+    <!--    <resultMap id="spaceResultMap" type="diamondpick.dd_backend.Entity.Entity.Space">-->
     <!--        <result column="" property="spaceId"/>-->
     <!--        <result column="" property="spaceName"/>-->
     <!--        <result column="" property="creatorId"/>-->
@@ -9,7 +9,7 @@
     <!--        <result column="" property="spaceType"/>-->
     <!--    </resultMap>-->
 
-    <resultMap id="userSpaceResult" type="diamondpick.dd_backend.Entity.lyz.UserSpace">
+    <resultMap id="userSpaceResult" type="diamondpick.dd_backend.Old.lyz.Entity.UserSpace">
         <result column="userspace_id" property="spaceId"/>
         <result column="userspace_name" property="spaceName"/>
         <result column="creator_id" property="creatorId"/>

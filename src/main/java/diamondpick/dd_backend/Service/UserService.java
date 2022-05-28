@@ -1,31 +1,27 @@
 package diamondpick.dd_backend.Service;
 
-import diamondpick.dd_backend.Entity.yyh.Team;
-import diamondpick.dd_backend.Entity.yyh.User;
+import diamondpick.dd_backend.Exception.Duplicate.DuplicateId;
+import diamondpick.dd_backend.Exception.Illegal.Illegal;
+import diamondpick.dd_backend.Exception.User.PwdError;
+import diamondpick.dd_backend.Exception.User.verificationFail;
+import diamondpick.dd_backend.Entity.Team;
 import diamondpick.dd_backend.Exception.NotExist.*;
-import diamondpick.dd_backend.Exception.OperationFail;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public interface UserService {
 
-    public ArrayList<Team> selectTeams(String userId);
+    public void newUser(String userId, String nickname, String password, String email)throws Illegal, DuplicateId;
 
-    //若为null则意味着不存在
-    public User selectUserByUserId(String id)throws UserNotExist;
-    //向数据库中添加User记录
-    public void addUser(User user)throws OperationFail;
-    boolean isEmailExist(String email);
-    boolean isUserIdExist(String userId);
-    boolean isLegalNickname(String nickname);
-    boolean isLegalEmail(String email);
-    boolean isLegalPassword(String password);
-    boolean isLegalUserId(String userId);
+    public void login(String userId, String password)throws PwdError, NotExist;
 
-    public User selectUserByEmail(String email);
+    public void modifyNickname(String userId, String newNickname)throws Illegal, NotExist;
+    public void modifyPassword(String userId, String newPwd)throws Illegal, NotExist;
+    public void modifyEmail(String userId, String newEmail)throws Illegal, NotExist, verificationFail;
+    public void modifyIntro(String userId, String newIntro)throws Illegal, NotExist;
 
-
+    public List<Team> selectTeams(String userId)throws NotExist;
 
 }

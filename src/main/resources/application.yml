@@ -12,9 +12,9 @@ mybatis:
   configuration:
     map-underscore-to-camel-case: true
   mapper-locations:
-    - classpath:Mapper/zzy/*.xml
-    - classpath:Mapper/lyz/*.xml
-    - classpath:Mapper/yyh/*.xml
+#    - classpath:Mapper/zzy/*.xml
+#    - classpath:Mapper/lyz/*.xml
+#    - classpath:Mapper/yyh/*.xml
   type-aliases-package: diamondpick.dd_backend.Entity
 server:
   port: 80

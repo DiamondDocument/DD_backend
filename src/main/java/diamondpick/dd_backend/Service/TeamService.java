@@ -1,47 +1,61 @@
 package diamondpick.dd_backend.Service;
 
-import diamondpick.dd_backend.Entity.yyh.Team;
-import diamondpick.dd_backend.Entity.yyh.User;
+import diamondpick.dd_backend.Exception.Illegal.Illegal;
+import diamondpick.dd_backend.Exception.OtherFail;
+import diamondpick.dd_backend.Entity.User;
 import diamondpick.dd_backend.Exception.NotExist.NotExist;
 import diamondpick.dd_backend.Exception.Team.*;
 import diamondpick.dd_backend.Exception.Illegal.TeamNameIllegal;
-import diamondpick.dd_backend.Exception.NotExist.TeamNotExist;
 import diamondpick.dd_backend.Exception.OperationFail;
+import diamondpick.dd_backend.Tool.UserStatusToTeam;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public interface TeamService {
-    public void addTeam(String name, String intro, String captainId)throws OperationFail, TeamNameIllegal;
+    /**该过程会新建一个空间并联动至团队*/
+    public void newTeam(String name, String intro, String captainId)throws OtherFail, TeamNameIllegal;
+
     public void dismissTeam(String teamId, String captainId) throws OperationFail;
 
-    public Team selectTeamByTeamId(String teamId) throws TeamNotExist;
+    /**包括队长和队员，注意user_member表只包含队员*/
+    public List<User> findUserInTeam(String teamId)throws NotExist;
 
-    //这里要包括团队和队长
-    public ArrayList<User> selectUsersInTeam(String teamId)throws TeamNotExist, OperationFail;
-    public void modifyName(String teamId)throws TeamNotExist, OperationFail;
-    public void modifyIntro(String teamId)throws TeamNotExist, OperationFail;
-    public void removeMember(String teamId, String captainId, String memberId) throws NotMember, OperationFail;
-    public void transferRank(String teamId, String oldCaptainId, String newCaptainId)throws NotMember, AlreadyCaption, OperationFail;
+    public void modifyName(String teamId, String newName)throws Illegal, NotExist;
+    public void modifyIntro(String teamId, String newIntro)throws Illegal, NotExist;
 
+    public void removeMember(String teamId, String memberId) throws NotInTeam, OtherFail;
 
-    //申请邀请部分
-    //申请或者邀请未处理前或者因为在团队里，则无法再次邀请或者申请
-    public void InviteMember(String teamId, String userId) throws NotYetDeal, AlreadyMember, OperationFail;
-    public void ApplyJoinTeam(String userId, String teamId) throws NotYetDeal, AlreadyMember, OperationFail;
-
+    /**
+     * @throws AlreadyCaption 要转让的人已经是队长了
+     * @throws NotInTeam 要转让的人不在团队中
+     */
+    public void transferRank(String teamId, String oldCaptainId, String newCaptainId)throws NotInTeam, AlreadyCaption, OtherFail;
 
 
-    public void dealInvite(String teamId, String userId)throws AlreadyDeal, OperationFail;
-    public void dealApply(String teamId, String userId)throws AlreadyDeal, OperationFail;
+    /**
+     * @throws NotYetDeal 之前的申请或者邀请未处理
+     * @throws AlreadyMember 已经在团队里
+     * 需要发送通知
+     */
+    public void InviteMember(String teamId, String userId) throws NotYetDeal, AlreadyMember, OtherFail;
+
+    /**
+     * @throws NotYetDeal     之前的申请或者邀请未处理
+     * @throws AlreadyMember  已经在团队里
+     * 需要发送通知
+     */
+    public void ApplyJoinTeam(String userId, String teamId) throws NotYetDeal, AlreadyMember, OtherFail;
+
+    /**
+     * @throws NoDealTodo 没有待处理的申请或者邀请
+     */
+    public void dealInvite(String teamId, String userId, boolean isAgree)throws NoDealTodo, OtherFail;
+    /**
+     * @throws NoDealTodo 没有待处理的申请或者邀请
+     */
+    public void dealApply(String teamId, String userId, boolean isAgree)throws NoDealTodo, OtherFail;
 
 
-    static enum statusUtoT{
-        captain,
-        member,
-        applying,
-        inviting,
-        other
-    }
-    public statusUtoT checkStatus(String teamId, String userId)throws NotExist;
+    public UserStatusToTeam checkStatus(String teamId, String userId)throws OperationFail;
 
 }
