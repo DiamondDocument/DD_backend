@@ -14,14 +14,14 @@ import java.util.List;
 @Service
 public interface DocumentService {
 
-    public String newDoc(String name, String spaceId, String userId, int authority, String parentId)throws OperationFail;
-    public String newDocByTemplate(String name, String spaceId, String userId, int authority, String parentId, String tempId)throws OperationFail;
-
-    public List<Document> getRootDocInSpace(String spaceId)throws SpaceNotExist;
-    public List<Folder> getDocInFolder(String folderId)throws FolderNotExist;
-
-
-    public ArrayList<Document> getCollection(String userId)throws UserNotExist;
+    /**
+     * @return 返回新建文档的id
+     */
+    public String newDoc(String name, String spaceId, String userId, String parentId)throws OperationFail;
+    /**
+     * @return 返回新建文档的id
+     */
+    public String newDocByTemplate(String name, String spaceId, String userId, String parentId, String tempId)throws OperationFail;
 
     /**
      * @return 返回一个形式化的字符串，如"98K"或者"1.2M"
@@ -32,15 +32,4 @@ public interface DocumentService {
 
     public void disCollect(String userId, String docId)throws UserNotExist, DocNotExist, NotyetCollect;
 
-    public ArrayList<Document> getDocumentBySpaceId(String userspaceId)throws SpaceNotExist;
-
-    public ArrayList<Document> getDocumentByFId(String folderId)throws FolderNotExist;
-
-    public Document selectDocByDocId(String DocId) throws DocNotExist;
-
-    public int checkAuth(String docId, String userId)throws DocNotExist, UserNotExist;
-
-    public void changeAuth(String docId, int newAuth)throws OperationFail;
-
-    List<Document> getDocumentByParentId(String folderId);
 }
