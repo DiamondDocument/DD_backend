@@ -17,7 +17,7 @@ public interface TeamService {
 
     public void dismissTeam(String teamId, String captainId) throws OperationFail;
 
-    /**包括队长和队员*/
+    /**包括队长和队员，注意user_member表只包含队员*/
     public List<User> findUserInTeam(String teamId)throws NotExist;
 
     public void modifyName(String teamId, String newName)throws Illegal, NotExist;
@@ -27,7 +27,7 @@ public interface TeamService {
 
     /**
      * @throws AlreadyCaption 要转让的人已经是队长了
-     * @throws NotInTeam 让转让的人不在团队中
+     * @throws NotInTeam 要转让的人不在团队中
      */
     public void transferRank(String teamId, String oldCaptainId, String newCaptainId)throws NotInTeam, AlreadyCaption, OtherFail;
 

@@ -30,7 +30,7 @@ public interface DocumentService {
 
     public void collect(String userId, String docId)throws UserNotExist, DocNotExist, AlreadyCollect, NoAuth;
 
-    public void discollect(String userId, String docId)throws UserNotExist, DocNotExist, NotyetCollect;
+    public void disCollect(String userId, String docId)throws UserNotExist, DocNotExist, NotyetCollect;
 
     public ArrayList<Document> getDocumentBySpaceId(String userspaceId)throws SpaceNotExist;
 
