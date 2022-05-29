@@ -21,7 +21,12 @@ public interface MessageDao {
     /**
      * @return 返回的Message对象额外需要发送者、团队处理中的团队、用户、文档的名称，以及申请/邀请处理的情况
      */
-    public List<Message> selectMsg(String userId);
+    public Message selectMsg(String msgId);
+
+    /**
+     * @return 返回的Message对象额外需要发送者、团队处理中的团队、用户、文档的名称，以及申请/邀请处理的情况
+     */
+    public List<Message> selectMsgByUser(String userId);
 
     /**
      * @return 返回的Message对象额外需要发送者、团队处理中的团队、用户、文档的名称，以及申请/邀请处理的情况
