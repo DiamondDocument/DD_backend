@@ -1,37 +1,95 @@
 package diamondpick.dd_backend.Dao;
 
 import diamondpick.dd_backend.Entity.Message;
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.DuplicateKeyException;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Mapper
 public interface MessageDao {
 
-    public void insertMsg(String msgId, String senderId, String receiverId, String msgType, String msgContent, String dealId, String docId)throws DuplicateKeyException, DataIntegrityViolationException;
+    /**
+     * 插入消息
+     *
+     * @param msgId      消息id
+     * @param senderId   发送者id
+     * @param receiverId 接收者id
+     * @param msgType    消息类型
+     * @param msgContent 消息内容
+     * @param docId      消息所属文档id
+     * @param dealId     消息所属处理id
+     * @throws DuplicateKeyException           主键冲突异常
+     * @throws DataIntegrityViolationException 数据完整性异常
+     */
+    @Insert("insert into messages (msg_id, sender_id, receiver_id, send_time, msg_type, msg_content, msg_status, msg_doc_id,\n" +
+            "                      msg_deal_id)\n" +
+            "values (#{param1}, #{param2}, #{param3}, now(), #{param4}, #{param5}, 0, #{param6}, #{param7})")
+    public void insertMsg(String msgId, String senderId, String receiverId, String msgType, String msgContent, String docId, String dealId) throws DuplicateKeyException, DataIntegrityViolationException;
 
     /**
-     * 直接标记已读
+     * 更新消息状态，标记已读
+     *
+     * @param msgId 消息id
      */
-    public void updateStatusToRead(String msgId);
+    @Update("update messages\n" +
+            "set msg_status = 1\n" +
+            "where msg_id = #{param1}")
+    public void updateStatusToRead(String msgId) throws DataIntegrityViolationException;
 
     /**
-     * @return 返回的Message对象额外需要发送者、团队处理中的团队、用户、文档的名称，以及申请/邀请处理的情况
+     * 根据用户选择消息
+     *
+     * @param userId 用户id
+     * @return 返回的Message对象额外需要发送者、团队处理中的团队、用户、文档的名称
      */
-    public Message selectMsg(String msgId);
+    @Select("select msg.*,\n" +
+            "       us.nickname as sender_name,\n" +
+            "       ur.nickname as receiver_name,\n" +
+            "       doc.name    as msg_doc_name,\n" +
+            "       td.user_id  as user_id,\n" +
+            "       td.team_id  as team_id\n" +
+            "from messages msg,\n" +
+            "     users us,\n" +
+            "     users ur,\n" +
+            "     documents doc,\n" +
+            "     team_deal td\n" +
+            "where msg.sender_id = us.user_id\n" +
+            "  and msg.receiver_id = ur.user_id\n" +
+            "  and msg.msg_doc_id = doc.doc_id\n" +
+            "  and msg.msg_deal_id = td.deal_id\n" +
+            "  and msg.receiver_id = #{param1}\n" +
+            "  and td.deal_status = 0")
+    public List<Message> selectMsg(String userId);
 
     /**
-     * @return 返回的Message对象额外需要发送者、团队处理中的团队、用户、文档的名称，以及申请/邀请处理的情况
+     * 根据用户和消息类型选择消息
+     *
+     * @param userId  用户id
+     * @param msgType 消息类型
+     * @return 返回的Message对象额外需要发送者、团队处理中的团队、用户、文档的名称
      */
-    public List<Message> selectMsgByUser(String userId);
-
-    /**
-     * @return 返回的Message对象额外需要发送者、团队处理中的团队、用户、文档的名称，以及申请/邀请处理的情况
-     */
-    public List<Message>  selectMsgByType(String userId, int MsgType);
-
-
+    @Select("select msg.*,\n" +
+            "       us.nickname as sender_name,\n" +
+            "       ur.nickname as receiver_name,\n" +
+            "       doc.name    as msg_doc_name,\n" +
+            "       td.user_id  as user_id,\n" +
+            "       td.team_id  as team_id\n" +
+            "from messages msg,\n" +
+            "     users us,\n" +
+            "     users ur,\n" +
+            "     documents doc,\n" +
+            "     team_deal td\n" +
+            "where msg.sender_id = us.user_id\n" +
+            "  and msg.receiver_id = ur.user_id\n" +
+            "  and msg.msg_doc_id = doc.doc_id\n" +
+            "  and msg.msg_deal_id = td.deal_id\n" +
+            "  and msg.receiver_id = #{param1}\n" +
+            "  and msg.msg_type = #{param2}\n" +
+            "  and td.deal_status = 0;")
+    public List<Message> selectMsgByType(String userId, int msgType);
 }

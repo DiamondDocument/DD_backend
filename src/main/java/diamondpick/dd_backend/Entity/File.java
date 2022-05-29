@@ -24,5 +24,5 @@ public interface File {
     public Date getDeleteTime();
     public Date getCreateTime();
     /**@return 文件夹不必返回有意义的值*/
-    public String getSize();
+    public String getSize() throws DocNotExist;
 }
