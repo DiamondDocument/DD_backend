@@ -24,11 +24,13 @@ public interface UserDao {
     @Select("select * from users\n" +
             "    where user_id = #{param1}")
     public User selectUser(String userId);
-
+    @Select("select * from users\n" +
+            "    where email = #{param1}")
     public User selectUserByEmail(String email);
-
+    @Select("select distinct * from team_member\n" +
+            "    where team_id = #{param1}")
     List<User> selectMember(String teamId);
-
+    @Select("select * from users where user_id = (select captain_id from teams where team_id = #{param1} ")
     User selectCaption(String teamId);
 
 
