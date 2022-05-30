@@ -114,4 +114,12 @@ public class Message {
     public String getTeamId() {
         return teamId;
     }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public String getTeamName() {
+        return teamName;
+    }
 }

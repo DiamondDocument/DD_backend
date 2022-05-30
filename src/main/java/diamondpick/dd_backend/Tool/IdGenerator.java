@@ -8,44 +8,44 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 public class IdGenerator {
     //todo  是不是可以搞一个参数为type的构造方法，然后getId不用参数了？ 这样可能更像一个类吧（笑哭
+    @Autowired
+    private static FolderDao folderDao;
+
+    @Autowired
+    private static DocumentDao documentDao;
+
+    @Autowired
+    private static MessageDao messageDao;
+
     /**
      * 'f': folder文件夹
      * 'd': document文档
      * 'm': message消息
      */
-    public char idType;
-    public int idNum;
+    private char idType;
+    private String newId;
+    private static int folderIdNum = Integer.parseInt(folderDao.selectMaxId().substring(1));
+    private static int documentIdNum = Integer.parseInt(documentDao.selectMaxId().substring(1));
+    private static int messageIdNum = Integer.parseInt(messageDao.selectMaxId().substring(1));
 
-    @Autowired
-    private FolderDao folderDao;
-
-    @Autowired
-    private DocumentDao documentDao;
-
-    @Autowired
-    private MessageDao messageDao;
-
-    public String getId(String type) throws Illegal {
-        String newId;
-        switch (type) {
-            case "folder":
-                idType = 'f';
-                idNum = Integer.parseInt(folderDao.selectMaxId().substring(1)) + 1;
-                newId = idType + String.format("%06d", idNum);
+    public IdGenerator(char idType) throws Illegal {
+        this.idType = idType;
+        switch (idType) {
+            case 'f':
+                newId = "f" + String.format("%06d", folderIdNum++);
                 break;
-            case "document":
-                idType = 'd';
-                idNum = Integer.parseInt(documentDao.selectMaxId().substring(1)) + 1;
-                newId = idType + String.format("%06d", idNum);
+            case 'd':
+                newId = "d" + String.format("%06d", documentIdNum++);
                 break;
-            case "message":
-                idType = 'm';
-                idNum = Integer.parseInt(messageDao.selectMaxId().substring(1)) + 1;
-                newId = idType + String.format("%06d", idNum);
+            case 'm':
+                newId = "m" + String.format("%06d", messageIdNum++);
                 break;
             default:
                 throw new Illegal();
         }
+    }
+
+    public String getNewId() {
         return newId;
     }
 }
