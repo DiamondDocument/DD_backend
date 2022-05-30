@@ -19,7 +19,9 @@ public class Message {
     private String receiverName;
     private String msgDocName;
     private String userId;
+    private String userName;
     private String teamId;
+    private String teamName;
 
     public String getMsgId() {
         return msgId;
