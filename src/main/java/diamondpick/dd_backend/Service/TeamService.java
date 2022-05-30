@@ -37,14 +37,14 @@ public interface TeamService {
      * @throws AlreadyMember 已经在团队里
      * 需要发送通知
      */
-    public void InviteMember(String teamId, String userId) throws NotYetDeal, AlreadyMember, OtherFail;
+    public void inviteMember(String teamId, String userId) throws NotYetDeal, AlreadyMember, OtherFail;
 
     /**
      * @throws NotYetDeal     之前的申请或者邀请未处理
      * @throws AlreadyMember  已经在团队里
      * 需要发送通知
      */
-    public void ApplyJoinTeam(String userId, String teamId) throws NotYetDeal, AlreadyMember, OtherFail;
+    public void applyJoinTeam(String userId, String teamId) throws NotYetDeal, AlreadyMember, OtherFail;
 
     /**
      * @throws NoDealTodo 没有待处理的申请或者邀请
