@@ -150,4 +150,14 @@ public interface FolderDao {
             "  and f.creator_id = u.user_id\n" +
             "  and f.is_delete = true")
     public List<Folder> selectDeleted(String type, String spaceOwnerId) throws BadSqlGrammarException;
+
+    /**
+     * 查询文件夹最大id
+     * @return 文件夹最大id
+     */
+    @Select("select folder_id\n" +
+            "from folders\n" +
+            "order by convert(folder_id using gbk) desc\n" +
+            "limit 1")
+    public String selectMaxId();
 }

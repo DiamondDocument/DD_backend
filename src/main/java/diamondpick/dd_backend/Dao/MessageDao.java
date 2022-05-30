@@ -29,7 +29,7 @@ public interface MessageDao {
     @Insert("insert into messages (msg_id, sender_id, receiver_id, send_time, msg_type, msg_content, msg_status, msg_doc_id,\n" +
             "                      msg_deal_id)\n" +
             "values (#{param1}, #{param2}, #{param3}, now(), #{param4}, #{param5}, 0, #{param6}, #{param7})")
-    public void insertMsg(String msgId, String senderId, String receiverId, String msgType, String msgContent, String docId, String dealId) throws DuplicateKeyException, DataIntegrityViolationException;
+    public void insertMsg(String msgId, String senderId, String receiverId, int msgType, String msgContent, String docId, String dealId) throws DuplicateKeyException, DataIntegrityViolationException;
 
     /**
      * 更新消息状态，标记已读
@@ -92,4 +92,14 @@ public interface MessageDao {
             "  and msg.msg_type = #{param2}\n" +
             "  and td.deal_status = 0;")
     public List<Message> selectMsgByType(String userId, int msgType);
+
+    /**
+     * 查询消息最大id
+     * @return 消息最大id
+     */
+    @Select("select msg_id\n" +
+            "from messages\n" +
+            "order by convert(msg_id using gbk) desc\n" +
+            "limit 1")
+    public String selectMaxId();
 }

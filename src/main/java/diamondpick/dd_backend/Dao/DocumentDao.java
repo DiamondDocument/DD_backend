@@ -124,4 +124,13 @@ public interface DocumentDao {
     @Select("select count(*) from documents")
     public int numOfDoc();
 
+    /**
+     * 查询文档最大id
+     * @return 文档最大id
+     */
+    @Select("select doc_id\n" +
+            "from documents\n" +
+            "order by convert(doc_id using gbk) desc\n" +
+            "limit 1")
+    public String selectMaxId();
 }
