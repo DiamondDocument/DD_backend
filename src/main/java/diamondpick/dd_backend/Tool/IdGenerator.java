@@ -7,6 +7,7 @@ import diamondpick.dd_backend.Exception.Illegal.Illegal;
 import org.springframework.beans.factory.annotation.Autowired;
 
 public class IdGenerator {
+    //todo  是不是可以搞一个参数为type的构造方法，然后getId不用参数了？ 这样可能更像一个类吧（笑哭
     /**
      * 'f': folder文件夹
      * 'd': document文档
