@@ -11,11 +11,7 @@ import java.util.List;
 
 @Mapper
 public interface UserDao {
-
-
-
-    @Insert("insert into users (user_id, nickname, password, intro, email, space_id)\n" +
-            "        values (#{param1}, #{param2}, #{param3}, #{param4}, #{param5}, #{param6})")
+    @Insert("insert into users (user_id, nickname, password, intro, email, space_id) values (#{param1}, #{param2}, #{param3}, #{param4}, #{param5}, #{param6})")
     public void insertUser(String userId, String nickname, String password, String intro, String email, int spaceId)throws DuplicateKeyException, DataIntegrityViolationException;
 
     @Update("update users set ${param2} = #{param3} where user_id = #{param1}")
@@ -30,7 +26,7 @@ public interface UserDao {
     @Select("select distinct * from team_member\n" +
             "    where team_id = #{param1}")
     List<User> selectMember(String teamId);
-    @Select("select * from users where user_id = (select captain_id from teams where team_id = #{param1} ")
+    @Select("select user_id, nickname, password, users.intro, email, users.space_id from users,teams where user_id =captain_id and team_id = #{param1} ")
     User selectCaption(String teamId);
 
 

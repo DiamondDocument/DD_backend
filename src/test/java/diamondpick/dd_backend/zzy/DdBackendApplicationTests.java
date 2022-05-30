@@ -23,11 +23,11 @@ class DdBackendApplicationTests {
 
     @Autowired
     UserService userService;
-    @Test
+   /* @Test
     void updateDoc(){
 //        documentDao.insertDoc("123", "123", "123", 2, "123");
-        documentDao.updateDoc("123", "modify_time", new Date());
-    }
+        documentDao.updateDoc("1233", "modify_time", new Date());
+    }*/
 //    @Test
 //    void collect(){
 //        try{

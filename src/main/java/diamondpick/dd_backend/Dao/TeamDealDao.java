@@ -2,18 +2,19 @@ package diamondpick.dd_backend.Dao;
 
 import diamondpick.dd_backend.Entity.TeamDeal;
 import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 import org.springframework.dao.DataIntegrityViolationException;
 
-
+@Mapper
 public interface TeamDealDao {
 
 
     /*
      * @param type 1 为邀请，2为申请
      */
-    @Insert("insert into team_deal values(#{param1}, #{param2},#{param3}")
+    @Insert("insert into team_deal(team_id,user_id,deal_type) values(#{param1}, #{param2}, #{param3})")
     public void insertDeal(String teamId, String userId, int type)throws DataIntegrityViolationException;
     @Update("update team_deal set deal_status = #{param2} where deal_id = #{param1}")
     public void updateStatus(int dealId, int newStatus)throws DataIntegrityViolationException;
