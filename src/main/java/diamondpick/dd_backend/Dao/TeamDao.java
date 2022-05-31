@@ -17,7 +17,6 @@ public interface TeamDao {
     @Insert("insert into team_member(team_id,member_id)\n" +
             "    values(#{param1},#{param2})")
     public void insertMember(String teamId, String memberId)throws DataIntegrityViolationException;
-    //在删除团队之前要首先对team_member,team_deal进行删除
     @Delete("delete from teams where team_id = #{param1}")
     public void deleteTeam(String teamId);
     @Delete("delete from team_member where team_id = #{param1} and member_id = #{param2}")

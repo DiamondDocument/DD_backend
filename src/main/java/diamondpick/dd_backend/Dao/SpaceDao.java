@@ -32,7 +32,6 @@ public interface SpaceDao {
 
     /**
      * 删除空间
-     *
      * @param spaceId
      */
     @Delete("delete from spaces\n" +

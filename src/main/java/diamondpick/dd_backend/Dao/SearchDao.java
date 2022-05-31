@@ -10,7 +10,7 @@ import org.apache.ibatis.annotations.Select;
 import java.util.List;
 @Mapper
 public interface SearchDao {
-
+//todo 可能需要再优化一下
     /**根据用户信息模糊查找*/
     @Select("select * from users where user_id like '%${value}%' or nickname like '%${value}%'")
     public List<User> selectUser(String value);

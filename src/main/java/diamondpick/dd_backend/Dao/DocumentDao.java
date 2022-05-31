@@ -28,6 +28,9 @@ public interface DocumentDao {
     @Delete("delete from documents where doc_id = #{param1}")
     public void deleteDoc(String docId);
 
+    //todo
+    public void deleteDocInSpace(int spaceId);
+
     @Delete("delete from document_collector where collector_id = #{param1} and doc_id = #{param2}")
     public void deleteCollection(String collectorId, String docId);
 
@@ -120,9 +123,6 @@ public interface DocumentDao {
     /** 只包括未删除的，按照时间排序，如果多于limit个则显示limit个 */
     public List<Document> selectRecent(String browserId, int limit);
 
-
-    @Select("select count(*) from documents")
-    public int numOfDoc();
 
     /**
      * 查询文档最大id

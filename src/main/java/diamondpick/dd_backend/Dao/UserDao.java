@@ -30,33 +30,6 @@ public interface UserDao {
     User selectCaption(String teamId);
 
 
-//    @Select("select * from users\n" +
-//            "    where ${param1} = #{param2}")
-//    @ResultType(User.class)
-//    public List<User> selectUserBy(String key, Object value);
-
-
-//    /**
-//     * @return 返回的User对象中只有用户名和用户昵称。
-//     */
-//    public User selectCreator(String docId);
-//
-//
-//
-//    /**
-//     * @return 返回的User对象中只有用户名和用户昵称。
-//     */
-//    User selectModifier(String docId);
-//
-//    /**
-//     * @return 返回的User对象中只有用户名和用户昵称。
-//     */
-//    User selectSender(String msgId);
-//
-//    /**
-//     * @return 返回的User对象中只有用户名和用户昵称。
-//     */
-//    User selectReceiver(String msgId);
 
 
 }
