@@ -11,7 +11,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 public interface TeamDealDao {
 
 
-    /*
+    /**
      * @param type 1 为邀请，2为申请
      */
     @Insert("insert into team_deal(team_id,user_id,deal_type) values(#{param1}, #{param2}, #{param3})")
@@ -19,7 +19,7 @@ public interface TeamDealDao {
     @Update("update team_deal set deal_status = #{param2} where deal_id = #{param1}")
     public void updateStatus(int dealId, int newStatus)throws DataIntegrityViolationException;
 
-    //按时间排序的最近的
+    //todo 需要让TeamDeal返回对应的团队名和用户名（通过join等语句）
     @Select("select * from team_deal where team_id = #{param1} and user_id = #{param2} order by create_time desc limit 1")
     public TeamDeal selectDeal(String teamId, String userId);
 
