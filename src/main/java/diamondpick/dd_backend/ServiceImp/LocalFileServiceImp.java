@@ -16,6 +16,7 @@ import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 
 
+/**存储的所有文件都存放在了程序运行时所在目录的/DD_file文件夹下*/
 @Service
 public class LocalFileServiceImp implements LocalFileService {
     @Autowired
