@@ -4,10 +4,11 @@ import java.util.Date;
 
 public class Message {
     /**
-     * 额外需要发送者、团队处理中的团队、用户、设计文档的名称
+     * 额外需要发送者名称、相关文档名称、相关团队名称、处理结果（如果是邀请、申请处理通知）
      */
     private String msgId;
     private String senderId;
+    private String senderName;
     private String receiverId;
     private Date sendTime;
     private int msgType;
@@ -15,13 +16,10 @@ public class Message {
     private boolean msgStatus;
     private String msgDocId;
     private String msgDealId;
-    private String senderName;
-    private String receiverName;
     private String msgDocName;
-    private String userId;
-    private String userName;
     private String teamId;
     private String teamName;
+    private int dealStatus;
 
     public String getMsgId() {
         return msgId;
@@ -99,27 +97,43 @@ public class Message {
         return senderName;
     }
 
-    public String getReceiverName() {
-        return receiverName;
+    public void setSenderName(String senderName) {
+        this.senderName = senderName;
+    }
+
+    public boolean isMsgStatus() {
+        return msgStatus;
     }
 
     public String getMsgDocName() {
         return msgDocName;
     }
 
-    public String getUserId() {
-        return userId;
+    public void setMsgDocName(String msgDocName) {
+        this.msgDocName = msgDocName;
     }
 
     public String getTeamId() {
         return teamId;
     }
 
-    public String getUserName() {
-        return userName;
+    public void setTeamId(String teamId) {
+        this.teamId = teamId;
     }
 
     public String getTeamName() {
         return teamName;
+    }
+
+    public void setTeamName(String teamName) {
+        this.teamName = teamName;
+    }
+
+    public int getDealStatus() {
+        return dealStatus;
+    }
+
+    public void setDealStatus(int dealStatus) {
+        this.dealStatus = dealStatus;
     }
 }
