@@ -13,6 +13,7 @@ public interface MessageService {
      * 需要自动按照deal对应来确定发送者和接收者，同意或者拒绝等
      *
      * @param dealId 对应团队处理id
+     * @throws OperationFail 操作失败
      */
     public void newTeamDealMsg(int dealId) throws OperationFail;
 
@@ -23,6 +24,7 @@ public interface MessageService {
      * @param docId      文档id
      * @param receiverId 接收者id
      * @param comment    评论内容
+     * @throws OperationFail 操作失败
      */
     public void newCommentMsg(String senderId, String docId, String receiverId, String comment) throws OperationFail;
 
@@ -32,6 +34,7 @@ public interface MessageService {
      * @param senderId   发送者id
      * @param docId      文档id
      * @param receiverId 接收者id
+     * @throws OperationFail 操作失败
      */
     public void newAtMsg(String senderId, String docId, String receiverId) throws OperationFail;
 
@@ -41,6 +44,7 @@ public interface MessageService {
      * @param userId     用户id
      * @param onlyUnread 是否只查询未读消息
      * @return 消息列表
+     * @throws OperationFail 操作失败
      */
     List<Message> getMsg(String userId, boolean onlyUnread) throws OperationFail;
 
@@ -48,6 +52,7 @@ public interface MessageService {
      * 标记消息已读，若消息已读则不进行任何操作
      *
      * @param msgId 消息id
+     * @throws OperationFail 操作失败
      */
     public void setMsgToRead(String msgId) throws OperationFail;
 }
