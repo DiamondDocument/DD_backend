@@ -49,25 +49,19 @@ public interface MessageDao {
      * @return 返回的Message对象额外需要发送者、团队处理中的团队、用户、文档的名称
      */
     @Select("select msg.*,\n" +
-            "       us.nickname as sender_name,\n" +
-            "       ur.nickname as receiver_name,\n" +
-            "       doc.name    as msg_doc_name,\n" +
-            "       td.user_id  as user_id,\n" +
-            "       utd.nickname as user_name,\n" +
-            "       td.team_id  as team_id,\n" +
-            "       ttd.name as team_name\n" +
+            "       us.nickname    as sender_name,\n" +
+            "       doc.name       as msg_doc_name,\n" +
+            "       td.team_id     as team_id,\n" +
+            "       ttd.name       as team_name,\n" +
+            "       td.deal_status as deal_status\n" +
             "from messages msg,\n" +
             "     users us,\n" +
-            "     users ur,\n" +
             "     documents doc,\n" +
             "     team_deal td,\n" +
-            "     users utd,\n" +
             "     teams ttd\n" +
             "where msg.sender_id = us.user_id\n" +
-            "  and msg.receiver_id = ur.user_id\n" +
             "  and msg.msg_doc_id = doc.doc_id\n" +
             "  and msg.msg_deal_id = td.deal_id\n" +
-            "  and td.user_id = utd.user_id\n" +
             "  and td.team_id = ttd.team_id\n" +
             "  and msg.receiver_id = #{param1}\n" +
             "  and td.deal_status = 0")
@@ -81,25 +75,19 @@ public interface MessageDao {
      * @return 返回的Message对象额外需要发送者、团队处理中的团队、用户、文档的名称
      */
     @Select("select msg.*,\n" +
-            "       us.nickname  as sender_name,\n" +
-            "       ur.nickname  as receiver_name,\n" +
-            "       doc.name     as msg_doc_name,\n" +
-            "       td.user_id   as user_id,\n" +
-            "       utd.nickname as user_name,\n" +
-            "       td.team_id   as team_id,\n" +
-            "       ttd.name     as team_name\n" +
+            "       us.nickname    as sender_name,\n" +
+            "       doc.name       as msg_doc_name,\n" +
+            "       td.team_id     as team_id,\n" +
+            "       ttd.name       as team_name,\n" +
+            "       td.deal_status as deal_status\n" +
             "from messages msg,\n" +
             "     users us,\n" +
-            "     users ur,\n" +
             "     documents doc,\n" +
             "     team_deal td,\n" +
-            "     users utd,\n" +
             "     teams ttd\n" +
             "where msg.sender_id = us.user_id\n" +
-            "  and msg.receiver_id = ur.user_id\n" +
             "  and msg.msg_doc_id = doc.doc_id\n" +
             "  and msg.msg_deal_id = td.deal_id\n" +
-            "  and td.user_id = utd.user_id\n" +
             "  and td.team_id = ttd.team_id\n" +
             "  and msg.receiver_id = #{param1}\n" +
             "  and msg.msg_type = #{param2}\n" +
