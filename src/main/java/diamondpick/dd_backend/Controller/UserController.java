@@ -31,8 +31,8 @@ public class UserController {
     private UserService userService;
     @Autowired
     private MailService mailService;
-    @Autowired
-    private FileService fileService;
+    //@Autowired
+    //private FileService fileService;
     @Autowired
     private EmailService emailService;
     @Autowired

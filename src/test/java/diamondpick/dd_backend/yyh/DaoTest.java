@@ -75,10 +75,10 @@ class DdBackendApplicationTest {
     /*void upsetStatus(){
         teamDealDao.updateStatus(1,1);
     }*/
-    /*void selectDeal(){
-        teamDealDao.selectDeal("t123","u123");
-    }*/
-    void deleteTeam(){
-        teamDao.deleteTeam("t123");
+    void selectDeal(){
+        teamDealDao.selectDeal("t123","u124");
     }
+    /*void deleteTeam(){
+        teamDao.deleteTeam("t123");
+    }*/
 }

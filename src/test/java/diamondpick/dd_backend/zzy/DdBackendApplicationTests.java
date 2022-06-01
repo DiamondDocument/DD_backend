@@ -26,7 +26,7 @@ class DdBackendApplicationTests {
 
     @Autowired
     UserService userService;
-    @Test
+    /*@Test
     void selectDoc(){
         Document doc = documentDao.selectDoc("123");
         try{
@@ -51,5 +51,5 @@ class DdBackendApplicationTests {
         docs = documentDao.selectRootDir("user","1");
         docs = documentDao.selectDeleted("user", "1");
         docs = documentDao.selectCollection("1");
-    }
+    }*/
 }
