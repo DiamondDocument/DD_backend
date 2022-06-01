@@ -17,6 +17,17 @@ import java.io.File;
 @Service
 public class MailService {
 
+    /*
+    Random random = new Random();
+        String identifying = "";
+        for (int i = 0; i < 5; i++) {
+            identifying += random.nextInt(10);
+        }
+        mailService.sendSimpleMail(email, "注册验证码", identifying);
+        map.put("error", 0);
+        map.put("identifyingCode", identifying);
+        return map;
+     */
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Value("${spring.mail.username}")

@@ -1,6 +1,8 @@
 package diamondpick.dd_backend.ServiceImp;
 
 import diamondpick.dd_backend.Exception.Illegal.Illegal;
+import diamondpick.dd_backend.Exception.Illegal.NameIllegal;
+import diamondpick.dd_backend.Exception.Illegal.PwdIllegal;
 import diamondpick.dd_backend.Service.ConstraintService;
 
 public class ConstraintImp implements ConstraintService {
@@ -11,12 +13,12 @@ public class ConstraintImp implements ConstraintService {
     }
 
     @Override
-    public void checkName(String nickname) throws Illegal {
+    public void checkName(String nickname) throws NameIllegal {
 
     }
 
     @Override
-    public void checkPassword(String password) throws Illegal {
+    public void checkPassword(String password) throws PwdIllegal {
 
     }
 

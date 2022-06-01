@@ -5,7 +5,10 @@ import diamondpick.dd_backend.Dao.TeamDao;
 import diamondpick.dd_backend.Dao.UserDao;
 import diamondpick.dd_backend.Exception.Duplicate.DuplicateId;
 import diamondpick.dd_backend.Exception.Illegal.Illegal;
+import diamondpick.dd_backend.Exception.Illegal.NameIllegal;
+import diamondpick.dd_backend.Exception.Illegal.PwdIllegal;
 import diamondpick.dd_backend.Exception.NotExist.NotExist;
+import diamondpick.dd_backend.Exception.OtherFail;
 import diamondpick.dd_backend.Exception.User.PwdError;
 import diamondpick.dd_backend.Entity.Team;
 import diamondpick.dd_backend.Entity.User;
@@ -30,10 +33,14 @@ public class UserImp implements UserService {
     ConstraintService constraintService;
 
     @Override
-    public void newUser(String userId, String nickname, String password, String email) throws Illegal, DuplicateId {
+    public void newUser(String userId, String nickname, String password, String email) throws NameIllegal, PwdIllegal,  DuplicateId, OtherFail {
         constraintService.checkName(nickname);
         constraintService.checkPassword(password);
-        constraintService.checkUserId(userId);
+        try{
+            constraintService.checkUserId(userId);
+        }catch (Exception e){
+            throw new OtherFail();
+        }
         spaceDao.insertSpace();
         try{
             userDao.insertUser(userId, nickname, password, null, email, spaceDao.selectSpace());
@@ -46,14 +53,16 @@ public class UserImp implements UserService {
 
     /**只要正常返回就算登陆成功*/
     @Override
-    public void login(String userId, String password) throws PwdError, NotExist {
+    public User login(String userId, String email, String password) throws PwdError, NotExist, OtherFail {
+        if(email == null && userId == null || email != null && userId != null)throw new OtherFail();
         User user = userDao.selectUser(userId);
         if(user == null)throw new NotExist();
         if(!user.getPassword().equals(password))throw new PwdError();
+        return user;
     }
 
     @Override
-    public void modifyNickname(String userId, String newNickname) throws Illegal, NotExist {
+    public void modifyNickname(String userId, String newNickname) throws Illegal, NotExist, OtherFail {
         if( userDao.selectUser(userId) == null )throw new NotExist();
         constraintService.checkName(newNickname);
         try{
@@ -64,7 +73,7 @@ public class UserImp implements UserService {
     }
 
     @Override
-    public void modifyPassword(String userId, String newPwd) throws Illegal, NotExist {
+    public void modifyPassword(String userId, String newPwd) throws Illegal, NotExist, OtherFail {
         if(userDao.selectUser(userId) == null)throw new NotExist();
         constraintService.checkPassword(newPwd);
         try{
@@ -75,7 +84,7 @@ public class UserImp implements UserService {
     }
 
     @Override
-    public void modifyEmail(String userId, String newEmail) throws Illegal, NotExist {
+    public void modifyEmail(String userId, String newEmail) throws Illegal, NotExist, OtherFail {
         if( userDao.selectUser(userId) == null )throw new NotExist();
         try{
             userDao.updateUser(userId, "password", newEmail);
@@ -85,7 +94,7 @@ public class UserImp implements UserService {
     }
 
     @Override
-    public void modifyIntro(String userId, String newIntro) throws Illegal, NotExist {
+    public void modifyIntro(String userId, String newIntro) throws Illegal, NotExist, OtherFail {
         if( userDao.selectUser(userId) == null )throw new NotExist();
         constraintService.checkIntro(newIntro);
         try{
@@ -95,7 +104,7 @@ public class UserImp implements UserService {
         }
     }
     @Override
-    public List<Team> selectTeams(String userId) throws NotExist {
+    public List<Team> selectTeams(String userId) throws NotExist, OtherFail {
         if(userDao.selectUser(userId) == null)throw new NotExist();
         List<Team> teamList = teamDao.selectTeamByCaptain(userId);
         teamList.addAll(teamDao.selectTeamByMember(userId));

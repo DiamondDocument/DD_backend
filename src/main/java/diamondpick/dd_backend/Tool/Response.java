@@ -2,6 +2,7 @@ package diamondpick.dd_backend.Tool;
 
 import java.util.HashMap;
 
+
 public class Response{
     public Response(String... key){
         this.keys = key;
