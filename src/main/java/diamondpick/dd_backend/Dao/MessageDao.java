@@ -40,7 +40,6 @@ public interface MessageDao {
             "where msg_id = #{param1}")
     public void updateStatusToRead(String msgId) throws DataIntegrityViolationException;
 
-    //todo 按照新Message定义修改各select接口
 
     /**
      * 根据用户选择消息

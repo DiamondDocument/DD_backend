@@ -28,7 +28,10 @@ public interface DocumentDao {
     @Delete("delete from documents where doc_id = #{param1}")
     public void deleteDoc(String docId);
 
-    //todo
+    /**
+     * @param spaceId 删除指定space的所有文档（解散团队用）
+     */
+    @Delete("delete from documents where space_id = #{param1}")
     public void deleteDocInSpace(int spaceId);
 
     @Delete("delete from document_collector where collector_id = #{param1} and doc_id = #{param2}")
@@ -44,11 +47,13 @@ public interface DocumentDao {
     @Update("update documents set now_auth = min(#{param2}, self_auth) where parent_id = #{param1}")
     public void updateSubDirAuth(String parentId, int newAuth)throws DataIntegrityViolationException;
 
-    //todo
     /** 更新某空间根目录下的所有文件夹的now_auth（取自身的和输入参数中的最小值）
      * @param type 可以是"team"和"user"的一种，表示是团队空间还是用户空间
      * @param spaceOwnerId 空间所有者的id（可能是团队id或者用户id）
      */
+    @Update("update documents\n" +
+            "set now_auth = min(#{param3}, self_auth)\n" +
+            "where space_id in (select space_id from ${param1}s where ${param1}_id = #{param2}) and parent_id is null")
     public void updateRootDirAuth(String type, String spaceOwnerId, int newAuth)throws DataIntegrityViolationException;
 
     /** 更新浏览时间至现在时间 */
