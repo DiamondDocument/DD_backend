@@ -78,6 +78,10 @@ public interface DocumentDao {
             "doc.is_delete = false")
     public List<Document> selectCollection(String collectorId);
 
+    @Select("select doc_id from document_collector where doc_id = #{param2} and collector_id = #{param1}")
+    public String selectCollectorAndDoc(String collectorId, String docId);
+
+
 
     @Select("select doc.*, m.nickname as modifier_name, c.nickname as creator_name " +
             "from documents as doc, users as m, users as c  " +

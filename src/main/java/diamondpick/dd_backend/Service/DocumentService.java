@@ -17,7 +17,7 @@ public interface DocumentService {
     /**
      * @return 返回新建文档的id
      */
-    public String newDoc(String name, String spaceId, String userId, String parentId)throws OperationFail, OtherFail;
+    public String newDoc(String name, String spaceId, String userId, String parentId)throws OperationFail;
     /**
      * @return 返回新建文档的id
      */
@@ -26,7 +26,7 @@ public interface DocumentService {
     /**
      * @return 返回一个形式化的字符串，如"98K"或者"1.2M"
      */
-    public String getSize(String docId) throws OtherFail;
+    public String getSize(String docId) throws OperationFail;
 
     public void collect(String userId, String docId)throws  AlreadyCollect, NoAuth, OtherFail;
 
