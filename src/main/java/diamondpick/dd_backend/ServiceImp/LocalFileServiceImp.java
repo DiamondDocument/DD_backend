@@ -1,9 +1,11 @@
 package diamondpick.dd_backend.ServiceImp;
 
+import com.aspose.words.Document;
 import diamondpick.dd_backend.Dao.DocumentDao;
 import diamondpick.dd_backend.Dao.TemplateDao;
 import diamondpick.dd_backend.Dao.UserDao;
 import diamondpick.dd_backend.Exception.NotExist.*;
+import diamondpick.dd_backend.Exception.OperationFail;
 import diamondpick.dd_backend.Exception.OtherFail;
 import diamondpick.dd_backend.Service.LocalFileService;
 import gui.ava.html.image.generator.HtmlImageGenerator;
@@ -255,6 +257,8 @@ public class LocalFileServiceImp implements LocalFileService {
         return new byte[0];
     }
 
+
+
     @Override
     public String getTemplate(String tempId) throws NotExist, OtherFail {
         if(templateDao.selectTemp(tempId) == null) throw new NotExist();
@@ -335,5 +339,43 @@ public class LocalFileServiceImp implements LocalFileService {
         dimension.width = 100;
         dimension.height = (int)(100 * 1.414);
         imageGenerator.saveAsImage(thumbnail);
+    }
+
+    @Override
+    public void htmlToDocx(String docId) throws NotExist, OtherFail {
+        Document doc = null;
+        try{
+            doc = new Document(documentLocation + docId + ".html");
+        }catch (Exception e){
+            throw new NotExist();
+        }
+        try {
+            doc.save(baseLocation + "exportTmp.docx");
+        }catch (Exception e){
+            throw new OtherFail();
+        }
+    }
+
+    @Override
+    public byte[] getDocx() {
+        return getByLocation(baseLocation + "exportTmp.docx") ;
+    }
+
+    @Override
+    public byte[] docxToHtml(MultipartFile file) throws OperationFail {
+        Document doc = null;
+        try{
+            doc = new Document(file.getInputStream());
+        }catch (Exception e){
+            e.printStackTrace();
+            throw new OperationFail();
+        }
+        try {
+            doc.save("importTmp.html");
+            return readFromFile("importTmp.html");
+        }catch (Exception e){
+            e.printStackTrace();
+            throw new OperationFail();
+        }
     }
 }

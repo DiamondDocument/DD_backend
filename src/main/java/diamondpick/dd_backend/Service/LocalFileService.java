@@ -1,6 +1,7 @@
 package diamondpick.dd_backend.Service;
 
 import diamondpick.dd_backend.Exception.NotExist.*;
+import diamondpick.dd_backend.Exception.OperationFail;
 import diamondpick.dd_backend.Exception.OtherFail;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -26,8 +27,10 @@ public interface LocalFileService {
     public String getTemplate(String tempId) throws NotExist, OtherFail;
     public String getDocSize(String docId) throws NotExist, OtherFail;
 
-
-
     public String getContentTypeByPath(String location);
     public byte[] getByLocation(String location);
+
+    public void htmlToDocx(String docId) throws NotExist, OtherFail;
+    public byte[] getDocx();
+    public byte[] docxToHtml(MultipartFile file) throws OperationFail;
 }
