@@ -194,6 +194,24 @@ public class LocalFileServiceImp implements LocalFileService {
         }
     }
     @Override
+    public String getDocSize(String docId) throws NotExist, OtherFail {
+        if(documentDao.selectDoc(docId) == null) throw new NotExist();
+        try{
+            File file =  new File(documentLocation + docId + ".html");
+            long l = file.length();
+            if(l < 1024){
+                return l + "B";
+            }else if(l < 1024*1024){
+                return l/1024.0 + "KB";
+            }else{
+                return l/(1024.0*1024) + "MB";
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+            throw new OtherFail();
+        }
+    }
+    @Override
     public String getTemplate(String tempId) throws NotExist, OtherFail {
 //        if(documentDao.selectDoc(docId) == null) throw new NotExist();
         //todo
@@ -204,6 +222,8 @@ public class LocalFileServiceImp implements LocalFileService {
             throw new NotExist();
         }
     }
+
+
 
     @Override
     public byte[] getImage(String fileName) throws NotExist, OtherFail {

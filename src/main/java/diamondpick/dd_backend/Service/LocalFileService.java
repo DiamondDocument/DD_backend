@@ -20,6 +20,7 @@ public interface LocalFileService {
     public String getDocument(String docId) throws NotExist, OtherFail;
     public byte[] getImage(String fileName) throws NotExist, OtherFail;
     public String getTemplate(String tempId) throws NotExist, OtherFail;
+    public String getDocSize(String docId) throws DocNotExist, OtherFail;
 
     public String getUserAvatarContentType(String userId)throws NotExist;
     public String getTeamAvatarContentType(String teamId)throws NotExist;
