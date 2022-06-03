@@ -22,5 +22,6 @@ public interface TeamDealDao {
     @Select("select team_deal.*,nickname,name from team_deal,teams,users where team_deal.team_id = #{param1} and team_deal.user_id = #{param2} and users.user_id = #{param2} and teams.team_id = #{param1} order by create_time desc limit 1")
     public TeamDeal selectDeal(String teamId, String userId);
 
-
+    @Select("select * from team_deal where deal_id = #{param1}")
+    public TeamDeal selectDealByDealId(int dealId);
 }

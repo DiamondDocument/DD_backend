@@ -30,9 +30,7 @@ public interface FolderDao {
      *
      * @param docId 文档id
      */
-    @Update("update documents\n" +
-            "set parent_id = null\n" +
-            "where doc_id = #{param1}")
+    @Update("delete from folders where folder_id = #{param1}")
     public void deleteFolder(String docId);
 
     /**
@@ -40,7 +38,6 @@ public interface FolderDao {
      */
     @Delete("delete from folders where space_id = #{param1}")
     public void deleteDocInSpace(int spaceId);
-
 
     /**
      * 更新文件夹

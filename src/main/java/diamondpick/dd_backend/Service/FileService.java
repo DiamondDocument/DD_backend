@@ -36,21 +36,23 @@ public interface FileService {
     /**
      * 移动文件夹
      *
+     * @param fileId      文件id
      * @param newParentId 如果为空，则意为移至根目录
      * @throws OtherFail 其他错误
      * @throws NoAuth    没有权限
      */
-    public void moveFile(String newParentId) throws OtherFail, NoAuth;
+    void moveFile(String fileId, String newParentId) throws OtherFail, NoAuth;
 
     /**
      * 删除文件
      * 只需要将fileId代表的文件标记为delete就行了
      *
      * @param fileId 文件id（文档或文件夹）
+     * @param userId 删除者id
      * @throws OtherFail 其他错误
      * @throws NoAuth    没有权限
      */
-    public void deleteFile(String fileId) throws OtherFail, NoAuth;
+    void deleteFile(String fileId, String userId) throws OtherFail, NoAuth;
 
     /**
      * 永久删除文件
