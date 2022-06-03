@@ -14,7 +14,7 @@ import java.util.List;
 
 @Service
 public interface TeamService {
-    /**新建一个空间，根据空间新建团队*/
+    /**新建一个空间，根据空间新建团队，注意使用constraintService的接口判断约束*/
     public void newTeam(String name, String intro, String captainId)throws OtherFail, TeamNameIllegal;
     /**删除团队、对应空间和对应空间的所有文档*/
     public void dismissTeam(String teamId, String captainId) throws OperationFail;

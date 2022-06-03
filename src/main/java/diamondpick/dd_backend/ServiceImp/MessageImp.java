@@ -7,9 +7,10 @@ import diamondpick.dd_backend.Exception.OperationFail;
 import diamondpick.dd_backend.Service.MessageService;
 import diamondpick.dd_backend.Tool.IdGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
-
+@Service
 public class MessageImp implements MessageService {
     @Autowired
     private MessageDao messageDao;

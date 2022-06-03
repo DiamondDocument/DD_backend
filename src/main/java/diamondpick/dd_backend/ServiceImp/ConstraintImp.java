@@ -4,7 +4,9 @@ import diamondpick.dd_backend.Exception.Illegal.Illegal;
 import diamondpick.dd_backend.Exception.Illegal.NameIllegal;
 import diamondpick.dd_backend.Exception.Illegal.PwdIllegal;
 import diamondpick.dd_backend.Service.ConstraintService;
+import org.springframework.stereotype.Service;
 
+@Service
 public class ConstraintImp implements ConstraintService {
 //todo
     @Override

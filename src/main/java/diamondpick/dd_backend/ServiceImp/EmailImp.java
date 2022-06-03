@@ -1,5 +1,7 @@
-package diamondpick.dd_backend.Service;
+package diamondpick.dd_backend.ServiceImp;
 
+import diamondpick.dd_backend.Exception.OperationFail;
+import diamondpick.dd_backend.Service.EmailService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,21 +15,15 @@ import org.springframework.stereotype.Service;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Random;
 
 @Service
-public class MailService {
+public class EmailImp implements EmailService {
 
-    /*
-    Random random = new Random();
-        String identifying = "";
-        for (int i = 0; i < 5; i++) {
-            identifying += random.nextInt(10);
-        }
-        mailService.sendSimpleMail(email, "注册验证码", identifying);
-        map.put("error", 0);
-        map.put("identifyingCode", identifying);
-        return map;
-     */
+    private Map<String, String> map = new HashMap<>();
+
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Value("${spring.mail.username}")
@@ -132,5 +128,22 @@ public class MailService {
 
     }
 
+    @Override
+    public void sendVerification(String email) {
+        Random random = new Random();
+        String identifying = "";
+        for (int i = 0; i < 5; i++) {
+            identifying += random.nextInt(10);
+        }
+        map.put(email, identifying);
+        sendSimpleMail(email, "注册验证码", identifying);
+    }
+
+    @Override
+    public void checkVerification(String email, String code) throws OperationFail {
+        if(map.get(email) == null || !map.get(email).equals(code)){
+            throw new OperationFail();
+        }
+    }
 }
 

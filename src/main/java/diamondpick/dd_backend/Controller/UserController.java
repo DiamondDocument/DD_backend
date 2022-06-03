@@ -11,6 +11,7 @@ import diamondpick.dd_backend.Exception.OperationFail;
 import diamondpick.dd_backend.Exception.OtherFail;
 import diamondpick.dd_backend.Exception.User.PwdError;
 import diamondpick.dd_backend.Service.*;
+import diamondpick.dd_backend.ServiceImp.EmailImp;
 import diamondpick.dd_backend.Tool.JsonArray;
 import diamondpick.dd_backend.Tool.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +20,6 @@ import org.springframework.web.multipart.MultipartFile;
 import org.thymeleaf.TemplateEngine;
 
 import javax.annotation.Resource;
-import javax.persistence.criteria.CriteriaBuilder;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 import java.util.Map;
@@ -30,9 +30,9 @@ public class UserController {
     @Autowired
     private UserService userService;
     @Autowired
-    private MailService mailService;
-    @Autowired
-    private FileService fileService;
+    private EmailImp mailService;
+    //@Autowired
+    //private FileService fileService;
     @Autowired
     private EmailService emailService;
     @Autowired
@@ -107,12 +107,8 @@ public class UserController {
     @GetMapping("/api/user/send-identifying")
     public Map<String, Object> identifying(@RequestParam(name = "email") String email) {
         Response res = new Response();
-        try{
-            emailService.sendVerification(email);
-            return res.get(0);
-        }catch (OperationFail e){
-            return res.get(-1);
-        }
+        emailService.sendVerification(email);
+        return res.get(0);
     }
 
     @GetMapping("/api/user/register/check-id")
@@ -214,17 +210,14 @@ public class UserController {
         }
     }
 
-    @GetMapping(value="/api/user/avatar/{userId}")
-    public @ResponseBody void getAvatar(@PathVariable String userId, HttpServletResponse response) {
-//        //todo
-//        try{
-//            response.reset();
-//            response.setContentType(fileService.getAvatarContentType(userId));
-//            response.getOutputStream().write(fileService.getAvatar(userId));
-//        }catch(Exception e){
-//            e.printStackTrace();
-//            //加载失败
-//        }
+    @GetMapping(value="/api/user/get-avatar/")
+    public Map<String, Object> getAvatar(@RequestParam String userId) {
+        Response res = new Response("url");
+        try{
+            return res.get(0, localFileService.getUserAvatarUrl(userId));
+        }catch (OperationFail e){
+            return res.get(-1);
+        }
     }
 
 }

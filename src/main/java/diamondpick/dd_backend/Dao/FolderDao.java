@@ -1,10 +1,7 @@
 package diamondpick.dd_backend.Dao;
 
 import diamondpick.dd_backend.Entity.Folder;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Update;
+import org.apache.ibatis.annotations.*;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.jdbc.BadSqlGrammarException;
@@ -37,6 +34,13 @@ public interface FolderDao {
             "set parent_id = null\n" +
             "where doc_id = #{param1}")
     public void deleteFolder(String docId);
+
+    /**
+     * @param spaceId 删除指定space的所有文件夹（解散团队用）
+     */
+    @Delete("delete from folders where space_id = #{param1}")
+    public void deleteDocInSpace(int spaceId);
+
 
     /**
      * 更新文件夹
@@ -73,7 +77,7 @@ public interface FolderDao {
      * @throws DataIntegrityViolationException 数据完整性异常
      */
     @Update("update folders\n" +
-            "set now_auth = min(#{param2}, now_auth)\n" +
+            "set now_auth = min(#{param2}, self_auth)\n" +
             "where parent_id = #{param1}")
     public void updateSubDirAuth(String parentId, int newAuth) throws DataIntegrityViolationException;
 
@@ -85,8 +89,8 @@ public interface FolderDao {
      * @param spaceOwnerId 空间所有者的id（可能是团队id或者用户id）
      */
     @Update("update folders\n" +
-            "set now_auth = min(#{param3}, now_auth)\n" +
-            "where space_id in (select space_id from ${param1}s where ${param1}_id = #{param2})")
+            "set now_auth = min(#{param3}, self_auth)\n" +
+            "where space_id in (select space_id from ${param1}s where ${param1}_id = #{param2}) and parent_id is null")
     public void updateRootDirAuth(String type, String spaceOwnerId, int newAuth) throws DataIntegrityViolationException;
 
     /**

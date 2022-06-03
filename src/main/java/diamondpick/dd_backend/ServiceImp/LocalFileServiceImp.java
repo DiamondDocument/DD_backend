@@ -1,14 +1,19 @@
 package diamondpick.dd_backend.ServiceImp;
 
+import com.aspose.words.Document;
 import diamondpick.dd_backend.Dao.DocumentDao;
+import diamondpick.dd_backend.Dao.TemplateDao;
 import diamondpick.dd_backend.Dao.UserDao;
 import diamondpick.dd_backend.Exception.NotExist.*;
+import diamondpick.dd_backend.Exception.OperationFail;
 import diamondpick.dd_backend.Exception.OtherFail;
 import diamondpick.dd_backend.Service.LocalFileService;
+import gui.ava.html.image.generator.HtmlImageGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.awt.*;
 import java.io.*;
 import java.math.BigInteger;
 import java.net.URLConnection;
@@ -23,21 +28,27 @@ public class LocalFileServiceImp implements LocalFileService {
     private UserDao userDao;
     @Autowired
     private DocumentDao documentDao;
+    @Autowired
+    private TemplateDao templateDao;
 
     private String baseLocation = "C:/Users/18389/Desktop/DD_file/";
     private String userAvatarLocation = baseLocation + "user/avatar/";
     private String documentLocation = baseLocation + "document/";
     private String imageLocation = baseLocation + "image/";
-    private String templateLocation = baseLocation + "template/";
+    private String templateLocation = baseLocation + "template/content/";
     private String teamAvatarLocation = baseLocation + "team/avatar/";
+    private String templateImgLocation = baseLocation + "template/image/";
+    private String templateThumbnailLocation = baseLocation + "template/thumbnail/";
 
-    private String imgBaseUrl = "http://43.138.71.108/api/document/img/";
+    private String baseUrl = "http://43.138.71.108/api/url/";
+    private String download = "http://43.138.71.108/api/document/download";
 
     public LocalFileServiceImp() {
         File workDir = new File("");
         baseLocation = workDir.getAbsolutePath() + "/DD_file";
         if(System.getenv().get("IS_SERVICE") == null){
-            imgBaseUrl = "http://localhost/api/document/img/";
+            baseUrl = "http://localhost/api/url/";
+            download = "http://localhost/api/document/download";
         }
         File f = new File(baseLocation);
         f.mkdir();
@@ -84,17 +95,6 @@ public class LocalFileServiceImp implements LocalFileService {
             }
         }
     }
-
-    @Override
-    public void saveUserAvatar(String userId, MultipartFile file) throws NotExist, OtherFail {
-        saveAvatar(userId, file, userAvatarLocation);
-    }
-
-    @Override
-    public void saveTeamAvatar(String teamId, MultipartFile file) throws NotExist, OtherFail {
-        saveAvatar(teamId, file, teamAvatarLocation);
-    }
-
     public void writeToFile(String dir, byte[] bytes)throws OtherFail{
         FileOutputStream out = null;
         File f = new File(dir);
@@ -129,6 +129,26 @@ public class LocalFileServiceImp implements LocalFileService {
         }
         return null;
     }
+    public String getIdImageUrl(String Id, String location) throws NotExist{
+        File dir = new File(location);
+        String[] fileNames = dir.list();
+        for (String name : fileNames) {
+            if (name.matches(Id + ".*")) {
+                return baseUrl + location + name;
+            }
+        }
+        throw new NotExist();
+    }
+
+    @Override
+    public void saveUserAvatar(String userId, MultipartFile file) throws NotExist, OtherFail {
+        saveAvatar(userId, file, userAvatarLocation);
+    }
+
+    @Override
+    public void saveTeamAvatar(String teamId, MultipartFile file) throws NotExist, OtherFail {
+        saveAvatar(teamId, file, teamAvatarLocation);
+    }
 
     @Override
     public void saveDocument(String docId, String content) throws NotExist, OtherFail {
@@ -137,8 +157,31 @@ public class LocalFileServiceImp implements LocalFileService {
     }
     @Override
     public void saveTemplate(String tempId, String content) throws NotExist, OtherFail {
-        //todo template判断是否存在
+        if(templateDao.selectTemp(tempId) == null)throw new NotExist();
         writeToFile(templateLocation + tempId + "." + "html", content.getBytes(StandardCharsets.UTF_8));
+        saveTemplateImg(content,
+                new File(templateImgLocation + tempId + "png"),
+                new File(templateThumbnailLocation + tempId + "png"));
+    }
+
+    @Override
+    public String getUserAvatarUrl(String userId) throws NotExist {
+        return getIdImageUrl(userId, userAvatarLocation);
+    }
+
+    @Override
+    public String getTeamAvatarUrl(String teamId) throws NotExist {
+        return getIdImageUrl(teamId, teamAvatarLocation);
+    }
+
+    @Override
+    public String getTemplateImageUrl(String tempId) throws NotExist {
+        return baseUrl + templateImgLocation + tempId + ".png";
+    }
+
+    @Override
+    public String getThumbnailUrl(String tempId) throws NotExist, OtherFail {
+        return baseUrl + templateThumbnailLocation + tempId + ".png";
     }
 
     @Override
@@ -148,16 +191,14 @@ public class LocalFileServiceImp implements LocalFileService {
         try{
             String name = md5HSashCode(file.getInputStream()) + "." + nameSplit[nameSplit.length - 1];
             writeToFile(imageLocation + name, file.getBytes());
-            return imgBaseUrl + name;
+            return baseUrl + imageLocation + name;
         }catch (IOException e){
             e.printStackTrace();
             throw new OtherFail();
         }
     }
 
-
     public byte[] getAvatar(String Id, String avatarLocation) throws NotExist, OtherFail {
-        if(userDao.selectUser(Id) == null)throw new NotExist();
         File dir = new File(avatarLocation);
         String[] fileNames = dir.list();
         for (String name : fileNames) {
@@ -172,16 +213,6 @@ public class LocalFileServiceImp implements LocalFileService {
         }
         throw new NotExist();
     }
-    @Override
-    public byte[] getUserAvatar(String userId) throws NotExist, OtherFail {
-        return getAvatar(userId, userAvatarLocation);
-    }
-
-    @Override
-    public byte[] getTeamAvatar(String teamId) throws NotExist, OtherFail {
-        return getAvatar(teamId, userAvatarLocation);
-    }
-
 
     @Override
     public String getDocument(String docId) throws NotExist, OtherFail {
@@ -194,9 +225,45 @@ public class LocalFileServiceImp implements LocalFileService {
         }
     }
     @Override
+    public String getDocSize(String docId) throws NotExist, OtherFail {
+        if(documentDao.selectDoc(docId) == null) throw new NotExist();
+        try{
+            File file =  new File(documentLocation + docId + ".html");
+            long l = file.length();
+            if(l < 1024){
+                return l + "B";
+            }else if(l < 1024*1024){
+                return l/1024.0 + "KB";
+            }else{
+                return l/(1024.0*1024) + "MB";
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+            throw new OtherFail();
+        }
+    }
+
+    @Override
+    public String getContentTypeByPath(String path) {
+        File file = new File(path);
+        return URLConnection.guessContentTypeFromName(file.getName());
+    }
+
+    @Override
+    public byte[] getByLocation(String path) {
+        try{
+            return readFromFile(path);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return new byte[0];
+    }
+
+
+
+    @Override
     public String getTemplate(String tempId) throws NotExist, OtherFail {
-//        if(documentDao.selectDoc(docId) == null) throw new NotExist();
-        //todo
+        if(templateDao.selectTemp(tempId) == null) throw new NotExist();
         try{
             return new String(readFromFile(documentLocation + tempId + ".html"));
         }catch (FileNotFoundException e){
@@ -205,7 +272,8 @@ public class LocalFileServiceImp implements LocalFileService {
         }
     }
 
-    @Override
+
+
     public byte[] getImage(String fileName) throws NotExist, OtherFail {
         try{
             return readFromFile(imageLocation + fileName);
@@ -225,17 +293,14 @@ public class LocalFileServiceImp implements LocalFileService {
         }
         throw new NotExist();
     }
-    @Override
     public String getUserAvatarContentType(String userId) throws NotExist {
         return getAvatarContentType(userId, userAvatarLocation);
     }
 
-    @Override
     public String getTeamAvatarContentType(String teamId) throws NotExist {
         return getAvatarContentType(teamId, userAvatarLocation);
     }
 
-    @Override
     public String getImageContentType(String fileName) {
         return URLConnection.guessContentTypeFromName(fileName);
     }
@@ -260,5 +325,64 @@ public class LocalFileServiceImp implements LocalFileService {
             e.printStackTrace();
             return "";
         }
+    }
+
+    /**
+     * @param img png文件名
+     * @param thumbnail png文件名
+     */
+    public void saveTemplateImg(String html, File img, File thumbnail){
+        HtmlImageGenerator imageGenerator = new HtmlImageGenerator();
+        Dimension dimension = new Dimension();
+        dimension.width = 500;
+        imageGenerator.setSize(dimension);
+        imageGenerator.loadHtml(html);
+        imageGenerator.saveAsImage(img);
+        dimension.width = 100;
+        dimension.height = (int)(100 * 1.414);
+        imageGenerator.saveAsImage(thumbnail);
+    }
+
+    @Override
+    public void htmlToDocx(String docId) throws NotExist, OtherFail {
+        Document doc = null;
+        try{
+            doc = new Document(documentLocation + docId + ".html");
+        }catch (Exception e){
+            throw new NotExist();
+        }
+        try {
+            doc.save(baseLocation + "exportTmp.docx");
+        }catch (Exception e){
+            throw new OtherFail();
+        }
+    }
+
+    @Override
+    public byte[] getDocx() {
+        return getByLocation(baseLocation + "exportTmp.docx") ;
+    }
+
+    @Override
+    public byte[] docxToHtml(MultipartFile file) throws OperationFail {
+        Document doc = null;
+        try{
+            doc = new Document(file.getInputStream());
+        }catch (Exception e){
+            e.printStackTrace();
+            throw new OperationFail();
+        }
+        try {
+            doc.save("importTmp.html");
+            return readFromFile("importTmp.html");
+        }catch (Exception e){
+            e.printStackTrace();
+            throw new OperationFail();
+        }
+    }
+
+    @Override
+    public String getDownloadUrl() {
+        return download;
     }
 }

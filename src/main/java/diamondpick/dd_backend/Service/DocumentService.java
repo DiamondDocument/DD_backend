@@ -26,10 +26,15 @@ public interface DocumentService {
     /**
      * @return 返回一个形式化的字符串，如"98K"或者"1.2M"
      */
-    public String getSize(String docId) throws DocNotExist;
+    public String getSize(String docId) throws OperationFail;
 
-    public void collect(String userId, String docId)throws UserNotExist, DocNotExist, AlreadyCollect, NoAuth;
+    public void collect(String userId, String docId)throws  AlreadyCollect, NoAuth, OtherFail;
 
-    public void disCollect(String userId, String docId)throws UserNotExist, DocNotExist, NotyetCollect;
+    public void disCollect(String userId, String docId)throws  NotyetCollect, OtherFail;
 
+    //todo
+    /**
+     * @return 返回1到4中的一种
+     */
+    int checkShare(String docId)throws OperationFail;
 }

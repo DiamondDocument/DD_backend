@@ -1,6 +1,7 @@
 package diamondpick.dd_backend.Entity;
 
 import diamondpick.dd_backend.Exception.NotExist.DocNotExist;
+import diamondpick.dd_backend.Exception.OperationFail;
 import diamondpick.dd_backend.Service.DocumentService;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -70,7 +71,8 @@ public class Document implements File{
     public String getSize()  {
         try{
             return documentService.getSize(getDocId());
-        }catch (DocNotExist e ){
+        }catch (OperationFail e ){
+            e.printStackTrace();
             System.out.println("不可能");
             return "不可能！";
         }

@@ -1,6 +1,7 @@
 package diamondpick.dd_backend.Service;
 
 import diamondpick.dd_backend.Exception.NotExist.*;
+import diamondpick.dd_backend.Exception.OperationFail;
 import diamondpick.dd_backend.Exception.OtherFail;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -11,19 +12,26 @@ public interface LocalFileService {
     public void saveUserAvatar(String userId, MultipartFile file)throws NotExist, OtherFail;
     public void saveTeamAvatar(String teamId, MultipartFile file)throws NotExist, OtherFail;
     public void saveDocument(String docId, String content)throws NotExist, OtherFail;
-    //返回目录
+    /**返回url*/
     public String saveDocumentImg(MultipartFile file)throws OtherFail;
+
     public void saveTemplate(String tempId, String content)throws NotExist, OtherFail;
 
-    public byte[] getUserAvatar(String userId) throws NotExist, OtherFail;
-    public byte[] getTeamAvatar(String teamId) throws NotExist, OtherFail;
+
+    public String getUserAvatarUrl(String userId) throws NotExist, OtherFail;
+    public String getTeamAvatarUrl(String teamId) throws NotExist, OtherFail;
+    public String getTemplateImageUrl(String tempId) throws NotExist, OtherFail;
+    public String getThumbnailUrl(String tempId) throws NotExist, OtherFail;
+
     public String getDocument(String docId) throws NotExist, OtherFail;
-    public byte[] getImage(String fileName) throws NotExist, OtherFail;
     public String getTemplate(String tempId) throws NotExist, OtherFail;
+    public String getDocSize(String docId) throws NotExist, OtherFail;
 
-    public String getUserAvatarContentType(String userId)throws NotExist;
-    public String getTeamAvatarContentType(String teamId)throws NotExist;
-    public String getImageContentType(String fileName)throws NotExist;
+    public String getContentTypeByPath(String location);
+    public byte[] getByLocation(String location);
 
-
+    public void htmlToDocx(String docId) throws NotExist, OtherFail;
+    public byte[] getDocx();
+    public byte[] docxToHtml(MultipartFile file) throws OperationFail;
+    public String getDownloadUrl();
 }

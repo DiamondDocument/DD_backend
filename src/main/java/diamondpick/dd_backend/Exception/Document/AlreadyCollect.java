@@ -1,4 +1,6 @@
 package diamondpick.dd_backend.Exception.Document;
 
-public class AlreadyCollect extends Exception{
+import diamondpick.dd_backend.Exception.OperationFail;
+
+public class AlreadyCollect extends OperationFail {
 }
