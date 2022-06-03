@@ -41,12 +41,14 @@ public class LocalFileServiceImp implements LocalFileService {
     private String templateThumbnailLocation = baseLocation + "template/thumbnail/";
 
     private String baseUrl = "http://43.138.71.108/api/url/";
+    private String download = "http://43.138.71.108/api/document/download";
 
     public LocalFileServiceImp() {
         File workDir = new File("");
         baseLocation = workDir.getAbsolutePath() + "/DD_file";
         if(System.getenv().get("IS_SERVICE") == null){
             baseUrl = "http://localhost/api/url/";
+            download = "http://localhost/api/document/download";
         }
         File f = new File(baseLocation);
         f.mkdir();
@@ -377,5 +379,10 @@ public class LocalFileServiceImp implements LocalFileService {
             e.printStackTrace();
             throw new OperationFail();
         }
+    }
+
+    @Override
+    public String getDownloadUrl() {
+        return download;
     }
 }

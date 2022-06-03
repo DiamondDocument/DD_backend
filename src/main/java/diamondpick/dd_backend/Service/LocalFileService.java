@@ -33,4 +33,5 @@ public interface LocalFileService {
     public void htmlToDocx(String docId) throws NotExist, OtherFail;
     public byte[] getDocx();
     public byte[] docxToHtml(MultipartFile file) throws OperationFail;
+    public String getDownloadUrl();
 }

@@ -32,4 +32,9 @@ public interface DocumentService {
 
     public void disCollect(String userId, String docId)throws  NotyetCollect, OtherFail;
 
+    //todo
+    /**
+     * @return 返回1到4中的一种
+     */
+    int checkShare(String docId)throws OperationFail;
 }

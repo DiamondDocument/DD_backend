@@ -81,4 +81,10 @@ public class DocumentImp implements DocumentService {
         if(documentDao.selectCollectorAndDoc(userId, docId) == null)throw new NotyetCollect();
         documentDao.deleteCollection(userId, docId);
     }
+
+    @Override
+    public int checkShare(String docId) throws OperationFail {
+        //todo
+        return 1;
+    }
 }
