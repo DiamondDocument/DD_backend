@@ -7,6 +7,6 @@ import org.springframework.stereotype.Service;
 @Service
 public interface EmailService {
 
-    public void sendVerification(String email)throws OperationFail;
+    public void sendVerification(String email);
     public void checkVerification(String email, String code)throws OperationFail;
 }
