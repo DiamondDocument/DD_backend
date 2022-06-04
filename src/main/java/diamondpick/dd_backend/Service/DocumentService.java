@@ -46,5 +46,9 @@ public interface DocumentService {
     public void quitEdit(String userId, String docId)throws OperationFail ;
 
     //todo
-    public void share(String docId, String auth);
+    public void share(String docId, int auth)throws OperationFail;
+
+
+    //todo
+    void disShare(String docId)throws OperationFail;
 }

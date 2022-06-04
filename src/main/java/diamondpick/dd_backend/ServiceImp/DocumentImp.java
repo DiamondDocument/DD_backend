@@ -1,13 +1,10 @@
 package diamondpick.dd_backend.ServiceImp;
 
 import diamondpick.dd_backend.Dao.DocumentDao;
-import diamondpick.dd_backend.Entity.Document;
 import diamondpick.dd_backend.Exception.Document.AlreadyCollect;
 import diamondpick.dd_backend.Exception.Document.NotyetCollect;
+import diamondpick.dd_backend.Exception.Document.SomoneEditing;
 import diamondpick.dd_backend.Exception.NoAuth;
-import diamondpick.dd_backend.Exception.NotExist.DocNotExist;
-import diamondpick.dd_backend.Exception.NotExist.NotExist;
-import diamondpick.dd_backend.Exception.NotExist.UserNotExist;
 import diamondpick.dd_backend.Exception.OperationFail;
 import diamondpick.dd_backend.Exception.OtherFail;
 import diamondpick.dd_backend.Service.AuthService;
@@ -17,8 +14,7 @@ import diamondpick.dd_backend.Service.LocalFileService;
 import diamondpick.dd_backend.Tool.IdGenerator;
 import org.springframework.dao.DataIntegrityViolationException;
 
-import javax.naming.NamingException;
-import java.util.List;
+import java.util.*;
 
 public class DocumentImp implements DocumentService {
 
@@ -82,9 +78,47 @@ public class DocumentImp implements DocumentService {
         documentDao.deleteCollection(userId, docId);
     }
 
+    private Map<String, Integer> shareMap = new HashMap<>();
+    private Map<String, Date> editingMapByDate = new HashMap<>();
+    private Map<String, String> editingMapByEditor = new HashMap<>();
+
     @Override
-    public int checkShare(String docId) throws OperationFail {
-        //todo
-        return 1;
+    public int checkShare(String docId) {
+        Integer ret = shareMap.get(docId);
+        if(ret == null)return 1;
+        return ret;
+    }
+
+    @Override
+    public void keepEdit(String userId, String docId) throws NoAuth, SomoneEditing, OtherFail {
+        try{
+            if(documentDao.selectDoc(docId) == null)throw new OtherFail();
+            if(authService.checkFileAuth(docId, userId) < 4)throw new NoAuth();
+            String editor = editingMapByEditor.get(docId);
+            if(editor != null && !editor.equals(userId) &&
+                    new Date().getTime() - editingMapByDate.get(docId).getTime() < 21000 )throw new SomoneEditing();
+            editingMapByEditor.put(docId, userId);
+            editingMapByDate.put(docId, new Date());
+        }catch (OperationFail e){
+            throw new OtherFail();
+        }
+    }
+
+    @Override
+    public void quitEdit(String userId, String docId) throws OperationFail {
+        editingMapByEditor.remove(docId);
+        editingMapByDate.remove(docId);
+    }
+
+    @Override
+    public void share(String docId, int auth)throws OperationFail {
+        if(auth > 4 || auth < 1)throw new OperationFail();
+        if(documentDao.selectDoc(docId) == null)throw new OperationFail();
+        shareMap.put(docId, auth);
+    }
+
+    @Override
+    public void disShare(String docId) throws OperationFail {
+        shareMap.remove(docId);
     }
 }
