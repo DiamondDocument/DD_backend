@@ -31,7 +31,9 @@ public class LocalFileServiceImp implements LocalFileService {
     @Autowired
     private TemplateDao templateDao;
 
-    private String baseLocation = "C:/Users/18389/Desktop/DD_file/";
+//    private String baseLocation = new File("").getAbsolutePath() + "/DD_file/";
+    private String baseLocation = "./DD_file/";
+//    private String baseLocation = "C:/Users/18389/Desktop/DD_file/";
     private String userAvatarLocation = baseLocation + "user/avatar/";
     private String documentLocation = baseLocation + "document/";
     private String imageLocation = baseLocation + "image/";
@@ -44,24 +46,26 @@ public class LocalFileServiceImp implements LocalFileService {
     private String download = "http://43.138.71.108/api/document/download";
 
     public LocalFileServiceImp() {
-        File workDir = new File("");
-        baseLocation = workDir.getAbsolutePath() + "/DD_file";
         if(System.getenv().get("IS_SERVICE") == null){
             baseUrl = "http://localhost/api/url/";
             download = "http://localhost/api/document/download";
         }
         File f = new File(baseLocation);
-        f.mkdir();
+        f.mkdirs();
         f = new File(userAvatarLocation);
-        f.mkdir();
+        f.mkdirs();
         f = new File(documentLocation);
-        f.mkdir();
+        f.mkdirs();
         f = new File(imageLocation);
-        f.mkdir();
+        f.mkdirs();
         f = new File(teamAvatarLocation);
-        f.mkdir();
+        f.mkdirs();
         f = new File(templateLocation);
-        f.mkdir();
+        f.mkdirs();
+        f = new File(templateImgLocation);
+        f.mkdirs();
+        f = new File(templateThumbnailLocation);
+        f.mkdirs();
     }
 
     public void saveAvatar(String Id, MultipartFile file, String avatarLocation) throws NotExist, OtherFail {
@@ -134,7 +138,7 @@ public class LocalFileServiceImp implements LocalFileService {
         String[] fileNames = dir.list();
         for (String name : fileNames) {
             if (name.matches(Id + ".*")) {
-                return baseUrl + location + name;
+                return baseUrl + "?location=" + location + name;
             }
         }
         throw new NotExist();

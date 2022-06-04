@@ -54,7 +54,7 @@ public class UserController {
         }
     }
 
-    @GetMapping("/api/login")
+    @GetMapping("/api/user/login")
     public Map<String, Object> login(@RequestParam(required = false) String email, @RequestParam(required = false) String userId, @RequestParam String pwd) {
         Response res = new Response("userId", "nickName");
         User loginUser;
@@ -70,7 +70,7 @@ public class UserController {
         }
     }
 
-    @PostMapping("/api/register")
+    @PostMapping("/api/user/register")
     public Map<String, Object> register(@RequestBody Map<String, String> re_map) {
         Response res = new Response();
         String userId = re_map.get("userId");
@@ -98,10 +98,10 @@ public class UserController {
 
     }
 
-    @GetMapping("/api/user/send-identifying")
-    public Map<String, Object> identifying(@RequestParam(name = "email") String email) {
+    @PostMapping("/api/user/send-identifying")
+    public Map<String, Object> identifying(@RequestBody Map<String ,String> email) {
         Response res = new Response();
-        emailService.sendVerification(email);
+        emailService.sendVerification(email.get("email"));
         return res.get(0);
     }
 
@@ -204,7 +204,7 @@ public class UserController {
         }
     }
 
-    @GetMapping(value="/api/user/get-avatar/")
+    @GetMapping(value="/api/user/get-avatar")
     public Map<String, Object> getAvatar(@RequestParam String userId) {
         Response res = new Response("url");
         try{

@@ -1,4 +1,4 @@
-package diamondpick.dd_backend.Old.zzy.Controller;
+package diamondpick.dd_backend.Controller;
 
 import diamondpick.dd_backend.Tool.JsonArray;
 import diamondpick.dd_backend.Tool.Response;
@@ -37,4 +37,10 @@ public class TestController {
         arr.add("V", "欢迎来到夜之城");
         return res.get(0,arr.get());
     }
+    @PostMapping("api/body-and-formdata")
+    public Map<String, Object> post(@RequestBody Map<String, Object> req, @RequestParam MultipartFile file){
+        Response r = new Response("body","file");
+        return r.get(0, req, file.getOriginalFilename());
+    }
+
 }
