@@ -25,10 +25,6 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-<<<<<<< HEAD
-
-=======
->>>>>>> a2f227992e21fedacc223eaca3834a76a8dace2c
 @Service
 public class TeamImp implements TeamService {
     @Autowired
@@ -125,7 +121,7 @@ public class TeamImp implements TeamService {
         List<User> users = userDao.selectMember(teamId);
         int flag = 0;
         for(User user:users){
-            if(user.getUserId()==memberId){
+            if(user.getUserId().equals(memberId)){
                 flag = 1;
                 break;
             }
@@ -158,7 +154,7 @@ public class TeamImp implements TeamService {
         if(flag==0)
             throw new NotInTeam();
         try{
-            teamDao.updateTeam(teamId,"captainId",newCaptainId);
+            teamDao.updateTeam(teamId,"captain_id",newCaptainId);
         }catch (DataIntegrityViolationException e){
             throw new OtherFail();
         }
@@ -166,8 +162,10 @@ public class TeamImp implements TeamService {
 
     @Override
     public void inviteMember(String teamId, String userId) throws NotYetDeal, AlreadyMember, OtherFail {
-        if(teamDealDao.selectDeal(teamId,userId).getDealType()==0)
-            throw new NotYetDeal();
+        if(teamDealDao.selectDeal(teamId,userId)!=null){
+            if(teamDealDao.selectDeal(teamId,userId).getDealType()==0)
+                throw new NotYetDeal();
+        }
         List<User> users = userDao.selectMember(teamId);
         int flag = 0;
         for(User user:users){
@@ -187,8 +185,10 @@ public class TeamImp implements TeamService {
 
     @Override
     public void applyJoinTeam(String userId, String teamId) throws NotYetDeal, AlreadyMember, OtherFail {
-        if(teamDealDao.selectDeal(teamId,userId).getDealType()==0)
-            throw new NotYetDeal();
+        if(teamDealDao.selectDeal(teamId,userId)!=null){
+            if(teamDealDao.selectDeal(teamId,userId).getDealType()==0)
+                throw new NotYetDeal();
+        }
         List<User> users = userDao.selectMember(teamId);
         int flag = 0;
         for(User user:users){
@@ -200,7 +200,7 @@ public class TeamImp implements TeamService {
         if(flag==1)
             throw new AlreadyMember();
         try{
-            teamDealDao.insertDeal(teamId,userId,0);
+            teamDealDao.insertDeal(teamId,userId,2);
         }catch (DataIntegrityViolationException e){
             throw new OtherFail();
         }
