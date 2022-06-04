@@ -18,7 +18,7 @@ public class UrlController {
     @Autowired
     LocalFileService localFileService;
 
-    @GetMapping(value="/api/url/")
+    @GetMapping(value="/api/url")
     public @ResponseBody
     void url(@RequestParam String location, HttpServletResponse response) {
         try{
