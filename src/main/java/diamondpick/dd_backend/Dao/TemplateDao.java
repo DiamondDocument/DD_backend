@@ -5,6 +5,8 @@ import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
+import java.util.List;
+
 @Mapper
 public interface TemplateDao {
 
@@ -25,6 +27,8 @@ public interface TemplateDao {
             "from template as temp, users as c " +
             "where temp.creator_id = c.user_id and " +
             "temp.creator_id = #{param1} ")
-    public Template selectByCreator(String creatorId);
+    public List<Template> selectByCreator(String creatorId);
 
+    //todo
+    List<Template> selectByCollector(String userId);
 }

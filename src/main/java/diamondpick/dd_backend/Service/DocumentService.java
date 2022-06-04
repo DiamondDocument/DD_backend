@@ -4,6 +4,7 @@ import diamondpick.dd_backend.Entity.Folder;
 import diamondpick.dd_backend.Exception.*;
 import diamondpick.dd_backend.Exception.Document.AlreadyCollect;
 import diamondpick.dd_backend.Exception.Document.NotyetCollect;
+import diamondpick.dd_backend.Exception.Document.SomoneEditing;
 import diamondpick.dd_backend.Exception.NotExist.*;
 import diamondpick.dd_backend.Entity.Document;
 import org.springframework.stereotype.Service;
@@ -36,5 +37,14 @@ public interface DocumentService {
     /**
      * @return 返回1到4中的一种
      */
-    int checkShare(String docId)throws OperationFail;
+    public int checkShare(String docId)throws OperationFail;
+
+    //todo
+    public void keepEdit(String userId, String docId)throws NoAuth, SomoneEditing, OtherFail;
+
+    //todo
+    public void quitEdit(String userId, String docId)throws OperationFail ;
+
+    //todo
+    public void share(String docId, String auth);
 }
