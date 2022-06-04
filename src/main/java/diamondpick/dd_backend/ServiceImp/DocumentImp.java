@@ -13,9 +13,11 @@ import diamondpick.dd_backend.Service.DocumentService;
 import diamondpick.dd_backend.Service.LocalFileService;
 import diamondpick.dd_backend.Tool.IdGenerator;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.stereotype.Service;
 
 import java.util.*;
 
+@Service
 public class DocumentImp implements DocumentService {
 
     private DocumentDao documentDao;

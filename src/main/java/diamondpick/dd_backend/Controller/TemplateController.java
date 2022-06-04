@@ -9,6 +9,7 @@ import diamondpick.dd_backend.Service.LocalFileService;
 import diamondpick.dd_backend.Service.TemplateService;
 import diamondpick.dd_backend.Tool.JsonArray;
 import diamondpick.dd_backend.Tool.Response;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -18,8 +19,11 @@ import java.util.List;
 import java.util.Map;
 
 public class TemplateController {
+    @Autowired
     TemplateService templateService;
+    @Autowired
     TemplateDao templateDao;
+    @Autowired
     LocalFileService localFileService;
 
     @PostMapping("/api/template/create")

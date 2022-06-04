@@ -2,8 +2,8 @@ package diamondpick.dd_backend.Old.zzy.Controller;
 
 import org.springframework.web.bind.annotation.*;
 
-@CrossOrigin
-@RestController
+//@CrossOrigin
+//@RestController
 public class FileController {
 //
 //    @Autowired

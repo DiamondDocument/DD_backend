@@ -118,7 +118,8 @@ public interface DocumentDao {
     /**这里的额外信息没有修改者的名称，只有创建者和删除者的名称 */
     public List<Document> selectDeleted(String type, String spaceOwnerId);
 
-    @Select("select doc.*, m.nickname as modifier_name, c.nickname as creator_name " +
+    /** 只包括未删除的，按照时间排序，如果多于limit个则显示limit个 */
+    @Select("select doc.*, m.nickname as modifier_name, c.nickname as creator_name, r.browse_time as browse_time " +
             "from documents as doc, users as m, users as c, user_recent as r  " +
             "where " +
             "r.user_id            = #{param1} and      " +
@@ -129,7 +130,6 @@ public interface DocumentDao {
             "doc.is_delete        = false              " +
             "order by r.browse_time desc               " +
             "limit  ${param2}                          " )
-    /** 只包括未删除的，按照时间排序，如果多于limit个则显示limit个 */
     public List<Document> selectRecent(String browserId, int limit);
 
 

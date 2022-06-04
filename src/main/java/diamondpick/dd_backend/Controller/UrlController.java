@@ -1,6 +1,7 @@
 package diamondpick.dd_backend.Controller;
 
 import diamondpick.dd_backend.Service.LocalFileService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.MediaType;
@@ -17,6 +18,7 @@ import java.net.URLConnection;
 
 @RestController
 public class UrlController {
+    @Autowired
     LocalFileService localFileService;
 
     @GetMapping(value="/api/url/{location}")

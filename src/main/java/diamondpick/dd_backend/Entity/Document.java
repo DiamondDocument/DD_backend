@@ -190,8 +190,5 @@ public class Document implements File {
         return browseTime;
     }
 
-    public void setBrowseTime(Date browseTime) {
-        this.browseTime = browseTime;
-    }
 }
 

@@ -11,10 +11,11 @@ import diamondpick.dd_backend.Service.AuthService;
 import diamondpick.dd_backend.Service.FileService;
 import diamondpick.dd_backend.Tool.IdGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-
+@Service
 public class FileImp implements FileService {
     @Autowired
     private FolderDao folderDao;
