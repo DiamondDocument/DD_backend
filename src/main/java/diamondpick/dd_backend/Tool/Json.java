@@ -27,7 +27,11 @@ public class Json{
     public HashMap<String,Object> get(Integer code, Object... values){
         HashMap<String,Object> map = new HashMap<>();
         for(int i = 0; i < values.length; i++){
-            map.put(keys[i], values[i]);
+            if(values[i] instanceof JsonArray){
+                map.put(keys[i], ((JsonArray) values[i]).get());
+            }else{
+                map.put(keys[i], values[i]);
+            }
         }
         return map;
     }

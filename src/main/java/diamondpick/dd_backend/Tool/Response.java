@@ -31,7 +31,11 @@ public class Response{
             map.put("code", code);
         }
         for(int i = 0; i < values.length; i++){
-            map.put(keys[i], values[i]);
+            if(values[i] instanceof JsonArray){
+                map.put(keys[i], ((JsonArray) values[i]).get());
+            }else{
+                map.put(keys[i], values[i]);
+            }
         }
         return map;
     }
