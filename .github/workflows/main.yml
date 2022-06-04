@@ -61,6 +61,7 @@ jobs:
             cd ~/DD_backend/
             sudo git checkout master
             sudo git pull 
+            sudo mvn install
             sudo mvn -B package --file pom.xml -Dmaven.test.skip=true 
             cd target/ 
             sudo fuser -k 80/tcp
