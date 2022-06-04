@@ -56,7 +56,12 @@ public class UserImp implements UserService {
     @Override
     public User login(String userId, String email, String password) throws PwdError, NotExist, OtherFail {
         if(email == null && userId == null || email != null && userId != null)throw new OtherFail();
-        User user = userDao.selectUser(userId);
+        User user;
+        if(userId == null){
+            user = userDao.selectUserByEmail(email);
+        }else {
+            user = userDao.selectUser(userId);
+        }
         if(user == null)throw new NotExist();
         if(!user.getPassword().equals(password))throw new PwdError();
         return user;
