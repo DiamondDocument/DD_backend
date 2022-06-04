@@ -6,6 +6,7 @@ import diamondpick.dd_backend.Entity.Document;
 import diamondpick.dd_backend.Entity.Folder;
 import diamondpick.dd_backend.Exception.OperationFail;
 import diamondpick.dd_backend.Service.AuthService;
+import diamondpick.dd_backend.Service.DocumentService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 public class AuthImp implements AuthService {
@@ -14,6 +15,9 @@ public class AuthImp implements AuthService {
 
     @Autowired
     private FolderDao folderDao;
+
+    @Autowired
+    private DocumentService documentService;
 
     @Override
     public void changeFileAuth(String fileId, int newAuth) throws OperationFail {
@@ -45,7 +49,7 @@ public class AuthImp implements AuthService {
                 if (document.getCreatorId().equals(userId)) {
                     return 5;
                 } else {
-                    return document.getNowAuth();
+                    return Math.max(documentService.checkShare(fileId), document.getNowAuth());
                 }
             } else {
                 throw new OperationFail();
