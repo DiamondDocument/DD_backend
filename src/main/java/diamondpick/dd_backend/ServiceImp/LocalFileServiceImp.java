@@ -42,13 +42,16 @@ public class LocalFileServiceImp implements LocalFileService {
     private String templateImgLocation = baseLocation + "template/image/";
     private String templateThumbnailLocation = baseLocation + "template/thumbnail/";
 
-    private String baseUrl = "http://43.138.71.108/api/url/";
+    private String baseUrl = "http://43.138.71.108/api/url";
     private String download = "http://43.138.71.108/api/document/download";
 
     public LocalFileServiceImp() {
         if(System.getenv().get("IS_SERVICE") == null){
             baseUrl = "http://localhost/api/url/";
             download = "http://localhost/api/document/download";
+        }else{
+            baseUrl = "http://" + System.getenv().get("IS_SERVICE") + "/api/url";
+            download = "http://" + System.getenv().get("IS_SERVICE") + "/api/document/download";
         }
         File f = new File(baseLocation);
         f.mkdirs();
