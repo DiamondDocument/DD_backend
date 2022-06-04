@@ -30,10 +30,6 @@ public class UserController {
     @Autowired
     private UserService userService;
     @Autowired
-    private EmailImp mailService;
-    //@Autowired
-    //private FileService fileService;
-    @Autowired
     private EmailService emailService;
     @Autowired
     private UserDao userDao;
@@ -42,8 +38,6 @@ public class UserController {
     @Autowired
     private LocalFileService localFileService;
 
-    @Resource
-    private TemplateEngine templateEngine;
 
     @GetMapping("/api/user/team")
     public Map<String, Object> userTeam(@RequestParam String userId) {

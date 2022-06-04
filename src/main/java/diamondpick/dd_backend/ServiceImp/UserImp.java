@@ -34,6 +34,7 @@ public class UserImp implements UserService {
 
     @Override
     public void newUser(String userId, String nickname, String password, String email) throws NameIllegal, PwdIllegal,  DuplicateId, OtherFail {
+        if(userDao.selectUser(userId) != null || userDao.selectUserByEmail(email) != null) throw new DuplicateId();
         constraintService.checkName(nickname);
         constraintService.checkPassword(password);
         try{
