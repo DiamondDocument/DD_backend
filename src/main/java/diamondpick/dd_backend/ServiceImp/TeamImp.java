@@ -22,9 +22,10 @@ import diamondpick.dd_backend.Service.TeamService;
 import diamondpick.dd_backend.Tool.UserStatusToTeam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
-
+@Service
 public class TeamImp implements TeamService {
     @Autowired
     private ConstraintService constraintService;
