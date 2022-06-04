@@ -11,6 +11,7 @@ import diamondpick.dd_backend.Service.AuthService;
 import diamondpick.dd_backend.Service.DocumentService;
 import diamondpick.dd_backend.Service.LocalFileService;
 import diamondpick.dd_backend.Tool.Response;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -20,9 +21,13 @@ import java.util.Map;
 
 @RestController
 public class DocumentController {
+    @Autowired
     DocumentDao documentDao;
+    @Autowired
     DocumentService documentService;
+    @Autowired
     AuthService authService;
+    @Autowired
     LocalFileService localFileService;
 
     @GetMapping("/api/document/edit")
@@ -126,11 +131,26 @@ public class DocumentController {
     }
     @PostMapping("/api/document/share")
     public Map<String, Object> share(@RequestBody Map<String, String> req){
-        String docId = req.get("docId");
-        String auth = req.get("auth");
         Response res = new Response();
-        documentService.share(docId, auth);
-        return res.get(0);
+        try{
+            String docId = req.get("docId");
+            int auth = Integer.parseInt(req.get("auth"));
+            documentService.share(docId, auth);
+            return res.get(0);
+        }catch (Exception e){
+            return res.get(-1);
+        }
+    }
+    @PostMapping("/api/document/dis-share")
+    public Map<String, Object> disShare(@RequestBody Map<String, String> req){
+        String docId = req.get("docId");
+        Response res = new Response();
+        try{
+            documentService.disShare(docId);
+            return res.get(0);
+        }catch (OperationFail e){
+            return res.get(-1);
+        }
     }
 
     @PostMapping("/api/document/img")
@@ -141,4 +161,20 @@ public class DocumentController {
             return new Response("url").get(-1);
         }
     }
+
+    @PostMapping("/api/document/update-browse")
+    public Map<String, Object> updateBrowse(@RequestBody Map<String, String> req){
+        String docId = req.get("docId");
+        String userId = req.get("userId");
+        Response res = new Response();
+        try{
+            documentDao.updateRecent(userId, docId);
+            return res.get(0);
+        }catch (Exception e){
+            e.printStackTrace();
+            return res.get(-1);
+        }
+    }
+
+
 }

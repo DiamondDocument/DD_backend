@@ -8,7 +8,9 @@ import diamondpick.dd_backend.Exception.OperationFail;
 import diamondpick.dd_backend.Service.AuthService;
 import diamondpick.dd_backend.Service.DocumentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service
 public class AuthImp implements AuthService {
     @Autowired
     private DocumentDao documentDao;

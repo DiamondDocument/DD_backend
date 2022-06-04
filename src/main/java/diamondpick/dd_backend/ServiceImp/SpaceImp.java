@@ -10,11 +10,12 @@ import diamondpick.dd_backend.Exception.OperationFail;
 import diamondpick.dd_backend.Service.AuthService;
 import diamondpick.dd_backend.Service.SpaceService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
-
+@Service
 public class SpaceImp implements SpaceService {
     @Autowired
     private FolderDao folderDao;

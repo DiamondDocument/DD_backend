@@ -1,13 +1,12 @@
 package diamondpick.dd_backend.Entity;
 
-import diamondpick.dd_backend.Exception.NotExist.DocNotExist;
 import diamondpick.dd_backend.Exception.OperationFail;
 import diamondpick.dd_backend.Service.DocumentService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Date;
 
-public class Document implements File{
+public class Document implements File {
     @Autowired
     DocumentService documentService;
 
@@ -24,10 +23,11 @@ public class Document implements File{
     private String spaceId;
     private boolean isDelete;
     private String deleterId;
-    private Date   deleteTime;
+    private Date deleteTime;
     private String creatorName;
     private String modifierName;
     private String deleterName;
+    private Date browseTime;
 
     public String getDocId() {
         return docId;
@@ -68,10 +68,10 @@ public class Document implements File{
     }
 
     @Override
-    public String getSize()  {
-        try{
+    public String getSize() {
+        try {
             return documentService.getSize(getDocId());
-        }catch (OperationFail e ){
+        } catch (OperationFail e) {
             e.printStackTrace();
             System.out.println("不可能");
             return "不可能！";
@@ -185,5 +185,10 @@ public class Document implements File{
     public void setDeleterName(String deleterName) {
         this.deleterName = deleterName;
     }
+
+    public Date getBrowseTime() {
+        return browseTime;
+    }
+
 }
 

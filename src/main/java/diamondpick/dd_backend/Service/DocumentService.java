@@ -33,18 +33,17 @@ public interface DocumentService {
 
     public void disCollect(String userId, String docId)throws  NotyetCollect, OtherFail;
 
-    //todo
     /**
      * @return 返回1到4中的一种
      */
     public int checkShare(String docId)throws OperationFail;
 
-    //todo
     public void keepEdit(String userId, String docId)throws NoAuth, SomoneEditing, OtherFail;
 
-    //todo
     public void quitEdit(String userId, String docId)throws OperationFail ;
 
-    //todo
-    public void share(String docId, String auth);
+    public void share(String docId, int auth)throws OperationFail;
+
+
+    void disShare(String docId)throws OperationFail;
 }
