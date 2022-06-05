@@ -21,8 +21,8 @@ public interface FolderDao {
      * @throws DuplicateKeyException           主键冲突异常
      * @throws DataIntegrityViolationException 数据完整性异常
      */
-    @Insert("insert into folders(folder_id, name, creator_id, create_time, parent_id, space_id)\n" +
-            "values (#{param1}, #{param2}, #{param3}, now(), #{param5}, #{param6})")
+    @Insert("insert into folders(folder_id, name, creator_id, parent_id, space_id)\n" +
+            "values (#{param1}, #{param2}, #{param3}, #{param4}, #{param5})")
     public void insertFolder(String folderId, String name, String creatorId, String parentId, String spaceId) throws DuplicateKeyException, DataIntegrityViolationException;
 
     /**

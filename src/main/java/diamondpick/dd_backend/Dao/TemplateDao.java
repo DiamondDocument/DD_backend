@@ -18,13 +18,13 @@ public interface TemplateDao {
     public void insertCollection(String collectorId, String tempId);
 
     @Select("select temp.* , c.nickname as creator_name " +
-            "from template as temp, users as c " +
+            "from templates as temp, users as c " +
             "where temp.creator_id = c.user_id and " +
             "temp.temp_id = #{param1} ")
     public Template selectTemp(String tempId);
 
     @Select("select temp.* , c.nickname as creator_name " +
-            "from template as temp, users as c " +
+            "from templates as temp, users as c " +
             "where temp.creator_id = c.user_id and " +
             "temp.creator_id = #{param1} ")
     public List<Template> selectByCreator(String creatorId);

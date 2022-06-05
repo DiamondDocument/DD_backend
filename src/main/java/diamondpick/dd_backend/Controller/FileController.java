@@ -9,6 +9,7 @@ import diamondpick.dd_backend.Service.FileService;
 import diamondpick.dd_backend.Tool.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -35,7 +36,7 @@ public class FileController {
     private FolderDao folderDao;
 
     @PostMapping("/api/file/create")
-    public Map<String, Object> createFile(@RequestParam Map<String, String> re_map) {
+    public Map<String, Object> createFile(@RequestBody Map<String, String> re_map) {
         Response res = new Response("fileId");
         int type = Integer.parseInt(re_map.get("type"));
         String name = re_map.get("name");
@@ -79,7 +80,7 @@ public class FileController {
     }
 
     @PostMapping("/api/file/rename")
-    public Map<String, Object> renameFile(@RequestParam Map<String, String> re_map) {
+    public Map<String, Object> renameFile(@RequestBody Map<String, String> re_map) {
         Response res = new Response();
         String fileId = re_map.get("fileId");
         String newName = re_map.get("newName");
@@ -98,7 +99,7 @@ public class FileController {
     }
 
     @PostMapping("/api/file/move")
-    public Map<String, Object> moveFile(@RequestParam Map<String, String> re_map) {
+    public Map<String, Object> moveFile(@RequestBody Map<String, String> re_map) {
         Response res = new Response();
         String fileId = re_map.get("fileId");
         String newParentId = re_map.get("newParentId");
@@ -117,7 +118,7 @@ public class FileController {
     }
 
     @PostMapping("/api/file/remove")
-    public Map<String, Object> removeFile(@RequestParam Map<String, String> re_map) {
+    public Map<String, Object> removeFile(@RequestBody Map<String, String> re_map) {
         Response res = new Response();
         String userId = re_map.get("userId");
         String fileId = re_map.get("fileId");
@@ -136,7 +137,7 @@ public class FileController {
     }
 
     @PostMapping("/api/file/recover")
-    public Map<String, Object> recoverFile(@RequestParam Map<String, String> re_map) {
+    public Map<String, Object> recoverFile(@RequestBody Map<String, String> re_map) {
         Response res = new Response();
         String fileId = re_map.get("fileId");
         try {
@@ -154,7 +155,7 @@ public class FileController {
     }
 
     @PostMapping("api/file/authority")
-    public Map<String, Object> changeAuthority(@RequestParam Map<String, String> re_map) {
+    public Map<String, Object> changeAuthority(@RequestBody Map<String, String> re_map) {
         Response res = new Response();
         String fileId = re_map.get("fileId");
         int authority = Integer.parseInt(re_map.get("newAuth"));
