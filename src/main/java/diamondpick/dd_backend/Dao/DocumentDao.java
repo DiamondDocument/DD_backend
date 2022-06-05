@@ -60,75 +60,90 @@ public interface DocumentDao {
     @Update("update user_recent set browse_time = now() where user_id = #{param1} and doc_id = #{param2}")
     public void updateRecent(String browserId, String docId)throws DataIntegrityViolationException;
 
-    /** @return 注意这里包括有创建者、修改者和删除者的昵称 */
-    @Select("select doc.*, m.nickname as modifier_name, c.nickname as creator_name from documents as doc, users as m, users as c " +
-            "where doc_id    = #{param1} and " +
-            "doc.modifier_id = m.user_id and " +
-            "doc.creator_id  = c.user_id ")
+    /** @return 只要求返回documents表里的字段 */
+    @Select("select\n" +
+            "    doc2.*, m.nickname as modifier_name\n" +
+            "    from  users m right join\n" +
+            "        (select doc.*, c.nickname from  documents doc, users as c\n" +
+            "            where doc.doc_id = 'd100000' and\n" +
+            "                  doc.creator_id = c.user_id) doc2\n" +
+            "    on doc2.modifier_id = m.user_id\n")
     public Document selectDoc(String docId);
 
 
-    /** @return 只包括未删除的 */
-    @Select("select doc.*, m.nickname as modifier_name, c.nickname as creator_name " +
-            "from documents as doc, users as m, users as c, document_collector as co " +
-            " where co.collector_id = #{param1} and " +
-            " co.doc_id = doc.doc_id and " +
-            "doc.modifier_id = m.user_id and " +
-            "doc.creator_id = c.user_id and " +
-            "doc.is_delete = false")
+    /** @return 只输出未删除的，包括有创建者、修改者的昵称 */
+    @Select("select\n" +
+            "    doc2.*, m.nickname as modifier_name\n" +
+            "    from  users m right join\n" +
+            "        (select doc.*, c.nickname as creator_name from  documents doc, users as c, document_collector as co\n" +
+            "            where doc.doc_id = co.doc_id and\n" +
+            "                  doc.creator_id = c.user_id and\n" +
+            "                  co.collector_id = #{param1} and\n" +
+            "                  doc.is_delete = false) doc2\n" +
+            "    on doc2.modifier_id = m.user_id")
     public List<Document> selectCollection(String collectorId);
 
-    @Select("select doc_id from document_collector where doc_id = #{param2} and collector_id = #{param1}")
+    @Select("select DISTINCT doc_id from document_collector where doc_id = #{param2} and collector_id = #{param1}")
     public String selectCollectorAndDoc(String collectorId, String docId);
 
 
 
-    @Select("select doc.*, m.nickname as modifier_name, c.nickname as creator_name " +
-            "from documents as doc, users as m, users as c  " +
-            " where doc.parent_id = #{param1} and " +
-            "doc.modifier_id = m.user_id and " +
-            "doc.creator_id = c.user_id and  " +
-            "doc.is_delete = false           " )
-    /** 只包括未删除的 */
+    /** @return 只输出未删除的，包括有创建者、修改者的昵称 */
+    @Select("select\n" +
+            "    doc2.*, m.nickname as modifier_name\n" +
+            "    from  users m right join\n" +
+            "        (select doc.*, c.nickname as creator_name from  documents doc, users  c\n" +
+            "            where doc.creator_id = c.user_id and\n" +
+            "                  doc.parent_id = #{param1} and\n" +
+            "                  doc.is_delete = false) doc2\n" +
+            "    on doc2.modifier_id = m.user_id" )
     public List<Document> selectSubDir(String parentId);
 
     /**
      * @param type 可以是"team"和"user"的一种，表示是团队空间还是用户空间
      * @param spaceOwnerId 空间所有者的id（可能是团队id或者用户id）
-     * @return 只包括未删除的
+     * @return 只包括未删除的，包括有创建者、修改者的昵称
      */
-    @Select("select doc.*, m.nickname as modifier_name, c.nickname as creator_name " +
-            "from documents as doc, users as m, users as c, ${param1}s as s  " +
-            "where " +
-            "s.${param1}_id            = #{param1} and      " +
-            "s.space_id           = doc.space_id and   " +
-            "doc.modifier_id      = m.user_id and      " +
-            "doc.creator_id       = c.user_id and      " +
-            "doc.is_delete        = false              " )
+    @Select("select\n" +
+            "    doc2.*, m.nickname as modifier_name\n" +
+            "    from  users m right join\n" +
+            "        (select doc.*, c.nickname as creator_name from  documents doc, users c, ${param1}s s\n" +
+            "            where doc.creator_id = c.user_id and\n" +
+            "                  doc.space_id = s.space_id and\n" +
+            "                  doc.parent_id is null and\n" +
+            "                  doc.is_delete = false and\n" +
+            "                  s.${param1}_id = #{param2}) doc2\n" +
+            "    on doc2.modifier_id = m.user_id\n" )
     public List<Document> selectRootDir(String type, String spaceOwnerId);
 
-    @Select("select doc.*, d.nickname as deleter_name, c.nickname as creator_name " +
-            "from documents as doc, users as d, users as c, ${param1}s as s  " +
-            "where " +
-            "s.${param1}_id            = #{param2} and      " +
-            "s.space_id           = doc.space_id and   " +
-            "doc.deleter_id       = d.user_id and      " +
-            "doc.creator_id       = c.user_id and      " +
-            "doc.is_delete        = true               " )
-    /**这里的额外信息没有修改者的名称，只有创建者和删除者的名称 */
+    /**
+     * @param type 可以是"team"和"user"的一种，表示是团队空间还是用户空间
+     * @param spaceOwnerId 空间所有者的id（可能是团队id或者用户id）
+     * @return 只包括已经删除的，包括有创建者、删除者的昵称
+     */
+    @Select("select\n" +
+            "    doc2.*, d.nickname as deleter_name\n" +
+            "    from  users d right join\n" +
+            "        (select doc.*, c.nickname as creator_name from  documents doc, users c, ${param1}s s\n" +
+            "            where doc.creator_id = c.user_id and\n" +
+            "                  doc.space_id = s.space_id and\n" +
+            "                  doc.parent_id is null and\n" +
+            "                  doc.is_delete = true and\n" +
+            "                  s.${param1}_id = #{param2}) doc2\n" +
+            "    on doc2.deleter_id = d.user_id\n" )
     public List<Document> selectDeleted(String type, String spaceOwnerId);
 
-    /** 只包括未删除的，按照时间排序，如果多于limit个则显示limit个 */
-    @Select("select doc.*, m.nickname as modifier_name, c.nickname as creator_name, r.browse_time as browse_time " +
-            "from documents as doc, users as m, users as c, user_recent as r  " +
-            "where " +
-            "r.user_id            = #{param1} and      " +
-            "s.space_id           = doc.space_id and   " +
-            "doc.modifier_id      = m.user_id and      " +
-            "doc.creator_id       = c.user_id and      " +
-            "doc.doc_id           = r.doc_id           " +
-            "doc.is_delete        = false              " +
-            "order by r.browse_time desc               " +
+    /** 只包括未删除的，包括有创建者、修改者的昵称，按照时间排序，如果多于limit个则显示limit个 */
+    @Select("select\n" +
+            "    doc2.*, m.nickname as modifier_name\n" +
+            "    from  users m right join\n" +
+            "        (select doc.*, c.nickname as creator_name, r.browse_time from  documents doc, users c, user_recent r\n" +
+            "            where doc.creator_id = c.user_id and\n" +
+            "                  doc.doc_id = r.doc_id and\n" +
+            "                  doc.is_delete = false and\n" +
+            "                  r.user_id = #{param1}) doc2\n" +
+            "    on doc2.modifier_id = m.user_id\n" +
+            "order by browse_time desc               " +
             "limit  ${param2}                          " )
     public List<Document> selectRecent(String browserId, int limit);
 
@@ -137,7 +152,7 @@ public interface DocumentDao {
      * 查询文档最大id
      * @return 文档最大id
      */
-    @Select("select doc_id\n" +
+    @Select("select DISTINCT doc_id\n" +
             "from documents\n" +
             "order by convert(doc_id using gbk) desc\n" +
             "limit 1")
