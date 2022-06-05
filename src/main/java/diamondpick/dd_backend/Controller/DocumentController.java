@@ -18,7 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.nio.channels.NotYetConnectedException;
 import java.util.Map;
 
-
+@CrossOrigin
 @RestController
 public class DocumentController {
     @Autowired

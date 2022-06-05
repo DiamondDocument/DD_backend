@@ -376,17 +376,22 @@ public class LocalFileServiceImp implements LocalFileService {
     }
 
     @Override
-    public byte[] docxToHtml(MultipartFile file) throws OperationFail {
+    public String docxToHtml(MultipartFile file) throws OperationFail {
         Document doc = null;
         try{
-            doc = new Document(file.getInputStream());
+            File f = new File(baseLocation + "importTmp.docx");
+            f.createNewFile();
+            FileOutputStream os = new FileOutputStream(f);
+            os.write(file.getBytes());
+            doc = new Document(baseLocation + "importTmp.docx");
+            os.close();
         }catch (Exception e){
             e.printStackTrace();
             throw new OperationFail();
         }
         try {
-            doc.save("importTmp.html");
-            return readFromFile("importTmp.html");
+            doc.save( baseLocation + "importTmp.html");
+            return new String(readFromFile("importTmp.html"));
         }catch (Exception e){
             e.printStackTrace();
             throw new OperationFail();
