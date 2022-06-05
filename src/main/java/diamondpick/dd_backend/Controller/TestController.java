@@ -1,7 +1,10 @@
 package diamondpick.dd_backend.Controller;
 
+import diamondpick.dd_backend.Exception.Illegal.Illegal;
+import diamondpick.dd_backend.Tool.IdGenerator;
 import diamondpick.dd_backend.Tool.JsonArray;
 import diamondpick.dd_backend.Tool.Response;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -10,6 +13,8 @@ import java.util.Map;
 
 @RestController
 public class TestController {
+    @Autowired
+    private IdGenerator idGenerator;
 
     @GetMapping("api/hello")
     public Map<String, Object> helloWorld(@RequestParam(required = false) String userId){
@@ -43,4 +48,12 @@ public class TestController {
         return r.get(0, req, file.getOriginalFilename());
     }
 
+    @GetMapping("api/idgenerator")
+    public Map<String, Object> testIdGenerator() throws Illegal {
+        Response res = new Response("folder", "document", "message");
+        String folderId = idGenerator.generateId('f');
+        String documentId = idGenerator.generateId('d');
+        String messageId = idGenerator.generateId('m');
+        return res.get(0, folderId, documentId, messageId);
+    }
 }

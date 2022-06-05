@@ -26,11 +26,14 @@ public class FileImp implements FileService {
     @Autowired
     private AuthService authService;
 
+    @Autowired
+    private IdGenerator idGenerator;
+
     @Override
     public String newFolder(String folderName, String creatorId, String parentId, String spaceId) throws OtherFail, NoAuth {
         String folderId;
         try {
-            folderId = IdGenerator.generateId('f');
+            folderId = idGenerator.generateId('f');
             if (parentId == null) {
                 folderDao.insertFolder(folderId, folderName, creatorId, null, spaceId);
             } else {

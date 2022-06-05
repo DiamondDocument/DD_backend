@@ -12,6 +12,7 @@ import diamondpick.dd_backend.Service.ConstraintService;
 import diamondpick.dd_backend.Service.DocumentService;
 import diamondpick.dd_backend.Service.LocalFileService;
 import diamondpick.dd_backend.Tool.IdGenerator;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
@@ -20,15 +21,21 @@ import java.util.*;
 @Service
 public class DocumentImp implements DocumentService {
 
+    @Autowired
     private DocumentDao documentDao;
+    @Autowired
     private ConstraintService constraintService;
+    @Autowired
     private LocalFileService localFileService;
+    @Autowired
     private AuthService authService;
+    @Autowired
+    private IdGenerator idGenerator;
 
 
     @Override
     public String newDoc(String name, String spaceId, String userId, String parentId) throws OperationFail {
-        String newDocId = IdGenerator.generateId('d');
+        String newDocId = idGenerator.generateId('d');
         constraintService.checkName(name);
         try{
             documentDao.insertDoc(newDocId, name, userId, parentId, spaceId);
@@ -42,7 +49,7 @@ public class DocumentImp implements DocumentService {
 
     @Override
     public String newDocByTemplate(String name, String spaceId, String userId, String parentId, String tempId) throws OperationFail {
-        String newDocId = IdGenerator.generateId('d');
+        String newDocId = idGenerator.generateId('d');
         constraintService.checkName(name);
         try{
             documentDao.insertDoc(newDocId, name, userId, parentId, spaceId);

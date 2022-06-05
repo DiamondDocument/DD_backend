@@ -25,6 +25,9 @@ public class MessageImp implements MessageService {
     @Autowired
     private TeamDealDao teamDealDao;
 
+    @Autowired
+    private IdGenerator idGenerator;
+
     @Override
     public void newTeamDealMsg(int dealId) throws OperationFail {
         TeamDeal deal = teamDealDao.selectDealByDealId(dealId);
@@ -33,7 +36,7 @@ public class MessageImp implements MessageService {
         }
         if (deal.getDealType() == 0) {
             // 邀请
-            String msgId = IdGenerator.generateId('m');
+            String msgId = idGenerator.generateId('m');
             String senderId;
             String receiverId;
             int msgType;
@@ -51,7 +54,7 @@ public class MessageImp implements MessageService {
             messageDao.insertMsg(msgId, senderId, receiverId, msgType, null, null, dealId);
         } else if (deal.getDealType() == 1) {
             // 申请
-            String msgId = IdGenerator.generateId('m');
+            String msgId = idGenerator.generateId('m');
             String senderId;
             String receiverId;
             int msgType;
@@ -75,7 +78,7 @@ public class MessageImp implements MessageService {
     @Override
     public void newCommentMsg(String senderId, String docId, String receiverId, String comment) throws OperationFail {
         try {
-            messageDao.insertMsg(IdGenerator.generateId('m'), senderId, receiverId, 6, comment, docId, 0);
+            messageDao.insertMsg(idGenerator.generateId('m'), senderId, receiverId, 6, comment, docId, 0);
         } catch (Exception e) {
             throw new OperationFail();
         }
@@ -84,7 +87,7 @@ public class MessageImp implements MessageService {
     @Override
     public void newAtMsg(String senderId, String docId, String receiverId) throws OperationFail {
         try {
-            messageDao.insertMsg(IdGenerator.generateId('m'), senderId, receiverId, 7, null, docId, 0);
+            messageDao.insertMsg(idGenerator.generateId('m'), senderId, receiverId, 7, null, docId, 0);
         } catch (Exception e) {
             throw new OperationFail();
         }
