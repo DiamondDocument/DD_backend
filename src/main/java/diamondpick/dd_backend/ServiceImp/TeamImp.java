@@ -19,6 +19,7 @@ import diamondpick.dd_backend.Service.ConstraintService;
 import diamondpick.dd_backend.Service.FileService;
 import diamondpick.dd_backend.Service.SpaceService;
 import diamondpick.dd_backend.Service.TeamService;
+import diamondpick.dd_backend.Tool.IdGenerator;
 import diamondpick.dd_backend.Tool.UserStatusToTeam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -41,11 +42,11 @@ public class TeamImp implements TeamService {
     private TeamDealDao teamDealDao;
     @Autowired
     private FileService fileService;
-    int teamNum = 0;
+    @Autowired
+    private IdGenerator idGenerator;
     @Override
     public void newTeam(String name, String intro, String captainId) throws OtherFail, TeamNameIllegal {
         if(userDao.selectUser(captainId)==null) throw new OtherFail();
-
         try{
             constraintService.checkName(name);
         }catch (Exception e){
@@ -58,9 +59,8 @@ public class TeamImp implements TeamService {
         }
         spaceDao.insertSpace();
         try{
-            String teamId = "t"+Integer.toString(teamNum++);
-            teamDao.insertTeam(teamId,name,intro,captainId,spaceDao.selectSpace());
-        }catch (DataIntegrityViolationException e){
+            teamDao.insertTeam(idGenerator.generateId('t'), name,intro,captainId,spaceDao.selectSpace());
+        }catch (Exception e){
             e.printStackTrace();
             spaceDao.deleteSpace(spaceDao.selectSpace());
             throw new OtherFail();
