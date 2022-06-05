@@ -41,8 +41,9 @@ public class DocumentImp implements DocumentService {
             documentDao.insertDoc(newDocId, name, userId, parentId, spaceId);
             if(file != null){
                 localFileService.saveDocument(newDocId, localFileService.docxToHtml(file));
+            }else{
+                localFileService.saveDocument(newDocId, "");
             }
-            localFileService.saveDocument(newDocId, "");
             return newDocId;
         }catch (Exception e){
             e.printStackTrace();
