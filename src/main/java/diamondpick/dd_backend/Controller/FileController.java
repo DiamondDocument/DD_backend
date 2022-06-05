@@ -10,7 +10,9 @@ import diamondpick.dd_backend.Tool.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Map;
 
@@ -35,40 +37,40 @@ public class FileController {
     private FolderDao folderDao;
 
     @PostMapping("/api/file/create")
-    public Map<String, Object> createFile(@RequestBody Map<String, String> re_map) {
+    public Map<String, Object> createFile(@RequestParam(value = "type") String type,
+                                          @RequestParam(value = "name") String name,
+                                          @RequestParam(value = "creatorId") String creatorId,
+                                          @RequestParam(value = "authority", required = false) String authority,
+                                          @RequestParam(value = "teamId", required = false) String teamId,
+                                          @RequestParam(value = "parentId", required = false) String parentId,
+                                          @RequestParam(value = "templateId", required = false) String templateId,
+                                          @RequestParam(value = "file", required = false) MultipartFile file) {
         Response res = new Response("fileId");
-        int type = Integer.parseInt(re_map.get("type"));
-        String name = re_map.get("name");
-        String creatorId = re_map.get("creatorId");
-        int authority = 3;
+        int auth = 3;
         int spaceId;
-        String parentId = null;
-        if (re_map.get("authority") != null) {
-            authority = Integer.parseInt(re_map.get("authority"));
+        if (authority != null) {
+            auth = Integer.parseInt(authority);
         }
-        if (re_map.get("teamId") != null) {
-            spaceId = teamDao.selectTeam(re_map.get("teamId")).getSpaceId();
+        if (teamId != null) {
+            spaceId = teamDao.selectTeam(teamId).getSpaceId();
         } else {
             spaceId = userDao.selectUser(creatorId).getSpaceId();
         }
-        if (re_map.get("parentId") != null) {
-            parentId = re_map.get("parentId");
-        }
         try {
             String fileId;
-            if (type == 1) {
+            if (type.equals("1")) {
                 // create document
-                if (re_map.get("templateId") == null) {
-                    fileId = documentService.newDoc(name, String.valueOf(spaceId), creatorId, parentId);
-                    documentDao.updateDoc(fileId, "self_auth", authority);
+                if (templateId == null) {
+                    fileId = documentService.newDoc(name, String.valueOf(spaceId), creatorId, parentId, file);
+                    documentDao.updateDoc(fileId, "self_auth", auth);
                 } else {
-                    fileId = documentService.newDocByTemplate(name, String.valueOf(spaceId), creatorId, parentId, re_map.get("templateId"));
-                    documentDao.updateDoc(fileId, "self_auth", authority);
+                    fileId = documentService.newDocByTemplate(name, String.valueOf(spaceId), creatorId, parentId, templateId);
+                    documentDao.updateDoc(fileId, "self_auth", auth);
                 }
-            } else if (type == 2) {
+            } else if (type.equals("2")) {
                 // create folder
                 fileId = fileService.newFolder(name, creatorId, parentId, String.valueOf(spaceId));
-                folderDao.updateFolder(fileId, "self_auth", authority);
+                folderDao.updateFolder(fileId, "self_auth", auth);
             } else {
                 return res.get(-1);
             }
