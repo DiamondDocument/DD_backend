@@ -110,7 +110,7 @@ public class TeamController {
         Response res = new Response("url");
         try{
             return res.get(0, localFileService.getTeamAvatarUrl(teamId));
-        }catch (OperationFail e){
+        }catch (Exception e){
             return res.get(-1);
         }
     }
@@ -165,7 +165,10 @@ public class TeamController {
             for(User user : users){
                 Map<String,Object> info = new HashMap<>();
                 info.put("name",user.getNickname());
-                info.put("rank",user.getGender());
+                if(team.getCaptainId().equals(user.getUserId()))
+                    info.put("rank","队长");
+                else
+                    info.put("rank","队员");
                 info.put("userId",user.getUserId());
                 ret.put("member",info);
             }
