@@ -65,7 +65,7 @@ public interface DocumentDao {
             "    doc2.*, m.nickname as modifier_name\n" +
             "    from  users m right join\n" +
             "        (select doc.*, c.nickname from  documents doc, users as c\n" +
-            "            where doc.doc_id = 'd100000' and\n" +
+            "            where doc.doc_id = #{param1} and\n" +
             "                  doc.creator_id = c.user_id) doc2\n" +
             "    on doc2.modifier_id = m.user_id\n")
     public Document selectDoc(String docId);

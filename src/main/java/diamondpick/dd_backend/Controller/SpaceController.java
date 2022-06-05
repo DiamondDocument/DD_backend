@@ -138,7 +138,8 @@ public class SpaceController {
             if (Integer.parseInt(newAuth) < 1 || Integer.parseInt(newAuth) > 4) {
                 throw new Exception();
             }
-            spaceDao.updateAuth(type, spaceOwnerId, Integer.parseInt(newAuth));
+            int oldAuth = spaceDao.selectSpaceAuth(type, spaceOwnerId);
+            spaceDao.updateAuth(type, spaceOwnerId, Math.min(Integer.parseInt(newAuth), oldAuth));
             return res.get(0);
         } catch (Exception e) {
             return res.get(-1);

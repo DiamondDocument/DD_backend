@@ -34,23 +34,24 @@ public class DocumentImp implements DocumentService {
     private IdGenerator idGenerator;
 
 
-    @Override
-    public String newDoc(String name, String spaceId, String userId, String parentId) throws OperationFail {
-        String newDocId = idGenerator.generateId('d');
-        constraintService.checkName(name);
-        try{
-            documentDao.insertDoc(newDocId, name, userId, parentId, spaceId);
-            localFileService.saveDocument(newDocId, "");
-            return newDocId;
-        }catch (Exception e){
-            e.printStackTrace();
-            throw new OperationFail();
-        }
-    }
+//    @Override
+//    public String newDoc(String name, String spaceId, String userId, String parentId) throws OperationFail {
+//        String newDocId = idGenerator.generateId('d');
+//        constraintService.checkName(name);
+//        try{
+//            documentDao.insertDoc(newDocId, name, userId, parentId, spaceId);
+//            localFileService.saveDocument(newDocId, "");
+//            return newDocId;
+//        }catch (Exception e){
+//            e.printStackTrace();
+//            throw new OperationFail();
+//        }
+//    }
 
     @Override
     public String newDoc(String name, String spaceId, String userId, String parentId, MultipartFile file) throws OperationFail {
         //todo
+        return null;
     }
 
     @Override
