@@ -3,6 +3,7 @@ package diamondpick.dd_backend.Tool;
 import diamondpick.dd_backend.Dao.DocumentDao;
 import diamondpick.dd_backend.Dao.FolderDao;
 import diamondpick.dd_backend.Dao.MessageDao;
+import diamondpick.dd_backend.Dao.TeamDao;
 import diamondpick.dd_backend.Exception.Illegal.Illegal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,6 +18,9 @@ public class IdGenerator {
 
     @Autowired
     private MessageDao messageDao;
+
+    @Autowired
+    private TeamDao teamDao;
 
     /**
      * 'f': folder文件夹
@@ -37,6 +41,10 @@ public class IdGenerator {
             case 'm':
                 int messageIdNum = Integer.parseInt(messageDao.selectMaxId().substring(1)) + 1;
                 newId = "m" + String.format("%06d", messageIdNum);
+                break;
+            case 't':
+                int teamIdNum = Integer.parseInt(teamDao.selectMaxId()) + 1;
+                newId = String.format("%05d", teamIdNum);
                 break;
             default:
                 throw new Illegal();

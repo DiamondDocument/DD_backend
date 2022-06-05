@@ -32,12 +32,19 @@ public interface TeamDao {
     public void updateTeam(@Param("teamId")String teamId, @Param("key")String key, @Param("newValue")String newValue)throws DataIntegrityViolationException, BadSqlGrammarException;
 
     @Select("select * from teams where team_id = #{param1}" )
-    Team selectTeam(String teamId);
+    public Team selectTeam(String teamId);
 
     @Select("select * from teams where team_id in (select team_id from team_member where member_id = #{param1})")
-    List<Team> selectTeamByMember(String memberId);
+    public List<Team> selectTeamByMember(String memberId);
 
     @Select("select * from teams where captain_id = #{param1}")
-    List<Team> selectTeamByCaptain(String captainId);
+    public List<Team> selectTeamByCaptain(String captainId);
+
+
+    @Select("select team_id\n" +
+            "from teams\n" +
+            "order by convert(team_id using gbk) desc\n" +
+            "limit 1")
+    public String selectMaxId();
 
 }
