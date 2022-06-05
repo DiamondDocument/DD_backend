@@ -5,6 +5,7 @@ import diamondpick.dd_backend.Dao.*;
 import diamondpick.dd_backend.Entity.Document;
 import diamondpick.dd_backend.Entity.Folder;
 import diamondpick.dd_backend.Service.AuthService;
+import diamondpick.dd_backend.Service.DocumentService;
 import diamondpick.dd_backend.Tool.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -32,6 +33,9 @@ public class SpaceController {
 
     @Autowired
     private AuthService authService;
+
+    @Autowired
+    private DocumentService documentService;
 
     @GetMapping("/api/space")
     public Map<String, Object> getSpace(@RequestParam(value = "type") String type,
@@ -70,7 +74,7 @@ public class SpaceController {
                         json.put("modifierId", document.getModifierId());
                         json.put("modifierName", document.getModifierName());
                         json.put("modifyTime", document.getModifyTime());
-                        json.put("size", document.getSize());
+                        json.put("size", documentService.getSize(document.getFileId()));
                         jsonList.add(json);
                     }
                 }
@@ -160,7 +164,7 @@ public class SpaceController {
                     json.put("modifierId", document.getModifierId());
                     json.put("modifierName", document.getModifierName());
                     json.put("modifyTime", document.getModifyTime());
-                    json.put("size", document.getSize());
+                    json.put("size", documentService.getSize(document.getFileId()));
                     jsonList.add(json);
                 }
             }
@@ -204,7 +208,7 @@ public class SpaceController {
                 json.put("deleterId", document.getDeleterId());
                 json.put("deleterName", document.getDeleterName());
                 json.put("deleteTime", document.getDeleteTime());
-                json.put("size", document.getSize());
+                json.put("size", documentService.getSize(document.getFileId()));
                 jsonList.add(json);
             }
             return res.get(0, jsonList);
@@ -231,7 +235,7 @@ public class SpaceController {
                     json.put("modifierName", document.getModifierName());
                     json.put("modifyTime", document.getModifyTime());
                     json.put("browserTime", document.getBrowseTime());
-                    json.put("size", document.getSize());
+                    json.put("size", documentService.getSize(document.getFileId()));
                     jsonList.add(json);
                 }
             }

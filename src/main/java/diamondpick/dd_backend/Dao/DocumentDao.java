@@ -63,7 +63,7 @@ public interface DocumentDao {
     /** @return 注意这里包括有创建者、修改者和删除者的昵称 */
     @Select("select doc.*, m.nickname as modifier_name, c.nickname as creator_name from documents as doc, users as m, users as c " +
             "where doc_id    = #{param1} and " +
-            "doc.modifier_id = m.user_id and " +
+            "(doc.modifier_id = m.user_id or doc.modifier_id is null) and " +
             "doc.creator_id  = c.user_id ")
     public Document selectDoc(String docId);
 
@@ -73,7 +73,7 @@ public interface DocumentDao {
             "from documents as doc, users as m, users as c, document_collector as co " +
             " where co.collector_id = #{param1} and " +
             " co.doc_id = doc.doc_id and " +
-            "doc.modifier_id = m.user_id and " +
+            "(doc.modifier_id = m.user_id or doc.modifier_id is null) and " +
             "doc.creator_id = c.user_id and " +
             "doc.is_delete = false")
     public List<Document> selectCollection(String collectorId);
@@ -86,7 +86,7 @@ public interface DocumentDao {
     @Select("select doc.*, m.nickname as modifier_name, c.nickname as creator_name " +
             "from documents as doc, users as m, users as c  " +
             " where doc.parent_id = #{param1} and " +
-            "doc.modifier_id = m.user_id and " +
+            "(doc.modifier_id = m.user_id or doc.modifier_id is null) and " +
             "doc.creator_id = c.user_id and  " +
             "doc.is_delete = false           " )
     /** 只包括未删除的 */
@@ -100,9 +100,9 @@ public interface DocumentDao {
     @Select("select doc.*, m.nickname as modifier_name, c.nickname as creator_name " +
             "from documents as doc, users as m, users as c, ${param1}s as s  " +
             "where " +
-            "s.${param1}_id            = #{param1} and      " +
+            "s.${param1}_id       = #{param2} and      " +
             "s.space_id           = doc.space_id and   " +
-            "doc.modifier_id      = m.user_id and      " +
+            "(doc.modifier_id = m.user_id or doc.modifier_id is null) and      " +
             "doc.creator_id       = c.user_id and      " +
             "doc.is_delete        = false              " )
     public List<Document> selectRootDir(String type, String spaceOwnerId);
@@ -124,7 +124,7 @@ public interface DocumentDao {
             "where " +
             "r.user_id            = #{param1} and      " +
             "s.space_id           = doc.space_id and   " +
-            "doc.modifier_id      = m.user_id and      " +
+            "(doc.modifier_id = m.user_id or doc.modifier_id is null) and      " +
             "doc.creator_id       = c.user_id and      " +
             "doc.doc_id           = r.doc_id           " +
             "doc.is_delete        = false              " +

@@ -1,14 +1,8 @@
 package diamondpick.dd_backend.Entity;
 
-import diamondpick.dd_backend.Exception.OperationFail;
-import diamondpick.dd_backend.Service.DocumentService;
-import org.springframework.beans.factory.annotation.Autowired;
-
 import java.util.Date;
 
 public class Document implements File {
-    @Autowired
-    DocumentService documentService;
 
     private String docId;
     private String name;
@@ -48,7 +42,7 @@ public class Document implements File {
 
     @Override
     public String getFileId() {
-        return getDeleterId();
+        return docId;
     }
 
     public void setName(String name) {
@@ -69,13 +63,7 @@ public class Document implements File {
 
     @Override
     public String getSize() {
-        try {
-            return documentService.getSize(getDocId());
-        } catch (OperationFail e) {
-            e.printStackTrace();
-            System.out.println("不可能");
-            return "不可能！";
-        }
+        return null;
     }
 
     public void setCreateTime(Date createTime) {

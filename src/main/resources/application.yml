@@ -1,8 +1,9 @@
 spring:
   datasource:
-    url: jdbc:mysql://43.138.71.108:3306/dd_backend
+    url: jdbc:mysql://localhost:3306/dd_backend?serverTimezone=UTC
 #    password: diamond
-    username: diamond
+    username: root
+    password: Longyizhou2001
 #    initialization-mode:
 #    schema: classpath:/Sql/*.sql
 #  jpa:
