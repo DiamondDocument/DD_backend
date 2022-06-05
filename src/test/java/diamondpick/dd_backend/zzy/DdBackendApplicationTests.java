@@ -26,9 +26,9 @@ class DdBackendApplicationTests {
 
     @Autowired
     UserService userService;
-    /*@Test
+    @Test
     void selectDoc(){
-        Document doc = documentDao.selectDoc("123");
+        Document doc = documentDao.selectDoc("d100000");
         try{
             documentDao.insertCollection("1", "123");
         }catch (DuplicateKeyException e){}
@@ -51,5 +51,5 @@ class DdBackendApplicationTests {
         docs = documentDao.selectRootDir("user","1");
         docs = documentDao.selectDeleted("user", "1");
         docs = documentDao.selectCollection("1");
-    }*/
+    }
 }
