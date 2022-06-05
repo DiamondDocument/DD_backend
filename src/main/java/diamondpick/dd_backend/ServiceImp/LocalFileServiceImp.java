@@ -2,6 +2,7 @@ package diamondpick.dd_backend.ServiceImp;
 
 import com.aspose.words.Document;
 import diamondpick.dd_backend.Dao.DocumentDao;
+import diamondpick.dd_backend.Dao.TeamDao;
 import diamondpick.dd_backend.Dao.TemplateDao;
 import diamondpick.dd_backend.Dao.UserDao;
 import diamondpick.dd_backend.Exception.NotExist.*;
@@ -30,6 +31,9 @@ public class LocalFileServiceImp implements LocalFileService {
     private DocumentDao documentDao;
     @Autowired
     private TemplateDao templateDao;
+    @Autowired
+    private TeamDao teamDao;
+
 
 //    private String baseLocation = new File("").getAbsolutePath() + "/DD_file/";
     private String baseLocation = "./DD_file/";
@@ -71,8 +75,7 @@ public class LocalFileServiceImp implements LocalFileService {
         f.mkdirs();
     }
 
-    public void saveAvatar(String Id, MultipartFile file, String avatarLocation) throws NotExist, OtherFail {
-        if(userDao.selectUser(Id) == null) throw new UserNotExist();
+    public void saveAvatar(String Id, MultipartFile file, String avatarLocation) throws  OtherFail {
         //先删除后保存
         File dir = new File(avatarLocation);
         String[] fileNames = dir.list();
@@ -149,11 +152,13 @@ public class LocalFileServiceImp implements LocalFileService {
 
     @Override
     public void saveUserAvatar(String userId, MultipartFile file) throws NotExist, OtherFail {
+        if(userDao.selectUser(userId) == null) throw new UserNotExist();
         saveAvatar(userId, file, userAvatarLocation);
     }
 
     @Override
     public void saveTeamAvatar(String teamId, MultipartFile file) throws NotExist, OtherFail {
+        if(teamDao.selectTeam(teamId) == null) throw new TeamNotExist();
         saveAvatar(teamId, file, teamAvatarLocation);
     }
 

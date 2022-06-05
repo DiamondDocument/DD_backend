@@ -105,7 +105,7 @@ public class TeamController {
             return new Response().get(1);
         }
     }
-    @GetMapping(value="/api/team/get-avatar/")
+    @GetMapping(value="/api/team/get-avatar")
     public Map<String, Object> getAvatar(@RequestParam String teamId) {
         Response res = new Response("url");
         try{
