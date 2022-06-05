@@ -8,6 +8,7 @@ import diamondpick.dd_backend.Exception.Document.SomoneEditing;
 import diamondpick.dd_backend.Exception.NotExist.*;
 import diamondpick.dd_backend.Entity.Document;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,9 +17,10 @@ import java.util.List;
 public interface DocumentService {
 
     /**
+     * @param file 如果是按本地.docx文件创建则需要，不是的话为null
      * @return 返回新建文档的id
      */
-    public String newDoc(String name, String spaceId, String userId, String parentId)throws OperationFail;
+    public String newDoc(String name, String spaceId, String userId, String parentId, MultipartFile file)throws OperationFail;
     /**
      * @return 返回新建文档的id
      */

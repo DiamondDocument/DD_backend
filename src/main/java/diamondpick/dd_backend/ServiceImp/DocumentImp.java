@@ -15,6 +15,7 @@ import diamondpick.dd_backend.Tool.IdGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.*;
 
@@ -45,6 +46,11 @@ public class DocumentImp implements DocumentService {
             e.printStackTrace();
             throw new OperationFail();
         }
+    }
+
+    @Override
+    public String newDoc(String name, String spaceId, String userId, String parentId, MultipartFile file) throws OperationFail {
+        //todo
     }
 
     @Override
