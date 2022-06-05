@@ -51,19 +51,18 @@ public interface MessageDao {
             "       us.nickname    as sender_name,\n" +
             "       doc.name       as msg_doc_name,\n" +
             "       td.team_id     as team_id,\n" +
-            "       ttd.name       as team_name,\n" +
+            "       td.name        as team_name,\n" +
             "       td.deal_status as deal_status\n" +
-            "from messages msg,\n" +
-            "     users us,\n" +
-            "     documents doc,\n" +
-            "     team_deal td,\n" +
-            "     teams ttd\n" +
-            "where msg.sender_id = us.user_id\n" +
-            "  and msg.msg_doc_id = doc.doc_id\n" +
-            "  and msg.msg_deal_id = td.deal_id\n" +
-            "  and td.team_id = ttd.team_id\n" +
-            "  and msg.receiver_id = #{param1}\n" +
-            "  and td.deal_status = 0")
+            "from messages msg\n" +
+            "         left join (select sub_td.*, sub_t.name\n" +
+            "                    from team_deal sub_td,\n" +
+            "                         teams sub_t\n" +
+            "                    where sub_td.team_id = sub_t.team_id\n" +
+            "                      and sub_td.deal_status = 0) td\n" +
+            "                   on td.deal_id = msg.msg_deal_id\n" +
+            "         left join documents doc on doc.doc_id = msg.msg_doc_id\n" +
+            "         left join users us on us.user_id = msg.sender_id\n" +
+            "where msg.receiver_id = #{param1}")
     public List<Message> selectMsg(String userId);
 
     /**
@@ -77,20 +76,19 @@ public interface MessageDao {
             "       us.nickname    as sender_name,\n" +
             "       doc.name       as msg_doc_name,\n" +
             "       td.team_id     as team_id,\n" +
-            "       ttd.name       as team_name,\n" +
+            "       td.name        as team_name,\n" +
             "       td.deal_status as deal_status\n" +
-            "from messages msg,\n" +
-            "     users us,\n" +
-            "     documents doc,\n" +
-            "     team_deal td,\n" +
-            "     teams ttd\n" +
-            "where msg.sender_id = us.user_id\n" +
-            "  and msg.msg_doc_id = doc.doc_id\n" +
-            "  and msg.msg_deal_id = td.deal_id\n" +
-            "  and td.team_id = ttd.team_id\n" +
-            "  and msg.receiver_id = #{param1}\n" +
-            "  and msg.msg_type = #{param2}\n" +
-            "  and td.deal_status = 0")
+            "from messages msg\n" +
+            "         left join (select sub_td.*, sub_t.name\n" +
+            "                    from team_deal sub_td,\n" +
+            "                         teams sub_t\n" +
+            "                    where sub_td.team_id = sub_t.team_id\n" +
+            "                      and sub_td.deal_status = 0) td\n" +
+            "                   on td.deal_id = msg.msg_deal_id\n" +
+            "         left join documents doc on doc.doc_id = msg.msg_doc_id\n" +
+            "         left join users us on us.user_id = msg.sender_id\n" +
+            "where msg.receiver_id = #{param1}\n" +
+            "and msg.msg_type = #{param2}")
     public List<Message> selectMsgByType(String userId, int msgType);
 
     /**
