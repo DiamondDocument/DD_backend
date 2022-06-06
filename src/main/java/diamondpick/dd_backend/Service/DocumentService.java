@@ -1,5 +1,6 @@
 package diamondpick.dd_backend.Service;
 
+import diamondpick.dd_backend.Entity.Comment;
 import diamondpick.dd_backend.Entity.Folder;
 import diamondpick.dd_backend.Exception.*;
 import diamondpick.dd_backend.Exception.Document.AlreadyCollect;
@@ -47,5 +48,13 @@ public interface DocumentService {
     public void share(String docId, int auth)throws OperationFail;
 
 
-    void disShare(String docId)throws OperationFail;
+    public void disShare(String docId)throws OperationFail;
+
+    /**不用查权限了*/
+    public List<Comment> getComment(String docId)throws OperationFail;
+
+    public void newComment(String content, String docId, String creatorId)throws NoAuth, OtherFail;
+
+    public void deleteComment(int commentId, String userId)throws NoAuth, OtherFail;
+
 }

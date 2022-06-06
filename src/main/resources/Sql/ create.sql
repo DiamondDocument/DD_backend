@@ -8,7 +8,7 @@ create table spaces
 create table users
 (
     user_id  varchar(20) primary key not null,
-    nickname varchar(20)             not null check ( length(nickname) >= 6),
+    nickname varchar(20)             not null,
     password varchar(20)             not null,
     gender   char(5),
     intro    varchar(255),
@@ -151,5 +151,15 @@ create table template_collector
     foreign key (collector_id) references users (user_id),
     foreign key (temp_id) references templates (temp_id),
     primary key (temp_id, collector_id)
+);
+create table comments
+(
+    comment_id  int             auto_increment primary key ,
+    content     varchar(255)    not null ,
+    doc_id      char(7)         not null ,
+    creator_id  varchar(20)     not null ,
+    create_time datetime        default now(),
+    foreign key (creator_id) references users (user_id),
+    foreign key (doc_id) references documents (doc_id)
 );
 

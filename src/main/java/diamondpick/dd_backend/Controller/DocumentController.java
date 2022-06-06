@@ -1,6 +1,7 @@
 package diamondpick.dd_backend.Controller;
 
 import diamondpick.dd_backend.Dao.DocumentDao;
+import diamondpick.dd_backend.Entity.Comment;
 import diamondpick.dd_backend.Entity.Document;
 import diamondpick.dd_backend.Exception.Document.AlreadyCollect;
 import diamondpick.dd_backend.Exception.Document.NotyetCollect;
@@ -10,12 +11,15 @@ import diamondpick.dd_backend.Exception.OperationFail;
 import diamondpick.dd_backend.Service.AuthService;
 import diamondpick.dd_backend.Service.DocumentService;
 import diamondpick.dd_backend.Service.LocalFileService;
+import diamondpick.dd_backend.Tool.JsonArray;
 import diamondpick.dd_backend.Tool.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.print.attribute.standard.MediaSize;
 import java.nio.channels.NotYetConnectedException;
+import java.util.List;
 import java.util.Map;
 
 @CrossOrigin
@@ -176,5 +180,51 @@ public class DocumentController {
         }
     }
 
+    @GetMapping("/api/comment/list")
+    public Map<String, Object> listComment(@RequestParam String docId){
+        Response r = new Response("comments");
+        JsonArray arr = new JsonArray("commentId", "content", "data", "userId", "userName");
+        try{
+            List<Comment> comments = documentService.getComment(docId);
+            for(Comment c : comments){
+                arr.add(c.getCommentId(), c.getContent(), c.getCreateTime(), c.getCreatorId(), c.getCreatorName());
+            }
+            return r.get(0, arr);
+        }catch (OperationFail e){
+            return r.get(-1);
+        }
+    }
 
+    @PostMapping("/api/comment/add")
+    public Map<String, Object> addComment(@RequestBody Map<String, String> req){
+        String docId = req.get("docId");
+        String userId = req.get("userId");
+        String content = req.get("content");
+        Response res = new Response();
+        try{
+            documentService.newComment(content, docId, userId);
+            return res.get(0);
+        }catch (NoAuth e){
+            e.printStackTrace();
+            return res.get(1);
+        }catch (OperationFail e){
+            e.printStackTrace();
+            return res.get(-1);
+        }
+    }
+    @PostMapping("/api/comment/remove")
+    public Map<String, Object> removeComment(@RequestBody Map<String, Object> req){
+        String userId = (String)req.get("userId");
+        int commentId = (int)req.get("commentId");
+        Response res = new Response();
+        try{
+            documentService.deleteComment(commentId, userId);
+            return res.get(0);
+        }catch (NoAuth e){
+            return res.get(-1);
+        }catch (OperationFail e){
+            e.printStackTrace();
+            return res.get(-1);
+        }
+    }
 }
