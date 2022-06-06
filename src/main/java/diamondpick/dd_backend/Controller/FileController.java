@@ -4,6 +4,8 @@ import diamondpick.dd_backend.Dao.DocumentDao;
 import diamondpick.dd_backend.Dao.FolderDao;
 import diamondpick.dd_backend.Dao.TeamDao;
 import diamondpick.dd_backend.Dao.UserDao;
+import diamondpick.dd_backend.Entity.Document;
+import diamondpick.dd_backend.Entity.Folder;
 import diamondpick.dd_backend.Service.DocumentService;
 import diamondpick.dd_backend.Service.FileService;
 import diamondpick.dd_backend.Tool.Response;
@@ -63,14 +65,29 @@ public class FileController {
                 if (templateId == null) {
                     fileId = documentService.newDoc(name, String.valueOf(spaceId), creatorId, parentId, file);
                     documentDao.updateDoc(fileId, "self_auth", auth);
+                    if (parentId != null) {
+                        Document parent = documentDao.selectDoc(parentId);
+                        int nowAuth = Math.min(parent.getSelfAuth(), auth);
+                        documentDao.updateDoc(parentId, "now_auth", nowAuth);
+                    }
                 } else {
                     fileId = documentService.newDocByTemplate(name, String.valueOf(spaceId), creatorId, parentId, templateId);
                     documentDao.updateDoc(fileId, "self_auth", auth);
+                    if (parentId != null) {
+                        Document parent = documentDao.selectDoc(parentId);
+                        int nowAuth = Math.min(parent.getSelfAuth(), auth);
+                        documentDao.updateDoc(parentId, "now_auth", nowAuth);
+                    }
                 }
             } else if (type.equals("2")) {
                 // create folder
                 fileId = fileService.newFolder(name, creatorId, parentId, String.valueOf(spaceId));
                 folderDao.updateFolder(fileId, "self_auth", auth);
+                if (parentId != null) {
+                    Folder parent = folderDao.selectFolder(parentId);
+                    int nowAuth = Math.min(parent.getSelfAuth(), auth);
+                    folderDao.updateFolder(parentId, "now_auth", nowAuth);
+                }
             } else {
                 return res.get(-1);
             }
@@ -162,9 +179,25 @@ public class FileController {
         int authority = Integer.parseInt(re_map.get("newAuth"));
         try {
             if (fileId.charAt(0) == 'f') {
+                // change selfAuth
                 folderDao.updateFolder(fileId, "self_auth", authority);
+                // change nowAuth
+                String parentId = folderDao.selectFolder(fileId).getParentId();
+                if (parentId != null) {
+                    Folder parent = folderDao.selectFolder(parentId);
+                    int nowAuth = Math.min(parent.getNowAuth(), authority);
+                    folderDao.updateFolder(fileId, "now_auth", nowAuth);
+                }
             } else if (fileId.charAt(0) == 'd') {
+                // change selfAuth
                 documentDao.updateDoc(fileId, "self_auth", authority);
+                // change nowAuth
+                String parentId = documentDao.selectDoc(fileId).getParentId();
+                if (parentId != null) {
+                    Document parent = documentDao.selectDoc(parentId);
+                    int nowAuth = Math.min(parent.getNowAuth(), authority);
+                    documentDao.updateDoc(fileId, "now_auth", nowAuth);
+                }
             } else {
                 return res.get(-1);
             }
