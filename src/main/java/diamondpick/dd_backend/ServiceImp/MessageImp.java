@@ -78,7 +78,7 @@ public class MessageImp implements MessageService {
     @Override
     public void newCommentMsg(String senderId, String docId, String receiverId, String comment) throws OperationFail {
         try {
-            messageDao.insertMsg(idGenerator.generateId('m'), senderId, receiverId, 6, comment, docId, 0);
+            messageDao.insertMsg(idGenerator.generateId('m'), senderId, receiverId, 6, comment, docId, null);
         } catch (Exception e) {
             throw new OperationFail();
         }
@@ -87,7 +87,7 @@ public class MessageImp implements MessageService {
     @Override
     public void newAtMsg(String senderId, String docId, String receiverId) throws OperationFail {
         try {
-            messageDao.insertMsg(idGenerator.generateId('m'), senderId, receiverId, 7, null, docId, 0);
+            messageDao.insertMsg(idGenerator.generateId('m'), senderId, receiverId, 7, null, docId, null);
         } catch (Exception e) {
             throw new OperationFail();
         }

@@ -28,7 +28,7 @@ public interface MessageDao {
     @Insert("insert into messages (msg_id, sender_id, receiver_id, send_time, msg_type, msg_content, msg_status, msg_doc_id,\n" +
             "                      msg_deal_id)\n" +
             "values (#{param1}, #{param2}, #{param3}, now(), #{param4}, #{param5}, 0, #{param6}, #{param7})")
-    public void insertMsg(String msgId, String senderId, String receiverId, int msgType, String msgContent, String docId, int dealId) throws DuplicateKeyException, DataIntegrityViolationException;
+    public void insertMsg(String msgId, String senderId, String receiverId, int msgType, String msgContent, String docId, Integer dealId) throws DuplicateKeyException, DataIntegrityViolationException;
 
     /**
      * 更新消息状态，标记已读
