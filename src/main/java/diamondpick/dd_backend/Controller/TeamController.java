@@ -32,7 +32,6 @@ public class TeamController {
     LocalFileService localFileService;
     @Autowired
     UserDao userDao;
-    static int teamNum = 0;
     @PostMapping("/api/team/create")
     public Map<String, Object> createTeam(@RequestBody Map<String, String> remap){
         Map<String,Object> ret = new HashMap<>();
@@ -40,8 +39,7 @@ public class TeamController {
         String teamIntroductory = remap.get("teamIntroductory");
         String userId = remap.get("userId");
         try {
-            teamService.newTeam(teamName,teamIntroductory,userId);
-            String teamId = "t"+Integer.toString(teamNum++);
+            String teamId = teamService.newTeam(teamName,teamIntroductory,userId);
             ret.put("code",0);
             ret.put("teamId",teamId);
             return ret;

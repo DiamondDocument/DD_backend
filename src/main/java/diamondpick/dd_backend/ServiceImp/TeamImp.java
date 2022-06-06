@@ -45,7 +45,7 @@ public class TeamImp implements TeamService {
     @Autowired
     private IdGenerator idGenerator;
     @Override
-    public void newTeam(String name, String intro, String captainId) throws OtherFail, TeamNameIllegal {
+    public String newTeam(String name, String intro, String captainId) throws OtherFail, TeamNameIllegal {
         if(userDao.selectUser(captainId)==null) throw new OtherFail();
         try{
             constraintService.checkName(name);
@@ -59,7 +59,9 @@ public class TeamImp implements TeamService {
         }
         spaceDao.insertSpace();
         try{
-            teamDao.insertTeam(idGenerator.generateId('t'), name,intro,captainId,spaceDao.selectSpace());
+            String newId = idGenerator.generateId('t');
+            teamDao.insertTeam(newId, name,intro,captainId,spaceDao.selectSpace());
+            return newId;
         }catch (Exception e){
             e.printStackTrace();
             spaceDao.deleteSpace(spaceDao.selectSpace());
