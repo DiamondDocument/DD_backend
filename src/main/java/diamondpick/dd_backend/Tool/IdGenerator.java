@@ -68,7 +68,8 @@ public class IdGenerator {
                 } else {
                     teamIdNum = Integer.parseInt(teamMaxId.substring(1));
                 }
-                newId = "t" + String.format("%04d", teamIdNum + 1);
+//                newId = "t" + String.format("%04d", teamIdNum + 1);
+                newId = String.format("%05d", teamIdNum + 1);
                 break;
             default:
                 throw new Illegal();
