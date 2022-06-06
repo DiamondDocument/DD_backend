@@ -154,6 +154,7 @@ public interface FolderDao {
 
     /**
      * 查询文件夹最大id
+     *
      * @return 文件夹最大id
      */
     @Select("select folder_id\n" +

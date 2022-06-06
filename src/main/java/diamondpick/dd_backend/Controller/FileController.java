@@ -4,7 +4,6 @@ import diamondpick.dd_backend.Dao.DocumentDao;
 import diamondpick.dd_backend.Dao.FolderDao;
 import diamondpick.dd_backend.Dao.TeamDao;
 import diamondpick.dd_backend.Dao.UserDao;
-import diamondpick.dd_backend.Entity.Document;
 import diamondpick.dd_backend.Entity.Folder;
 import diamondpick.dd_backend.Service.DocumentService;
 import diamondpick.dd_backend.Service.FileService;
