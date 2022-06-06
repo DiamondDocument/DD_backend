@@ -4,6 +4,7 @@ import diamondpick.dd_backend.Entity.Comment;
 import diamondpick.dd_backend.Entity.Folder;
 import diamondpick.dd_backend.Exception.*;
 import diamondpick.dd_backend.Exception.Document.AlreadyCollect;
+import diamondpick.dd_backend.Exception.Document.CannotEdit;
 import diamondpick.dd_backend.Exception.Document.NotyetCollect;
 import diamondpick.dd_backend.Exception.Document.SomoneEditing;
 import diamondpick.dd_backend.Exception.NotExist.*;
@@ -57,4 +58,5 @@ public interface DocumentService {
 
     public void deleteComment(int commentId, String userId)throws NoAuth, OtherFail;
 
+    void checkEdit(String docId, String userId)throws CannotEdit;
 }

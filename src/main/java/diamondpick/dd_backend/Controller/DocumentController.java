@@ -4,6 +4,7 @@ import diamondpick.dd_backend.Dao.DocumentDao;
 import diamondpick.dd_backend.Entity.Comment;
 import diamondpick.dd_backend.Entity.Document;
 import diamondpick.dd_backend.Exception.Document.AlreadyCollect;
+import diamondpick.dd_backend.Exception.Document.CannotEdit;
 import diamondpick.dd_backend.Exception.Document.NotyetCollect;
 import diamondpick.dd_backend.Exception.Document.SomoneEditing;
 import diamondpick.dd_backend.Exception.NoAuth;
@@ -76,6 +77,7 @@ public class DocumentController {
         Response res = new Response();
         try{
             if(authService.checkFileAuth(docId, userId) < 4)return res.get(-1);
+            documentService.checkEdit(docId, userId);
             localFileService.saveDocument(docId, content);
             return res.get(0);
         }catch (OperationFail e){
@@ -172,7 +174,11 @@ public class DocumentController {
         String userId = req.get("userId");
         Response res = new Response();
         try{
-            documentDao.updateRecent(userId, docId);
+            if(documentDao.selectRecentRecord(userId, docId) == null){
+                documentDao.insertRecent(userId, docId);
+            }else{
+                documentDao.updateRecent(userId, docId);
+            }
             return res.get(0);
         }catch (Exception e){
             e.printStackTrace();
@@ -221,7 +227,7 @@ public class DocumentController {
             documentService.deleteComment(commentId, userId);
             return res.get(0);
         }catch (NoAuth e){
-            return res.get(-1);
+            return res.get(1);
         }catch (OperationFail e){
             e.printStackTrace();
             return res.get(-1);

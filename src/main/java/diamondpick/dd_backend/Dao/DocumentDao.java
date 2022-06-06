@@ -168,11 +168,13 @@ public interface DocumentDao {
             "doc_id = #{param1}")
     public List<Comment> selectCommentByDoc(String docId);
 
-    @Select("select * from comments " +
+    @Select("select * from comments where " +
             "comment_id = #{param1} ")
     public Comment selectComment(int commentId);
 
     @Delete("delete from comments where comment_id = #{param1}")
     public void deleteComment(int commentId);
 
+    @Select("select doc_id from user_recent where user_id = #{param1} and doc_id = #{param2}")
+    public String selectRecentRecord(String userId, String docId);
 }

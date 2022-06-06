@@ -52,4 +52,8 @@ class DdBackendApplicationTests {
         docs = documentDao.selectDeleted("user", "1");
         docs = documentDao.selectCollection("1");
     }
+    @Test
+    void deleteComment(){
+        documentDao.deleteComment(3);
+    }
 }

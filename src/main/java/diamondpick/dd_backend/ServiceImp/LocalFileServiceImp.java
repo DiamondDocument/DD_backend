@@ -212,7 +212,7 @@ public class LocalFileServiceImp implements LocalFileService {
         try{
             String name = md5HSashCode(file.getInputStream()) + "." + nameSplit[nameSplit.length - 1];
             writeToFile(imageLocation + name, file.getBytes());
-            return baseUrl + imageLocation + name;
+            return baseUrl + "?location=" + imageLocation + name;
         }catch (IOException e){
             e.printStackTrace();
             throw new OtherFail();
