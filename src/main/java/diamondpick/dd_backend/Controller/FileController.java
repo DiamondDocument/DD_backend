@@ -66,17 +66,21 @@ public class FileController {
                     fileId = documentService.newDoc(name, String.valueOf(spaceId), creatorId, parentId, file);
                     documentDao.updateDoc(fileId, "self_auth", auth);
                     if (parentId != null) {
-                        Document parent = documentDao.selectDoc(parentId);
+                        Folder parent = folderDao.selectFolder(parentId);
                         int nowAuth = Math.min(parent.getSelfAuth(), auth);
-                        documentDao.updateDoc(parentId, "now_auth", nowAuth);
+                        documentDao.updateDoc(fileId, "now_auth", nowAuth);
+                    } else {
+                        documentDao.updateDoc(fileId, "now_auth", auth);
                     }
                 } else {
                     fileId = documentService.newDocByTemplate(name, String.valueOf(spaceId), creatorId, parentId, templateId);
                     documentDao.updateDoc(fileId, "self_auth", auth);
                     if (parentId != null) {
-                        Document parent = documentDao.selectDoc(parentId);
+                        Folder parent = folderDao.selectFolder(parentId);
                         int nowAuth = Math.min(parent.getSelfAuth(), auth);
-                        documentDao.updateDoc(parentId, "now_auth", nowAuth);
+                        documentDao.updateDoc(fileId, "now_auth", nowAuth);
+                    } else {
+                        documentDao.updateDoc(fileId, "now_auth", auth);
                     }
                 }
             } else if (type.equals("2")) {
@@ -86,7 +90,9 @@ public class FileController {
                 if (parentId != null) {
                     Folder parent = folderDao.selectFolder(parentId);
                     int nowAuth = Math.min(parent.getSelfAuth(), auth);
-                    folderDao.updateFolder(parentId, "now_auth", nowAuth);
+                    folderDao.updateFolder(fileId, "now_auth", nowAuth);
+                } else {
+                    folderDao.updateFolder(fileId, "now_auth", auth);
                 }
             } else {
                 return res.get(-1);
@@ -187,6 +193,8 @@ public class FileController {
                     Folder parent = folderDao.selectFolder(parentId);
                     int nowAuth = Math.min(parent.getNowAuth(), authority);
                     folderDao.updateFolder(fileId, "now_auth", nowAuth);
+                } else {
+                    folderDao.updateFolder(fileId, "now_auth", authority);
                 }
             } else if (fileId.charAt(0) == 'd') {
                 // change selfAuth
@@ -194,9 +202,11 @@ public class FileController {
                 // change nowAuth
                 String parentId = documentDao.selectDoc(fileId).getParentId();
                 if (parentId != null) {
-                    Document parent = documentDao.selectDoc(parentId);
+                    Folder parent = folderDao.selectFolder(parentId);
                     int nowAuth = Math.min(parent.getNowAuth(), authority);
                     documentDao.updateDoc(fileId, "now_auth", nowAuth);
+                } else {
+                    documentDao.updateDoc(fileId, "now_auth", authority);
                 }
             } else {
                 return res.get(-1);
