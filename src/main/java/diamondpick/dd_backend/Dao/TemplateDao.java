@@ -13,7 +13,7 @@ import java.util.List;
 public interface TemplateDao {
 
     @Insert("insert into templates(temp_id, name, creator_id, intro) " +
-            "values(#{param1},#{param2},#{param3},#{param4}")
+            "values(#{param1},#{param2},#{param3},#{param4})")
     public void insertTemp(String tempId, String name, String creatorId, String intro);
 
     @Insert("insert into template_collector values(#{param2}, #{param1})")
@@ -43,5 +43,11 @@ public interface TemplateDao {
 
     @Select("select temp_id from template_collector where temp_id = #{param2} and collector_id = #{param1}")
     public String selectCollectorAndTemp(String collectorId, String tempId);
+
+    @Select("select DISTINCT temp_id\n" +
+            "from templates\n" +
+            "order by convert(temp_id using gbk) desc\n" +
+            "limit 1")
+    public String selectMaxId();
 
 }

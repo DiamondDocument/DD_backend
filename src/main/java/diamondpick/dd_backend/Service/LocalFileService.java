@@ -6,6 +6,8 @@ import diamondpick.dd_backend.Exception.OtherFail;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
+
 @Service
 public interface LocalFileService {
 
@@ -20,7 +22,7 @@ public interface LocalFileService {
 
     public String getUserAvatarUrl(String userId) throws NotExist, OtherFail;
     public String getTeamAvatarUrl(String teamId) throws NotExist, OtherFail;
-    public String getTemplateImageUrl(String tempId) throws NotExist, OtherFail;
+    public List<String> getTemplateImageUrl(String tempId) throws NotExist, OtherFail;
     public String getThumbnailUrl(String tempId) throws NotExist, OtherFail;
 
     public String getDocument(String docId) throws NotExist, OtherFail;

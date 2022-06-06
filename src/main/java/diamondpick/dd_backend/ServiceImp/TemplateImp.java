@@ -35,7 +35,7 @@ public class TemplateImp implements TemplateService {
         constraintService.checkName(name);
         constraintService.checkIntro(intro);
         Document doc = documentDao.selectDoc(docId);
-        String newId = 't' + doc.getDocId().substring(1);
+        String newId = idGenerator.generateId('p');
         templateDao.insertTemp(newId, name, doc.getCreatorId(),intro);
         localFileService.saveTemplate(newId, localFileService.getDocument(docId));
         return newId;

@@ -1,9 +1,11 @@
 package diamondpick.dd_backend.zzy;
 
+import diamondpick.dd_backend.Dao.TemplateDao;
 import diamondpick.dd_backend.Entity.Document;
 import diamondpick.dd_backend.Old.zzy.Dao.CollectionDao;
 import diamondpick.dd_backend.Dao.DocumentDao;
 import diamondpick.dd_backend.Service.DocumentService;
+import diamondpick.dd_backend.Service.LocalFileService;
 import diamondpick.dd_backend.Service.UserService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,8 +54,21 @@ class DdBackendApplicationTests {
         docs = documentDao.selectDeleted("user", "1");
         docs = documentDao.selectCollection("1");
     }
+
     @Test
     void deleteComment(){
         documentDao.deleteComment(3);
+    }
+    @Autowired
+    TemplateDao templateDao;
+    @Autowired
+    LocalFileService localFileService;
+    @Test
+    void insertTemp(){
+        templateDao.insertTemp("t100000", "金刚石文档模板", "Iamzzy", "这是一个测试模板");
+    }
+    @Test
+    void image(){
+
     }
 }

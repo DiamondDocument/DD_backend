@@ -1,12 +1,14 @@
 package diamondpick.dd_backend.Entity;
 
+import java.util.Date;
+
 public class Comment {
     private int commentId;
     private String content;
     private String docId;
     private String creatorName;
     private String creatorId;
-    private String createTime;
+    private Date createTime;
 
     public int getCommentId() {
         return commentId;
@@ -48,11 +50,11 @@ public class Comment {
         this.creatorId = creatorId;
     }
 
-    public String getCreateTime() {
+    public Date getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(String createTime) {
+    public void setCreateTime(Date createTime) {
         this.createTime = createTime;
     }
 }

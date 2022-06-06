@@ -9,18 +9,18 @@ import diamondpick.dd_backend.Exception.NotExist.*;
 import diamondpick.dd_backend.Exception.OperationFail;
 import diamondpick.dd_backend.Exception.OtherFail;
 import diamondpick.dd_backend.Service.LocalFileService;
-import gui.ava.html.image.generator.HtmlImageGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.awt.*;
 import java.io.*;
 import java.math.BigInteger;
 import java.net.URLConnection;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.security.MessageDigest;
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**存储的所有文件都存放在了程序运行时所在目录的/DD_file文件夹下*/
@@ -180,9 +180,9 @@ public class LocalFileServiceImp implements LocalFileService {
     public void saveTemplate(String tempId, String content) throws NotExist, OtherFail {
         if(templateDao.selectTemp(tempId) == null)throw new NotExist();
         writeToFile(templateLocation + tempId + "." + "html", content.getBytes(StandardCharsets.UTF_8));
-        saveTemplateImg(content,
-                new File(templateImgLocation + tempId + "png"),
-                new File(templateThumbnailLocation + tempId + "png"));
+        saveTemplateImg(templateLocation + tempId + "." + "html",
+                templateImgLocation + tempId + ".png",
+                templateThumbnailLocation + tempId + ".png");
     }
 
     @Override
@@ -196,13 +196,19 @@ public class LocalFileServiceImp implements LocalFileService {
     }
 
     @Override
-    public String getTemplateImageUrl(String tempId) throws NotExist {
-        return baseUrl + templateImgLocation + tempId + ".png";
+    public List<String> getTemplateImageUrl(String tempId) throws NotExist {
+        List<String> urls = new ArrayList<>();
+        for(int i = 1; ;i++){
+            String location = templateImgLocation + tempId + "_" + i + ".png";
+            if(!new File(location).isFile()) break;
+            urls.add(baseUrl + "?location=" + location);
+        }
+        return urls;
     }
 
     @Override
     public String getThumbnailUrl(String tempId) throws NotExist, OtherFail {
-        return baseUrl + templateThumbnailLocation + tempId + ".png";
+        return baseUrl + "?location=" + templateThumbnailLocation + tempId + ".png";
     }
 
     @Override
@@ -349,19 +355,36 @@ public class LocalFileServiceImp implements LocalFileService {
     }
 
     /**
+     * @param htmlLocation
      * @param img png文件名
      * @param thumbnail png文件名
      */
-    public void saveTemplateImg(String html, File img, File thumbnail){
-        HtmlImageGenerator imageGenerator = new HtmlImageGenerator();
-        Dimension dimension = new Dimension();
-        dimension.width = 500;
-        imageGenerator.setSize(dimension);
-        imageGenerator.loadHtml(html);
-        imageGenerator.saveAsImage(img);
-        dimension.width = 100;
-        dimension.height = (int)(100 * 1.414);
-        imageGenerator.saveAsImage(thumbnail);
+    public void saveTemplateImg(String htmlLocation, String img, String thumbnail){
+//        HtmlImageGenerator imageGenerator = new HtmlImageGenerator();
+//        Dimension dimension = new Dimension();
+//        dimension.width = 500;
+//        imageGenerator.setSize(dimension);
+//        imageGenerator.loadHtml(html);
+//        imageGenerator.saveAsImage(img);
+//        dimension.width = 100;
+//        dimension.height = (int)(100 * 1.414);
+//        imageGenerator.saveAsImage(thumbnail);
+        try{
+//            HTMLDocument doc = new HTMLDocument(htmlLocation);
+            Document doc = new Document(htmlLocation);
+            for (int page = 0; page < doc.getPageCount(); page++)
+            {
+                Document extractedPage = doc.extractPages(page, 1);
+                String splitedImg = img.split("[.]png")[0];
+                extractedPage.save(String.format(splitedImg + "_%d.png", page + 1));
+            }
+            doc = doc.extractPages(0, 1);
+            doc.save(thumbnail);
+//            com.aspose.html.saving.ImageSaveOptions options = new ImageSaveOptions(ImageFormat.Jpeg);
+//            Converter.convertHTML(doc, options, img.getPath());
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     @Override
