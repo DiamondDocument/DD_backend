@@ -50,10 +50,11 @@ public class TestController {
 
     @GetMapping("api/idgenerator")
     public Map<String, Object> testIdGenerator() throws Illegal {
-        Response res = new Response("folder", "document", "message");
+        Response res = new Response("folder", "document", "message", "team");
         String folderId = idGenerator.generateId('f');
         String documentId = idGenerator.generateId('d');
         String messageId = idGenerator.generateId('m');
-        return res.get(0, folderId, documentId, messageId);
+        String teamId = idGenerator.generateId('t');
+        return res.get(0, folderId, documentId, messageId, teamId);
     }
 }
