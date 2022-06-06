@@ -1,6 +1,8 @@
 package diamondpick.dd_backend.Dao;
 
+import diamondpick.dd_backend.Entity.Document;
 import diamondpick.dd_backend.Entity.Template;
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
@@ -17,6 +19,9 @@ public interface TemplateDao {
     @Insert("insert into template_collector values(#{param2}, #{param1})")
     public void insertCollection(String collectorId, String tempId);
 
+    @Delete("delete from template_collector where collector_id = #{param1} and temp_id = #{param2}")
+    public void deleteCollection(String collectorId, String tempId);
+
     @Select("select temp.* , c.nickname as creator_name " +
             "from templates as temp, users as c " +
             "where temp.creator_id = c.user_id and " +
@@ -29,6 +34,14 @@ public interface TemplateDao {
             "temp.creator_id = #{param1} ")
     public List<Template> selectByCreator(String creatorId);
 
-    //todo
-    List<Template> selectByCollector(String userId);
+    @Select("select temp.* , c.nickname as creator_name " +
+            "from templates as temp, users as c, template_collector as co " +
+            "where temp.creator_id = c.user_id and " +
+            "temp.temp_id = co.temp_id and " +
+            "co.collector_id = #{param1}")
+    public List<Template> selectCollection(String collectorId);
+
+    @Select("select temp_id from template_collector where temp_id = #{param2} and collector_id = #{param1}")
+    public String selectCollectorAndTemp(String collectorId, String tempId);
+
 }

@@ -10,14 +10,12 @@ import diamondpick.dd_backend.Service.TemplateService;
 import diamondpick.dd_backend.Tool.JsonArray;
 import diamondpick.dd_backend.Tool.Response;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
 
+@RestController
 public class TemplateController {
     @Autowired
     TemplateService templateService;
@@ -29,7 +27,6 @@ public class TemplateController {
     @PostMapping("/api/template/create")
     public Map<String, Object> create(@RequestBody Map<String, String> req){
         Response r = new Response("tempId");
-        String userId = req.get("userId");
         String docId = req.get("docId");
         String name = req.get("name");
         String intro = req.get("intro");
@@ -44,7 +41,7 @@ public class TemplateController {
         Response res = new Response("temps");
         JsonArray arr = new JsonArray("tempId", "tempName", "creatorId", "creatorName", "createTime");
         try{
-            List<Template> temps =  templateDao.selectByCreator(userId);
+            List<Template> temps =  templateService.getMyTemplate(userId);
             for(Template temp : temps){
                 arr.add(temp.getTempId(), temp.getName(), temp.getCreatorId(), temp.getCreatorName(), temp.getCreateTime());
             }
@@ -58,7 +55,7 @@ public class TemplateController {
         Response res = new Response("temps");
         JsonArray arr = new JsonArray("tempId", "tempName", "creatorId", "creatorName", "createTime");
         try{
-            List<Template> temps =  templateDao.selectByCollector(userId);
+            List<Template> temps =  templateService.getCollection(userId);
             for(Template temp : temps){
                 arr.add(temp.getTempId(), temp.getName(), temp.getCreatorId(), temp.getCreatorName(), temp.getCreateTime());
             }
@@ -129,6 +126,7 @@ public class TemplateController {
             return res.get(-1);
         }
     }
+
     @GetMapping("/api/template/thumbnail")
     public Map<String, Object> getThumbnail(@RequestParam String tempId){
         Response res = new Response("url");
