@@ -45,10 +45,10 @@ public class UserImp implements UserService {
         spaceDao.insertSpace();
         try{
             userDao.insertUser(userId, nickname, password, null, email, spaceDao.selectSpace());
-        }catch (DataIntegrityViolationException e){
+        }catch (Exception e){
             e.printStackTrace();
             spaceDao.deleteSpace(spaceDao.selectSpace());
-            throw new DuplicateId();
+            throw new NameIllegal();
         }
     }
 
