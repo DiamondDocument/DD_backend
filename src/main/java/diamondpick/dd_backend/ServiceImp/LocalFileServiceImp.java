@@ -19,6 +19,7 @@ import java.io.*;
 import java.math.BigInteger;
 import java.net.URLConnection;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.security.MessageDigest;
 
 
@@ -45,6 +46,8 @@ public class LocalFileServiceImp implements LocalFileService {
     private String teamAvatarLocation = baseLocation + "team/avatar/";
     private String templateImgLocation = baseLocation + "template/image/";
     private String templateThumbnailLocation = baseLocation + "template/thumbnail/";
+    private String defaultLocation = "./defaultFile/";
+    private String defaultName = "_defaultavatar.webp";
 
     private String baseUrl = "http://43.138.71.108/api/url";
     private String download = "http://43.138.71.108/api/document/download";
@@ -73,6 +76,12 @@ public class LocalFileServiceImp implements LocalFileService {
         f.mkdirs();
         f = new File(templateThumbnailLocation);
         f.mkdirs();
+        try{
+            Files.copy(new File(defaultLocation + "_defaultavatar.webp").toPath(), new File(userAvatarLocation + "_defaultavatar.webp").toPath());
+            Files.copy(new File(defaultLocation + "_defaultavatar.webp").toPath(), new File(teamAvatarLocation + "_defaultavatar.webp").toPath());
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     public void saveAvatar(String Id, MultipartFile file, String avatarLocation) throws  OtherFail {
@@ -147,7 +156,7 @@ public class LocalFileServiceImp implements LocalFileService {
                 return baseUrl + "?location=" + location + name;
             }
         }
-        throw new NotExist();
+        return baseUrl + "?location=" + location + defaultName;
     }
 
     @Override
@@ -376,17 +385,22 @@ public class LocalFileServiceImp implements LocalFileService {
     }
 
     @Override
-    public byte[] docxToHtml(MultipartFile file) throws OperationFail {
+    public String docxToHtml(MultipartFile file) throws OperationFail {
         Document doc = null;
         try{
-            doc = new Document(file.getInputStream());
+            File f = new File(baseLocation + "importTmp.docx");
+            f.createNewFile();
+            FileOutputStream os = new FileOutputStream(f);
+            os.write(file.getBytes());
+            doc = new Document(baseLocation + "importTmp.docx");
+            os.close();
         }catch (Exception e){
             e.printStackTrace();
             throw new OperationFail();
         }
         try {
-            doc.save("importTmp.html");
-            return readFromFile("importTmp.html");
+            doc.save( baseLocation + "importTmp.html");
+            return new String(readFromFile("importTmp.html"));
         }catch (Exception e){
             e.printStackTrace();
             throw new OperationFail();

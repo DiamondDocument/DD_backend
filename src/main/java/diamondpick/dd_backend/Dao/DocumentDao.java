@@ -1,5 +1,6 @@
 package diamondpick.dd_backend.Dao;
 
+import diamondpick.dd_backend.Entity.Comment;
 import diamondpick.dd_backend.Entity.Document;
 import org.apache.ibatis.annotations.*;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -157,4 +158,21 @@ public interface DocumentDao {
             "order by convert(doc_id using gbk) desc\n" +
             "limit 1")
     public String selectMaxId();
+
+
+    @Insert("insert into comments(content, doc_id, creator_id) values(#{param1}, #{param3}, #{param2})")
+    public void insertComment(String content, String userId, String docId);
+    /** @return 要包括创建者名称 */
+    @Select("select * , c.nickname as creator_name from comments, users c " +
+            "where creator_id = c.user_id and " +
+            "doc_id = #{param1}")
+    public List<Comment> selectCommentByDoc(String docId);
+
+    @Select("select * from comments " +
+            "comment_id = #{param1} ")
+    public Comment selectComment(int commentId);
+
+    @Delete("delete from comments where comment_id = #{param1}")
+    public void deleteComment(int commentId);
+
 }

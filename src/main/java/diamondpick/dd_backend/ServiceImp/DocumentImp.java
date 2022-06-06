@@ -1,6 +1,7 @@
 package diamondpick.dd_backend.ServiceImp;
 
 import diamondpick.dd_backend.Dao.DocumentDao;
+import diamondpick.dd_backend.Entity.Comment;
 import diamondpick.dd_backend.Exception.Document.AlreadyCollect;
 import diamondpick.dd_backend.Exception.Document.NotyetCollect;
 import diamondpick.dd_backend.Exception.Document.SomoneEditing;
@@ -33,25 +34,22 @@ public class DocumentImp implements DocumentService {
     @Autowired
     private IdGenerator idGenerator;
 
-
-//    @Override
-//    public String newDoc(String name, String spaceId, String userId, String parentId) throws OperationFail {
-//        String newDocId = idGenerator.generateId('d');
-//        constraintService.checkName(name);
-//        try{
-//            documentDao.insertDoc(newDocId, name, userId, parentId, spaceId);
-//            localFileService.saveDocument(newDocId, "");
-//            return newDocId;
-//        }catch (Exception e){
-//            e.printStackTrace();
-//            throw new OperationFail();
-//        }
-//    }
-
     @Override
     public String newDoc(String name, String spaceId, String userId, String parentId, MultipartFile file) throws OperationFail {
-        //todo
-        return null;
+        String newDocId = idGenerator.generateId('d');
+        constraintService.checkName(name);
+        try{
+            documentDao.insertDoc(newDocId, name, userId, parentId, spaceId);
+            if(file != null){
+                localFileService.saveDocument(newDocId, localFileService.docxToHtml(file));
+            }else{
+                localFileService.saveDocument(newDocId, "");
+            }
+            return newDocId;
+        }catch (Exception e){
+            e.printStackTrace();
+            throw new OperationFail();
+        }
     }
 
     @Override
@@ -136,5 +134,38 @@ public class DocumentImp implements DocumentService {
     @Override
     public void disShare(String docId) throws OperationFail {
         shareMap.remove(docId);
+    }
+
+    @Override
+    public List<Comment> getComment(String docId) throws OperationFail {
+        try{
+            return documentDao.selectCommentByDoc(docId);
+        }catch (Exception e){
+            throw new OperationFail();
+        }
+    }
+
+    @Override
+    public void newComment(String content, String docId, String creatorId) throws NoAuth, OtherFail {
+        try{
+            if(authService.checkFileAuth(docId, creatorId) < 3)throw new NoAuth();
+            documentDao.insertComment(content, creatorId, docId);
+        }catch (Exception e){
+            throw new OtherFail();
+        }
+    }
+
+    @Override
+    public void deleteComment(int commentId, String userId) throws NoAuth, OtherFail {
+        try{
+            Comment cmt = documentDao.selectComment(commentId);
+            String commentCreator = cmt.getCreatorId();
+            String docCreator = documentDao.selectDoc(cmt.getDocId()).getCreatorId();
+            if(!(commentCreator.equals(userId) || docCreator.equals(userId)))throw new NoAuth();
+            documentDao.deleteComment(commentId);
+        }catch (Exception e){
+            e.printStackTrace();
+            throw new OtherFail();
+        }
     }
 }

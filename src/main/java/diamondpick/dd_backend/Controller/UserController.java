@@ -84,7 +84,10 @@ public class UserController {
             return res.get(3);
         }
         try{
-            userService.newUser(userId, nickname, password, email);
+            if(nickname == null)
+                userService.newUser(userId, userId, password, email);
+            else
+                userService.newUser(userId, nickname, password, email);
             return res.get(0);
         }catch (NameIllegal e){
             return res.get(2);
