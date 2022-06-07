@@ -68,6 +68,7 @@ public interface FileService {
      * 递归修改文件权限
      *
      * @param parentId 父文件夹id
+     * @param newAuth  新权限
      */
     public void updateAuthRecur(String parentId, int newAuth);
 }
