@@ -119,8 +119,8 @@ public class LocalFileServiceImp implements LocalFileService {
         File f = new File(dir);
         try{
             out = new FileOutputStream(f);
-            f.delete();
-            f.createNewFile();
+//            System.out.println(f.delete());
+//            System.out.println(f.createNewFile());
             out.write(bytes);
             out.close();
         }catch (Exception e){
