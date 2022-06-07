@@ -69,7 +69,7 @@ public class TeamController {
             ret.put("code",0);
             return ret;
         }
-        catch (OperationFail e) {
+        catch (Exception e) {
             ret.put("code",-1);
             return ret;
         }

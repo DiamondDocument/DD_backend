@@ -54,7 +54,7 @@ public class SearchController {
         try{
             List<User> users = searchDao.searchUser(key);
             for(User user: users){
-                arr.add(user.getNickname(), user.getIntro(), user.getUserId(), localFileService.getTeamAvatarUrl(user.getUserId()));
+                arr.add(user.getNickname(), user.getIntro(), user.getUserId(), localFileService.getUserAvatarUrl(user.getUserId()));
             }
             return r.get(0, arr);
         }catch (Exception e){

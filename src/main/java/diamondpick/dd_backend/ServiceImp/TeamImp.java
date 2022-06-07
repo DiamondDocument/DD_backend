@@ -1,9 +1,6 @@
 package diamondpick.dd_backend.ServiceImp;
 
-import diamondpick.dd_backend.Dao.SpaceDao;
-import diamondpick.dd_backend.Dao.TeamDao;
-import diamondpick.dd_backend.Dao.TeamDealDao;
-import diamondpick.dd_backend.Dao.UserDao;
+import diamondpick.dd_backend.Dao.*;
 import diamondpick.dd_backend.Entity.Team;
 import diamondpick.dd_backend.Entity.TeamDeal;
 import diamondpick.dd_backend.Entity.User;
@@ -44,6 +41,10 @@ public class TeamImp implements TeamService {
     private FileService fileService;
     @Autowired
     private IdGenerator idGenerator;
+    @Autowired
+    private DocumentDao documentDao;
+    @Autowired
+    private FolderDao folderDao;
     @Override
     public String newTeam(String name, String intro, String captainId) throws OtherFail, TeamNameIllegal {
         if(userDao.selectUser(captainId)==null) throw new OtherFail();
@@ -72,8 +73,11 @@ public class TeamImp implements TeamService {
     @Override
     public void dismissTeam(String teamId, String captainId) throws OperationFail {
         try{
+            int spaceId = teamDao.selectTeam(teamId).getSpaceId();
+            documentDao.deleteDocInSpace(spaceId);
+            folderDao.deleteDocInSpace(spaceId);
             teamDao.deleteTeam(teamId);
-            spaceDao.deleteSpace(spaceDao.selectSpace());
+            spaceDao.deleteSpace(spaceId);
         }catch (DataIntegrityViolationException e){
             e.printStackTrace();
             throw new OperationFail();
