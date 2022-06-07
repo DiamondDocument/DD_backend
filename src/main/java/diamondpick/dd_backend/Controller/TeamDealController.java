@@ -10,6 +10,7 @@ import diamondpick.dd_backend.Exception.OperationFail;
 import diamondpick.dd_backend.Exception.OtherFail;
 import diamondpick.dd_backend.Exception.Team.*;
 import diamondpick.dd_backend.Service.EmailService;
+import diamondpick.dd_backend.Service.MessageService;
 import diamondpick.dd_backend.Service.TeamService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -31,6 +32,7 @@ public class TeamDealController {
     UserDao userDao;
     @Autowired
     TeamDealDao teamDealDao;
+
     @PostMapping("/api/team/invite")
     public Map<String, Object> invite(@RequestBody Map<String, String> remap){
         Map<String,Object> ret = new HashMap<>();
@@ -45,16 +47,9 @@ public class TeamDealController {
                 ret.put("code",2);
                 return ret;
             }
-            if(teamDealDao.selectDeal(teamId,userId)!=null){
-                TeamDeal teamDeal = teamDealDao.selectDeal(teamId,userId);
-                if(teamDeal.getDealStatus()!=0){
-                    ret.put("code",3);
-                    return ret;
-                }
-            }
             teamService.inviteMember(teamId,userId);
+
             User user = userDao.selectUser(userId);
-            emailService.sendSimpleMail(user.getEmail(),"邀请加入团队","邀请加入团队"+teamId);
             ret.put("code",0);
             return ret;
         }
@@ -83,17 +78,9 @@ public class TeamDealController {
                 ret.put("code",2);
                 return ret;
             }
-            if(teamDealDao.selectDeal(teamId,userId)!=null){
-                TeamDeal teamDeal = teamDealDao.selectDeal(teamId,userId);
-                if(teamDeal.getDealStatus()!=0){
-                    ret.put("code",3);
-                    return ret;
-                }
-            }
             teamService.applyJoinTeam(userId,teamId);
             Team team = teamDao.selectTeam(teamId);
             User user = userDao.selectUser(team.getCaptainId());
-            emailService.sendSimpleMail(user.getEmail(),"申请加入团队",userId+"申请加入团队");
             ret.put("code",0);
             return ret;
         }
@@ -113,7 +100,7 @@ public class TeamDealController {
         Map<String,Object> ret = new HashMap<>();
         String teamId = remap.get("teamId");
         String userId = remap.get("userId");
-        boolean deal = Boolean.getBoolean(remap.get("deal"));
+        boolean deal = Integer.parseInt(remap.get("deal")) == 1;
         try {
             if(teamDealDao.selectDeal(teamId,userId)==null){
                 ret.put("code",1);
@@ -122,12 +109,6 @@ public class TeamDealController {
             teamService.dealInvite(teamId,userId,deal);
             Team team = teamDao.selectTeam(teamId);
             User user = userDao.selectUser(team.getCaptainId());
-            if(deal){
-                emailService.sendSimpleMail(user.getEmail(),"邀请处理",userId+"同意加入团队");
-            }
-            else{
-                emailService.sendSimpleMail(user.getEmail(),"邀请处理",userId+"拒绝加入团队");
-            }
             ret.put("code",0);
             return ret;
         }
@@ -144,7 +125,7 @@ public class TeamDealController {
         Map<String,Object> ret = new HashMap<>();
         String teamId = remap.get("teamId");
         String userId = remap.get("userId");
-        boolean deal = Boolean.getBoolean(remap.get("deal"));
+        boolean deal = Integer.parseInt(remap.get("deal")) == 1;
         try {
             if(teamDealDao.selectDeal(teamId,userId)==null){
                 ret.put("code",1);
@@ -152,19 +133,14 @@ public class TeamDealController {
             }
             teamService.dealApply(teamId,userId,deal);
             User user = userDao.selectUser(userId);
-            if(deal){
-                emailService.sendSimpleMail(user.getEmail(),"申请处理",teamId+"同意加入团队");
-            }
-            else{
-                emailService.sendSimpleMail(user.getEmail(),"申请处理",teamId+"拒绝加入团队");
-            }
+
             ret.put("code",0);
             return ret;
         }
         catch (OtherFail e) {
             ret.put("code",-1);
             return ret;
-        }   catch (NoDealTodo e) {
+        } catch (NoDealTodo e) {
             ret.put("code",1);
             return ret;
         }
