@@ -46,7 +46,7 @@ public class UserController {
         try{
             List<Team> teams = userService.selectTeams(userId);
             for(Team t : teams){
-                arr.add(t.getName(), t.getIntro(), t.getTeamId(), localFileService.getUserAvatarUrl(t.getTeamId()));
+                arr.add(t.getName(), t.getIntro(), t.getTeamId(), localFileService.getTeamAvatarUrl(t.getTeamId()));
             }
             return res.get(0, arr.get());
         }catch (Exception e){
