@@ -122,12 +122,9 @@ public class LocalFileServiceImp implements LocalFileService {
             f.delete();
             f.createNewFile();
             out.write(bytes);
+            out.close();
         }catch (Exception e){
             e.printStackTrace();
-        }finally {
-            try{
-                out.close();
-            }catch (Exception e2){}
         }
     }
     public byte[] readFromFile(String dir)throws OtherFail, FileNotFoundException{

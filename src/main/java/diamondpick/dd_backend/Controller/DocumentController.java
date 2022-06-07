@@ -189,7 +189,7 @@ public class DocumentController {
     @GetMapping("/api/comment/list")
     public Map<String, Object> listComment(@RequestParam String docId){
         Response r = new Response("comments");
-        JsonArray arr = new JsonArray("commentId", "content", "data", "userId", "userName");
+        JsonArray arr = new JsonArray("commentId", "content", "date", "userId", "userName");
         try{
             List<Comment> comments = documentService.getComment(docId);
             for(Comment c : comments){
