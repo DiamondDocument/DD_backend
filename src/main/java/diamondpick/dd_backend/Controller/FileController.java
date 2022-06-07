@@ -5,6 +5,7 @@ import diamondpick.dd_backend.Dao.FolderDao;
 import diamondpick.dd_backend.Dao.TeamDao;
 import diamondpick.dd_backend.Dao.UserDao;
 import diamondpick.dd_backend.Entity.Folder;
+import diamondpick.dd_backend.Service.AuthService;
 import diamondpick.dd_backend.Service.DocumentService;
 import diamondpick.dd_backend.Service.FileService;
 import diamondpick.dd_backend.Tool.Response;
@@ -36,6 +37,9 @@ public class FileController {
 
     @Autowired
     private FolderDao folderDao;
+
+    @Autowired
+    private AuthService authService;
 
     @PostMapping("/api/file/create")
     public Map<String, Object> createFile(@RequestParam(value = "type") String type,
@@ -166,8 +170,11 @@ public class FileController {
         String userId = re_map.get("userId");
         String fileId = re_map.get("fileId");
         try {
+            if (authService.checkFileAuth(fileId, userId) < 4) {
+                return res.get(-1);
+            }
             if (fileId.charAt(0) == 'f') {
-                folderDao.deleteFolder(fileId);
+                fileService.deletePermanently(fileId, userId);
             } else if (fileId.charAt(0) == 'd') {
                 documentDao.deleteDoc(fileId);
             } else {

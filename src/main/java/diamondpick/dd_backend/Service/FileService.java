@@ -59,10 +59,12 @@ public interface FileService {
      * 如果是文件夹需要递归删除所有文件
      *
      * @param fileId 文件id（文档或文件夹）
+     * @param userId 删除者id
+     * @return 删除状态：0-成功，-1-失败，1-没有权限
      * @throws OtherFail 其他错误
      * @throws NoAuth    没有权限
      */
-    public void DeletePermanently(String fileId) throws OtherFail, NoAuth;
+    public int deletePermanently(String fileId, String userId) throws OtherFail, NoAuth;
 
     /**
      * 递归修改文件权限

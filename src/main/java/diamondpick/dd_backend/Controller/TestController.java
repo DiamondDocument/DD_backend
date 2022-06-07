@@ -1,6 +1,8 @@
 package diamondpick.dd_backend.Controller;
 
 import diamondpick.dd_backend.Exception.Illegal.Illegal;
+import diamondpick.dd_backend.Exception.NoAuth;
+import diamondpick.dd_backend.Exception.OtherFail;
 import diamondpick.dd_backend.Service.FileService;
 import diamondpick.dd_backend.Tool.IdGenerator;
 import diamondpick.dd_backend.Tool.JsonArray;
@@ -66,6 +68,13 @@ public class TestController {
     public Map<String, Object> testUpdateAuthRecur() throws Illegal {
         Response res = new Response();
         fileService.updateAuthRecur("f000001", 1);
+        return res.get(0);
+    }
+
+    @GetMapping("api/delete_permanently")
+    public Map<String, Object> testDeletePermanently() throws OtherFail, NoAuth {
+        Response res = new Response();
+        fileService.deletePermanently("f000006", "user2");
         return res.get(0);
     }
 }

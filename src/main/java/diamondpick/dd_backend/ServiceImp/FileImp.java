@@ -106,12 +106,35 @@ public class FileImp implements FileService {
     }
 
     @Override
-    public void DeletePermanently(String fileId) throws OtherFail, NoAuth {
+    public int deletePermanently(String fileId, String userId) throws OtherFail, NoAuth {
         try {
+            if (authService.checkFileAuth(fileId, userId) < 4) {
+                return 1;
+            }
+            System.out.println(fileId);
             if (fileId.charAt(0) == 'f') {
+                List<Folder> folders = folderDao.selectSubDir(fileId);
+                List<Document> documents = documentDao.selectSubDir(fileId);
+                if (folders.size() == 0 && documents.size() == 0) {
+                    return 0;
+                }
+                for (Folder folder : folders) {
+                    if (deletePermanently(folder.getFileId(), userId) == 1) {
+                        return 1;
+                    }
+                    folderDao.deleteFolder(folder.getFileId());
+                }
+                for (Document document : documents) {
+                    if (authService.checkFileAuth(document.getFileId(), userId) < 4) {
+                        return 1;
+                    }
+                    documentDao.deleteDoc(document.getFileId());
+                }
                 folderDao.deleteFolder(fileId);
+                return 0;
             } else if (fileId.charAt(0) == 'd') {
                 documentDao.deleteDoc(fileId);
+                return 0;
             } else {
                 throw new OtherFail();
             }
@@ -124,7 +147,7 @@ public class FileImp implements FileService {
     public void updateAuthRecur(String parentId, int newAuth) {
         List<Folder> folders = folderDao.selectSubDir(parentId);
         List<Document> documents = documentDao.selectSubDir(parentId);
-        if (folders == null && documents == null) {
+        if (folders.size() == 0 && documents.size() == 0) {
             return;
         }
         for (Document document : documents) {
