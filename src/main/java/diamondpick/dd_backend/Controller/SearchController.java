@@ -68,14 +68,14 @@ public class SearchController {
                                          @RequestParam String visitorId, @RequestParam String key){
         Response r = new Response("documents");
         JsonArray arr = new JsonArray("docId", "docName", "creatorId", "creatorName", "createTime",
-                "modifierId", "modifierName", "modifyTime", "size");
+                "modifierId", "modifierName", "modifyTime", "size", "fileType");
         try {
                 List<Document> documents = searchDao.searchDoc(type, ownerId, key);
                 for (Document document : documents) {
                     if (authService.checkFileAuth(document.getFileId(), visitorId) >= 2) {
                         arr.add(document.getFileId(), document.getName(), document.getCreatorId(),
                                 document.getCreatorName(), document.getCreateTime(), document.getModifierId(),
-                                document.getModifierName(), document.getModifyTime(), documentService.getSize(document.getFileId()));
+                                document.getModifierName(), document.getModifyTime(), documentService.getSize(document.getFileId()), 1);
                 }
             }
             return r.get(0, arr);
