@@ -41,89 +41,178 @@ public class SpaceController {
     public Map<String, Object> getSpace(@RequestParam(value = "type") String type,
                                         @RequestParam(value = "ownerId") String ownerId,
                                         @RequestParam(value = "folderId", required = false) String folderId,
-                                        @RequestParam(value = "visitorId") String visitorId) {
-        Response res = new Response("files");
+                                        @RequestParam(value = "visitorId") String visitorId,
+                                        @RequestParam(value = "isBack") boolean isBack) {
+        Response res = new Response();
         try {
             List<JSONObject> jsonList = new ArrayList<>();
-            if (folderId == null) {
-                List<Folder> folders = folderDao.selectRootDir(type, ownerId);
-                List<Document> documents = documentDao.selectRootDir(type, ownerId);
-                folders.sort((o1, o2) -> o2.getName().compareTo(o1.getName()));
-                documents.sort((o1, o2) -> o2.getName().compareTo(o1.getName()));
-                for (Folder folder : folders) {
-                    if (authService.checkFileAuth(folder.getFileId(), visitorId) >= 2) {
-                        JSONObject json = new JSONObject();
-                        json.put("fileType", 2);
-                        json.put("fileId", folder.getFileId());
-                        json.put("fileName", folder.getName());
-                        json.put("creatorId", folder.getCreatorId());
-                        json.put("creatorName", folder.getCreatorName());
-                        json.put("createTime", folder.getCreateTime());
-                        jsonList.add(json);
-                    }
-                }
-                for (Document document : documents) {
-                    if (authService.checkFileAuth(document.getFileId(), visitorId) >= 2) {
-                        JSONObject json = new JSONObject();
-                        json.put("fileType", 1);
-                        json.put("fileId", document.getFileId());
-                        json.put("fileName", document.getName());
-                        json.put("creatorId", document.getCreatorId());
-                        json.put("creatorName", document.getCreatorName());
-                        json.put("createTime", document.getCreateTime());
-                        json.put("modifierId", document.getModifierId());
-                        json.put("modifierName", document.getModifierName());
-                        json.put("modifyTime", document.getModifyTime());
-                        json.put("size", documentService.getSize(document.getFileId()));
-                        jsonList.add(json);
-                    }
-                }
-            } else {
-                List<Folder> folders = folderDao.selectSubDir(folderId);
-                List<Document> documents = documentDao.selectSubDir(folderId);
-                folders.sort((o1, o2) -> o2.getName().compareTo(o1.getName()));
-                documents.sort((o1, o2) -> o2.getName().compareTo(o1.getName()));
-                int spaceId;
-                if (type.equals("user")) {
-                    spaceId = userDao.selectUser(ownerId).getSpaceId();
-                } else if (type.equals("team")) {
-                    spaceId = teamDao.selectTeam(ownerId).getSpaceId();
-                } else {
-                    throw new Exception();
-                }
-                for (Folder folder : folders) {
-                    if (authService.checkFileAuth(folder.getFileId(), visitorId) >= 2 &&
-                            folder.getSpaceId().equals(String.valueOf(spaceId))) {
-                        JSONObject json = new JSONObject();
-                        json.put("fileType", 2);
-                        json.put("fileId", folder.getFileId());
-                        json.put("fileName", folder.getName());
-                        json.put("creatorId", folder.getCreatorId());
-                        json.put("creatorName", folder.getCreatorName());
-                        json.put("createTime", folder.getCreateTime());
-                        jsonList.add(json);
-                    }
-                }
-                for (Document document : documents) {
-                    if (authService.checkFileAuth(document.getFileId(), visitorId) >= 2 &&
-                            document.getSpaceId().equals(String.valueOf(spaceId))) {
-                        JSONObject json = new JSONObject();
-                        json.put("fileType", 1);
-                        json.put("fileId", document.getFileId());
-                        json.put("fileName", document.getName());
-                        json.put("creatorId", document.getCreatorId());
-                        json.put("creatorName", document.getCreatorName());
-                        json.put("createTime", document.getCreateTime());
-                        json.put("modifierId", document.getModifierId());
-                        json.put("modifierName", document.getModifierName());
-                        json.put("modifyTime", document.getModifyTime());
-                        json.put("size", document.getSize());
-                        jsonList.add(json);
-                    }
-                }
+            if (isBack && folderId == null) {
+                throw new Exception("isBack is true, but folderId is null.");
             }
-            return res.get(0, jsonList);
+            if (isBack) {
+                res = new Response("parentId", "files");
+                String parentId = folderDao.selectFolder(folderId).getParentId();
+                if (parentId == null) {
+                    List<Folder> folders = folderDao.selectRootDir(type, ownerId);
+                    List<Document> documents = documentDao.selectRootDir(type, ownerId);
+                    folders.sort((o1, o2) -> o2.getName().compareTo(o1.getName()));
+                    documents.sort((o1, o2) -> o2.getName().compareTo(o1.getName()));
+                    for (Folder folder : folders) {
+                        if (authService.checkFileAuth(folder.getFileId(), visitorId) >= 2) {
+                            JSONObject json = new JSONObject();
+                            json.put("fileType", 2);
+                            json.put("fileId", folder.getFileId());
+                            json.put("fileName", folder.getName());
+                            json.put("creatorId", folder.getCreatorId());
+                            json.put("creatorName", folder.getCreatorName());
+                            json.put("createTime", folder.getCreateTime());
+                            jsonList.add(json);
+                        }
+                    }
+                    for (Document document : documents) {
+                        if (authService.checkFileAuth(document.getFileId(), visitorId) >= 2) {
+                            JSONObject json = new JSONObject();
+                            json.put("fileType", 1);
+                            json.put("fileId", document.getFileId());
+                            json.put("fileName", document.getName());
+                            json.put("creatorId", document.getCreatorId());
+                            json.put("creatorName", document.getCreatorName());
+                            json.put("createTime", document.getCreateTime());
+                            json.put("modifierId", document.getModifierId());
+                            json.put("modifierName", document.getModifierName());
+                            json.put("modifyTime", document.getModifyTime());
+                            json.put("size", documentService.getSize(document.getFileId()));
+                            jsonList.add(json);
+                        }
+                    }
+                } else {
+                    List<Folder> folders = folderDao.selectSubDir(parentId);
+                    List<Document> documents = documentDao.selectSubDir(parentId);
+                    folders.sort((o1, o2) -> o2.getName().compareTo(o1.getName()));
+                    documents.sort((o1, o2) -> o2.getName().compareTo(o1.getName()));
+                    int spaceId;
+                    if (type.equals("user")) {
+                        spaceId = userDao.selectUser(ownerId).getSpaceId();
+                    } else if (type.equals("team")) {
+                        spaceId = teamDao.selectTeam(ownerId).getSpaceId();
+                    } else {
+                        throw new Exception();
+                    }
+                    for (Folder folder : folders) {
+                        if (authService.checkFileAuth(folder.getFileId(), visitorId) >= 2 &&
+                                folder.getSpaceId().equals(String.valueOf(spaceId))) {
+                            JSONObject json = new JSONObject();
+                            json.put("fileType", 2);
+                            json.put("fileId", folder.getFileId());
+                            json.put("fileName", folder.getName());
+                            json.put("creatorId", folder.getCreatorId());
+                            json.put("creatorName", folder.getCreatorName());
+                            json.put("createTime", folder.getCreateTime());
+                            jsonList.add(json);
+                        }
+                    }
+                    for (Document document : documents) {
+                        if (authService.checkFileAuth(document.getFileId(), visitorId) >= 2 &&
+                                document.getSpaceId().equals(String.valueOf(spaceId))) {
+                            JSONObject json = new JSONObject();
+                            json.put("fileType", 1);
+                            json.put("fileId", document.getFileId());
+                            json.put("fileName", document.getName());
+                            json.put("creatorId", document.getCreatorId());
+                            json.put("creatorName", document.getCreatorName());
+                            json.put("createTime", document.getCreateTime());
+                            json.put("modifierId", document.getModifierId());
+                            json.put("modifierName", document.getModifierName());
+                            json.put("modifyTime", document.getModifyTime());
+                            json.put("size", document.getSize());
+                            jsonList.add(json);
+                        }
+                    }
+                }
+                return res.get(0, parentId, jsonList);
+            } else {
+                res = new Response("files");
+                if (folderId == null) {
+                    List<Folder> folders = folderDao.selectRootDir(type, ownerId);
+                    List<Document> documents = documentDao.selectRootDir(type, ownerId);
+                    folders.sort((o1, o2) -> o2.getName().compareTo(o1.getName()));
+                    documents.sort((o1, o2) -> o2.getName().compareTo(o1.getName()));
+                    for (Folder folder : folders) {
+                        if (authService.checkFileAuth(folder.getFileId(), visitorId) >= 2) {
+                            JSONObject json = new JSONObject();
+                            json.put("fileType", 2);
+                            json.put("fileId", folder.getFileId());
+                            json.put("fileName", folder.getName());
+                            json.put("creatorId", folder.getCreatorId());
+                            json.put("creatorName", folder.getCreatorName());
+                            json.put("createTime", folder.getCreateTime());
+                            jsonList.add(json);
+                        }
+                    }
+                    for (Document document : documents) {
+                        if (authService.checkFileAuth(document.getFileId(), visitorId) >= 2) {
+                            JSONObject json = new JSONObject();
+                            json.put("fileType", 1);
+                            json.put("fileId", document.getFileId());
+                            json.put("fileName", document.getName());
+                            json.put("creatorId", document.getCreatorId());
+                            json.put("creatorName", document.getCreatorName());
+                            json.put("createTime", document.getCreateTime());
+                            json.put("modifierId", document.getModifierId());
+                            json.put("modifierName", document.getModifierName());
+                            json.put("modifyTime", document.getModifyTime());
+                            json.put("size", documentService.getSize(document.getFileId()));
+                            jsonList.add(json);
+                        }
+                    }
+                } else {
+                    List<Folder> folders = folderDao.selectSubDir(folderId);
+                    List<Document> documents = documentDao.selectSubDir(folderId);
+                    folders.sort((o1, o2) -> o2.getName().compareTo(o1.getName()));
+                    documents.sort((o1, o2) -> o2.getName().compareTo(o1.getName()));
+                    int spaceId;
+                    if (type.equals("user")) {
+                        spaceId = userDao.selectUser(ownerId).getSpaceId();
+                    } else if (type.equals("team")) {
+                        spaceId = teamDao.selectTeam(ownerId).getSpaceId();
+                    } else {
+                        throw new Exception();
+                    }
+                    for (Folder folder : folders) {
+                        if (authService.checkFileAuth(folder.getFileId(), visitorId) >= 2 &&
+                                folder.getSpaceId().equals(String.valueOf(spaceId))) {
+                            JSONObject json = new JSONObject();
+                            json.put("fileType", 2);
+                            json.put("fileId", folder.getFileId());
+                            json.put("fileName", folder.getName());
+                            json.put("creatorId", folder.getCreatorId());
+                            json.put("creatorName", folder.getCreatorName());
+                            json.put("createTime", folder.getCreateTime());
+                            jsonList.add(json);
+                        }
+                    }
+                    for (Document document : documents) {
+                        if (authService.checkFileAuth(document.getFileId(), visitorId) >= 2 &&
+                                document.getSpaceId().equals(String.valueOf(spaceId))) {
+                            JSONObject json = new JSONObject();
+                            json.put("fileType", 1);
+                            json.put("fileId", document.getFileId());
+                            json.put("fileName", document.getName());
+                            json.put("creatorId", document.getCreatorId());
+                            json.put("creatorName", document.getCreatorName());
+                            json.put("createTime", document.getCreateTime());
+                            json.put("modifierId", document.getModifierId());
+                            json.put("modifierName", document.getModifierName());
+                            json.put("modifyTime", document.getModifyTime());
+                            json.put("size", document.getSize());
+                            jsonList.add(json);
+                        }
+                    }
+                }
+                return res.get(0, jsonList);
+            }
         } catch (Exception e) {
+            e.printStackTrace();
             return res.get(-1);
         }
     }
