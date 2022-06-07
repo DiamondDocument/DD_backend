@@ -60,8 +60,9 @@ jobs:
           command: | # 命令中的 & 表示在后台运行进程
             cd ~/DD_backend/
             sudo git checkout master
-#            sudo git pull
-            sudo git fetch --all && sudo git reset --hard origin/master && sudo git pull
+            sudo git fetch --all 
+            sudo git reset --hard origin/master
+            sudo git pull
             sudo mvn install
             sudo mvn -B package --file pom.xml -Dmaven.test.skip=true 
             sudo fuser -k 80/tcp

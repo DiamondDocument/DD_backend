@@ -119,15 +119,12 @@ public class LocalFileServiceImp implements LocalFileService {
         File f = new File(dir);
         try{
             out = new FileOutputStream(f);
-            f.delete();
-            f.createNewFile();
+//            System.out.println(f.delete());
+//            System.out.println(f.createNewFile());
             out.write(bytes);
+            out.close();
         }catch (Exception e){
             e.printStackTrace();
-        }finally {
-            try{
-                out.close();
-            }catch (Exception e2){}
         }
     }
     public byte[] readFromFile(String dir)throws OtherFail, FileNotFoundException{
@@ -174,7 +171,7 @@ public class LocalFileServiceImp implements LocalFileService {
     @Override
     public void saveDocument(String docId, String content) throws NotExist, OtherFail {
         if (documentDao.selectDoc(docId) == null) throw new NotExist();
-        writeToFile(documentLocation + docId + "." + "html", content.getBytes(StandardCharsets.UTF_8));
+        writeToFile(documentLocation + docId + "." + "html", content.getBytes());
     }
     @Override
     public void saveTemplate(String tempId, String content) throws NotExist, OtherFail {

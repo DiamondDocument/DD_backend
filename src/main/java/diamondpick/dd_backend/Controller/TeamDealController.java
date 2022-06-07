@@ -3,10 +3,14 @@ package diamondpick.dd_backend.Controller;
 import diamondpick.dd_backend.Dao.TeamDao;
 import diamondpick.dd_backend.Dao.TeamDealDao;
 import diamondpick.dd_backend.Dao.UserDao;
+import diamondpick.dd_backend.Entity.Team;
 import diamondpick.dd_backend.Entity.TeamDeal;
+import diamondpick.dd_backend.Entity.User;
 import diamondpick.dd_backend.Exception.OperationFail;
 import diamondpick.dd_backend.Exception.OtherFail;
 import diamondpick.dd_backend.Exception.Team.*;
+import diamondpick.dd_backend.Service.EmailService;
+import diamondpick.dd_backend.Service.MessageService;
 import diamondpick.dd_backend.Service.TeamService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -21,11 +25,14 @@ public class TeamDealController {
     @Autowired
     TeamService teamService;
     @Autowired
+    private EmailService emailService;
+    @Autowired
     TeamDao teamDao;
     @Autowired
     UserDao userDao;
     @Autowired
     TeamDealDao teamDealDao;
+
     @PostMapping("/api/team/invite")
     public Map<String, Object> invite(@RequestBody Map<String, String> remap){
         Map<String,Object> ret = new HashMap<>();
@@ -41,6 +48,8 @@ public class TeamDealController {
                 return ret;
             }
             teamService.inviteMember(teamId,userId);
+
+            User user = userDao.selectUser(userId);
             ret.put("code",0);
             return ret;
         }
@@ -70,6 +79,8 @@ public class TeamDealController {
                 return ret;
             }
             teamService.applyJoinTeam(userId,teamId);
+            Team team = teamDao.selectTeam(teamId);
+            User user = userDao.selectUser(team.getCaptainId());
             ret.put("code",0);
             return ret;
         }
@@ -89,9 +100,15 @@ public class TeamDealController {
         Map<String,Object> ret = new HashMap<>();
         String teamId = remap.get("teamId");
         String userId = remap.get("userId");
-        boolean deal = Boolean.getBoolean(remap.get("deal"));
+        boolean deal = Integer.parseInt(remap.get("deal")) == 1;
         try {
+            if(teamDealDao.selectDeal(teamId,userId)==null){
+                ret.put("code",1);
+                return ret;
+            }
             teamService.dealInvite(teamId,userId,deal);
+            Team team = teamDao.selectTeam(teamId);
+            User user = userDao.selectUser(team.getCaptainId());
             ret.put("code",0);
             return ret;
         }
@@ -99,7 +116,7 @@ public class TeamDealController {
             ret.put("code",-1);
             return ret;
         }   catch (NoDealTodo e) {
-            ret.put("code",2);
+            ret.put("code",1);
             return ret;
         }
     }
@@ -108,17 +125,23 @@ public class TeamDealController {
         Map<String,Object> ret = new HashMap<>();
         String teamId = remap.get("teamId");
         String userId = remap.get("userId");
-        boolean deal = Boolean.getBoolean(remap.get("deal"));
+        boolean deal = Integer.parseInt(remap.get("deal")) == 1;
         try {
+            if(teamDealDao.selectDeal(teamId,userId)==null){
+                ret.put("code",1);
+                return ret;
+            }
             teamService.dealApply(teamId,userId,deal);
+            User user = userDao.selectUser(userId);
+
             ret.put("code",0);
             return ret;
         }
         catch (OtherFail e) {
             ret.put("code",-1);
             return ret;
-        }   catch (NoDealTodo e) {
-            ret.put("code",2);
+        } catch (NoDealTodo e) {
+            ret.put("code",1);
             return ret;
         }
     }
@@ -128,6 +151,10 @@ public class TeamDealController {
         try{
             TeamDeal teamDeal = teamDealDao.selectDeal(teamId,userId);
             if(teamDeal==null){
+                ret.put("code",3);
+                return ret;
+            }
+            if(teamDeal.getDealType()!=2){
                 ret.put("code",3);
                 return ret;
             }
@@ -157,6 +184,10 @@ public class TeamDealController {
         try{
             TeamDeal teamDeal = teamDealDao.selectDeal(teamId,userId);
             if(teamDeal==null){
+                ret.put("code",3);
+                return ret;
+            }
+            if(teamDeal.getDealType()!=1){
                 ret.put("code",3);
                 return ret;
             }

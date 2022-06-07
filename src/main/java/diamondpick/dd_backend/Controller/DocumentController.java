@@ -61,10 +61,10 @@ public class DocumentController {
     }
     @GetMapping("/api/document/content")
     public Map<String, Object> getDoc(@RequestParam String userId, @RequestParam String docId){
-        Response res = new Response("content");
+        Response res = new Response("content", "name");
         try{
             if(authService.checkFileAuth(docId, userId) < 2)return res.get(1);
-            return res.get(0, localFileService.getDocument(docId));
+            return res.get(0, localFileService.getDocument(docId), documentDao.selectDoc(docId).getName());
         }catch (OperationFail e){
             return res.get(-1);
         }
@@ -189,7 +189,7 @@ public class DocumentController {
     @GetMapping("/api/comment/list")
     public Map<String, Object> listComment(@RequestParam String docId){
         Response r = new Response("comments");
-        JsonArray arr = new JsonArray("commentId", "content", "data", "userId", "userName");
+        JsonArray arr = new JsonArray("commentId", "content", "date", "userId", "userName");
         try{
             List<Comment> comments = documentService.getComment(docId);
             for(Comment c : comments){

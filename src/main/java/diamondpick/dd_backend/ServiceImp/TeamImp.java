@@ -1,9 +1,6 @@
 package diamondpick.dd_backend.ServiceImp;
 
-import diamondpick.dd_backend.Dao.SpaceDao;
-import diamondpick.dd_backend.Dao.TeamDao;
-import diamondpick.dd_backend.Dao.TeamDealDao;
-import diamondpick.dd_backend.Dao.UserDao;
+import diamondpick.dd_backend.Dao.*;
 import diamondpick.dd_backend.Entity.Team;
 import diamondpick.dd_backend.Entity.TeamDeal;
 import diamondpick.dd_backend.Entity.User;
@@ -15,10 +12,7 @@ import diamondpick.dd_backend.Exception.NotExist.NotExist;
 import diamondpick.dd_backend.Exception.OperationFail;
 import diamondpick.dd_backend.Exception.OtherFail;
 import diamondpick.dd_backend.Exception.Team.*;
-import diamondpick.dd_backend.Service.ConstraintService;
-import diamondpick.dd_backend.Service.FileService;
-import diamondpick.dd_backend.Service.SpaceService;
-import diamondpick.dd_backend.Service.TeamService;
+import diamondpick.dd_backend.Service.*;
 import diamondpick.dd_backend.Tool.IdGenerator;
 import diamondpick.dd_backend.Tool.UserStatusToTeam;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +27,8 @@ public class TeamImp implements TeamService {
     @Autowired
     private SpaceService spaceService;
     @Autowired
+    MessageService messageService;
+    @Autowired
     private TeamDao teamDao;
     @Autowired
     private SpaceDao spaceDao;
@@ -44,6 +40,10 @@ public class TeamImp implements TeamService {
     private FileService fileService;
     @Autowired
     private IdGenerator idGenerator;
+    @Autowired
+    private DocumentDao documentDao;
+    @Autowired
+    private FolderDao folderDao;
     @Override
     public String newTeam(String name, String intro, String captainId) throws OtherFail, TeamNameIllegal {
         if(userDao.selectUser(captainId)==null) throw new OtherFail();
@@ -72,8 +72,11 @@ public class TeamImp implements TeamService {
     @Override
     public void dismissTeam(String teamId, String captainId) throws OperationFail {
         try{
+            int spaceId = teamDao.selectTeam(teamId).getSpaceId();
+            documentDao.deleteDocInSpace(spaceId);
+            folderDao.deleteDocInSpace(spaceId);
             teamDao.deleteTeam(teamId);
-            spaceDao.deleteSpace(spaceDao.selectSpace());
+            spaceDao.deleteSpace(spaceId);
         }catch (DataIntegrityViolationException e){
             e.printStackTrace();
             throw new OperationFail();
@@ -165,7 +168,7 @@ public class TeamImp implements TeamService {
     @Override
     public void inviteMember(String teamId, String userId) throws NotYetDeal, AlreadyMember, OtherFail {
         if(teamDealDao.selectDeal(teamId,userId)!=null){
-            if(teamDealDao.selectDeal(teamId,userId).getDealType()==0)
+            if(teamDealDao.selectDeal(teamId,userId).getDealStatus() == 0)
                 throw new NotYetDeal();
         }
         List<User> users = userDao.selectMember(teamId);
@@ -180,7 +183,8 @@ public class TeamImp implements TeamService {
             throw new AlreadyMember();
         try{
             teamDealDao.insertDeal(teamId,userId,1);
-        }catch (DataIntegrityViolationException e){
+            messageService.newTeamDealMsg(teamDealDao.selectDeal(teamId, userId).getDealId());
+        }catch (OperationFail e){
             throw new OtherFail();
         }
     }
@@ -188,7 +192,7 @@ public class TeamImp implements TeamService {
     @Override
     public void applyJoinTeam(String userId, String teamId) throws NotYetDeal, AlreadyMember, OtherFail {
         if(teamDealDao.selectDeal(teamId,userId)!=null){
-            if(teamDealDao.selectDeal(teamId,userId).getDealType()==0)
+            if(teamDealDao.selectDeal(teamId,userId).getDealStatus() == 0)
                 throw new NotYetDeal();
         }
         List<User> users = userDao.selectMember(teamId);
@@ -203,7 +207,8 @@ public class TeamImp implements TeamService {
             throw new AlreadyMember();
         try{
             teamDealDao.insertDeal(teamId,userId,2);
-        }catch (DataIntegrityViolationException e){
+            messageService.newTeamDealMsg(teamDealDao.selectDeal(teamId, userId).getDealId());
+        }catch (OperationFail e){
             throw new OtherFail();
         }
     }
@@ -213,6 +218,10 @@ public class TeamImp implements TeamService {
         TeamDeal teamDeal = teamDealDao.selectDeal(teamId,userId);
         if(teamDeal==null)
             throw new NoDealTodo();
+        else if(teamDeal.getDealType()!=1)
+            throw new NoDealTodo();
+        else if(teamDeal.getDealStatus() != 0)
+            throw new NoDealTodo();
         try{
             if(isAgree){
                 teamDealDao.updateStatus(teamDeal.getDealId(),1);
@@ -220,7 +229,8 @@ public class TeamImp implements TeamService {
             }
             else
                 teamDealDao.updateStatus(teamDeal.getDealId(),2);
-        }catch (DataIntegrityViolationException e){
+            messageService.newTeamDealMsg(teamDealDao.selectDeal(teamId, userId).getDealId());
+        }catch (OperationFail e){
             throw new OtherFail();
         }
     }
@@ -230,6 +240,10 @@ public class TeamImp implements TeamService {
         TeamDeal teamDeal = teamDealDao.selectDeal(teamId,userId);
         if(teamDeal==null)
             throw new NoDealTodo();
+        else if(teamDeal.getDealType()!=2)
+            throw new NoDealTodo();
+        else if(teamDeal.getDealStatus() != 0)
+            throw new NoDealTodo();
         try{
             if(isAgree){
                 teamDealDao.updateStatus(teamDeal.getDealId(),1);
@@ -237,7 +251,8 @@ public class TeamImp implements TeamService {
             }
             else
                 teamDealDao.updateStatus(teamDeal.getDealId(),2);
-        }catch (DataIntegrityViolationException e){
+            messageService.newTeamDealMsg(teamDealDao.selectDeal(teamId, userId).getDealId());
+        }catch (OperationFail e){
             throw new OtherFail();
         }
     }

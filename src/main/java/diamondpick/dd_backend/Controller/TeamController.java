@@ -13,11 +13,13 @@ import diamondpick.dd_backend.Exception.Team.AlreadyCaption;
 import diamondpick.dd_backend.Exception.Team.NotInTeam;
 import diamondpick.dd_backend.Service.LocalFileService;
 import diamondpick.dd_backend.Service.TeamService;
+import diamondpick.dd_backend.Tool.JsonArray;
 import diamondpick.dd_backend.Tool.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -67,7 +69,7 @@ public class TeamController {
             ret.put("code",0);
             return ret;
         }
-        catch (OperationFail e) {
+        catch (Exception e) {
             ret.put("code",-1);
             return ret;
         }
@@ -158,18 +160,17 @@ public class TeamController {
                 ret.put("code",1);
                 return ret;
             }
+
             List<User> users = userDao.selectMember(teamId);
-            ret.put("code",0);
+            JsonArray members = new JsonArray("userId", "name", "rank", "url");
+            String captainId = team.getCaptainId();
+            User captain = userDao.selectUser(captainId);
+            members.add(captainId, captain.getNickname(), "队长", localFileService.getUserAvatarUrl(captainId));
             for(User user : users){
-                Map<String,Object> info = new HashMap<>();
-                info.put("name",user.getNickname());
-                if(team.getCaptainId().equals(user.getUserId()))
-                    info.put("rank","队长");
-                else
-                    info.put("rank","队员");
-                info.put("userId",user.getUserId());
-                ret.put("member",info);
+                members.add(user.getUserId(), user.getNickname(), "队员", localFileService.getUserAvatarUrl(user.getUserId()));
             }
+            ret.put("code",0);
+            ret.put("member", members.get());
             return ret;
         }catch (Exception e){
             ret.put("code",-1);
@@ -217,4 +218,11 @@ public class TeamController {
             return ret;
         }
     }
+    public class Member{
+        String name;
+        String rank;
+        String userId;
+        String url;
+    }
+
 }
