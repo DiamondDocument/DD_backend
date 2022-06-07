@@ -171,7 +171,7 @@ public class LocalFileServiceImp implements LocalFileService {
     @Override
     public void saveDocument(String docId, String content) throws NotExist, OtherFail {
         if (documentDao.selectDoc(docId) == null) throw new NotExist();
-        writeToFile(documentLocation + docId + "." + "html", content.getBytes(StandardCharsets.UTF_8));
+        writeToFile(documentLocation + docId + "." + "html", content.getBytes());
     }
     @Override
     public void saveTemplate(String tempId, String content) throws NotExist, OtherFail {
