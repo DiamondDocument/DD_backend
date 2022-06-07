@@ -63,4 +63,11 @@ public interface FileService {
      * @throws NoAuth    没有权限
      */
     public void DeletePermanently(String fileId) throws OtherFail, NoAuth;
+
+    /**
+     * 递归修改文件权限
+     *
+     * @param parentId 父文件夹id
+     */
+    public void updateAuthRecur(String parentId, int newAuth);
 }

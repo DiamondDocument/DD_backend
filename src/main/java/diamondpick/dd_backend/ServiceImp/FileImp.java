@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+
 @Service
 public class FileImp implements FileService {
     @Autowired
@@ -116,6 +117,26 @@ public class FileImp implements FileService {
             }
         } catch (Exception e) {
             throw new OtherFail();
+        }
+    }
+
+    @Override
+    public void updateAuthRecur(String parentId, int newAuth) {
+        List<Folder> folders = folderDao.selectSubDir(parentId);
+        List<Document> documents = documentDao.selectSubDir(parentId);
+        if (folders == null && documents == null) {
+            return;
+        }
+        for (Document document : documents) {
+            if (newAuth < document.getNowAuth()) {
+                documentDao.updateDoc(document.getFileId(), "now_auth", newAuth);
+            }
+        }
+        for (Folder folder : folders) {
+            if (newAuth < folder.getNowAuth()) {
+                folderDao.updateFolder(folder.getFileId(), "now_auth", newAuth);
+            }
+            updateAuthRecur(folder.getFileId(), newAuth);
         }
     }
 }

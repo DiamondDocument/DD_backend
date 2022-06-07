@@ -159,6 +159,7 @@ public class FileController {
             return res.get(-1);
         }
     }
+
     @PostMapping("/api/file/complete-remove")
     public Map<String, Object> completeRemoveFile(@RequestBody Map<String, String> re_map) {
         Response res = new Response();
@@ -209,11 +210,10 @@ public class FileController {
                 String parentId = folderDao.selectFolder(fileId).getParentId();
                 if (parentId != null) {
                     Folder parent = folderDao.selectFolder(parentId);
-                    int nowAuth = Math.min(parent.getNowAuth(), authority);
-                    folderDao.updateFolder(fileId, "now_auth", nowAuth);
-                } else {
-                    folderDao.updateFolder(fileId, "now_auth", authority);
+                    authority = Math.min(parent.getNowAuth(), authority);
                 }
+                folderDao.updateFolder(fileId, "now_auth", authority);
+                fileService.updateAuthRecur(fileId, authority);
             } else if (fileId.charAt(0) == 'd') {
                 // change selfAuth
                 documentDao.updateDoc(fileId, "self_auth", authority);

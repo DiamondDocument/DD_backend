@@ -1,6 +1,7 @@
 package diamondpick.dd_backend.Controller;
 
 import diamondpick.dd_backend.Exception.Illegal.Illegal;
+import diamondpick.dd_backend.Service.FileService;
 import diamondpick.dd_backend.Tool.IdGenerator;
 import diamondpick.dd_backend.Tool.JsonArray;
 import diamondpick.dd_backend.Tool.Response;
@@ -15,6 +16,9 @@ import java.util.Map;
 public class TestController {
     @Autowired
     private IdGenerator idGenerator;
+
+    @Autowired
+    private FileService fileService;
 
     @GetMapping("api/hello")
     public Map<String, Object> helloWorld(@RequestParam(required = false) String userId){
@@ -56,5 +60,12 @@ public class TestController {
         String messageId = idGenerator.generateId('m');
         String teamId = idGenerator.generateId('t');
         return res.get(0, folderId, documentId, messageId, teamId);
+    }
+
+    @GetMapping("api/update_auth_recur")
+    public Map<String, Object> testUpdateAuthRecur() throws Illegal {
+        Response res = new Response();
+        fileService.updateAuthRecur("f000001", 1);
+        return res.get(0);
     }
 }
