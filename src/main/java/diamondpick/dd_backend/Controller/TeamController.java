@@ -13,6 +13,7 @@ import diamondpick.dd_backend.Exception.Team.AlreadyCaption;
 import diamondpick.dd_backend.Exception.Team.NotInTeam;
 import diamondpick.dd_backend.Service.LocalFileService;
 import diamondpick.dd_backend.Service.TeamService;
+import diamondpick.dd_backend.Tool.JsonArray;
 import diamondpick.dd_backend.Tool.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -159,26 +160,17 @@ public class TeamController {
                 ret.put("code",1);
                 return ret;
             }
+
             List<User> users = userDao.selectMember(teamId);
-            List<Member> members = new ArrayList<>();
+            JsonArray members = new JsonArray("userId", "name", "rank", "url");
             String captainId = team.getCaptainId();
             User captain = userDao.selectUser(captainId);
-            Member capt = new Member();
-            capt.userId = captainId;
-            capt.name = captain.getNickname();
-            capt.rank = "队长";
-            capt.url = localFileService.getUserAvatarUrl(captainId);
-            members.add(capt);
+            members.add(captainId, captain.getNickname(), "队长", localFileService.getUserAvatarUrl(captainId));
             for(User user : users){
-                Member member = new Member();
-                member.userId = user.getUserId();
-                member.name = user.getNickname();
-                member.rank = "队员";
-                member.url = localFileService.getUserAvatarUrl(user.getUserId());
-                members.add(member);
+                members.add(user.getUserId(), user.getNickname(), "队员", localFileService.getUserAvatarUrl(user.getUserId()));
             }
             ret.put("code",0);
-            ret.put("member",members);
+            ret.put("member", members.get());
             return ret;
         }catch (Exception e){
             ret.put("code",-1);
