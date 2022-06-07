@@ -146,10 +146,29 @@ public class FileController {
         String userId = re_map.get("userId");
         String fileId = re_map.get("fileId");
         try {
+
             if (fileId.charAt(0) == 'f') {
                 folderDao.updateToDelete(fileId, userId);
             } else if (fileId.charAt(0) == 'd') {
                 documentDao.updateToDelete(fileId, userId);
+            } else {
+                return res.get(-1);
+            }
+            return res.get(0);
+        } catch (Exception e) {
+            return res.get(-1);
+        }
+    }
+    @PostMapping("/api/file/complete-remove")
+    public Map<String, Object> completeRemoveFile(@RequestBody Map<String, String> re_map) {
+        Response res = new Response();
+        String userId = re_map.get("userId");
+        String fileId = re_map.get("fileId");
+        try {
+            if (fileId.charAt(0) == 'f') {
+                folderDao.deleteFolder(fileId);
+            } else if (fileId.charAt(0) == 'd') {
+                documentDao.deleteDoc(fileId);
             } else {
                 return res.get(-1);
             }
