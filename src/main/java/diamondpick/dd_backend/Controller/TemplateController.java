@@ -39,11 +39,11 @@ public class TemplateController {
     @GetMapping(value="/api/template/list/my")
     public Map<String, Object> my(@RequestParam String userId) {
         Response res = new Response("temps");
-        JsonArray arr = new JsonArray("tempId", "tempName", "creatorId", "creatorName", "createTime");
+        JsonArray arr = new JsonArray("tempId", "tempName", "creatorId", "creatorName", "createTime", "url");
         try{
             List<Template> temps =  templateService.getMyTemplate(userId);
             for(Template temp : temps){
-                arr.add(temp.getTempId(), temp.getName(), temp.getCreatorId(), temp.getCreatorName(), temp.getCreateTime());
+                arr.add(temp.getTempId(), temp.getName(), temp.getCreatorId(), temp.getCreatorName(), temp.getCreateTime(), localFileService.getThumbnailUrl(temp.getTempId()));
             }
             return res.get(0, arr);
         }catch (Exception e){
@@ -53,11 +53,11 @@ public class TemplateController {
     @GetMapping(value="/api/template/list/collection")
     public Map<String, Object> collection(@RequestParam String userId) {
         Response res = new Response("temps");
-        JsonArray arr = new JsonArray("tempId", "tempName", "creatorId", "creatorName", "createTime");
+        JsonArray arr = new JsonArray("tempId", "tempName", "creatorId", "creatorName", "createTime", "url");
         try{
             List<Template> temps =  templateService.getCollection(userId);
             for(Template temp : temps){
-                arr.add(temp.getTempId(), temp.getName(), temp.getCreatorId(), temp.getCreatorName(), temp.getCreateTime());
+                arr.add(temp.getTempId(), temp.getName(), temp.getCreatorId(), temp.getCreatorName(), temp.getCreateTime(), localFileService.getThumbnailUrl(temp.getTempId()));
             }
             return res.get(0, arr);
         }catch (Exception e){
@@ -67,11 +67,11 @@ public class TemplateController {
     @GetMapping(value="/api/template/list/recommend")
     public Map<String, Object> recommend(@RequestParam String userId) {
         Response res = new Response("temps");
-        JsonArray arr = new JsonArray("tempId", "tempName", "creatorId", "creatorName", "createTime");
+        JsonArray arr = new JsonArray("tempId", "tempName", "creatorId", "creatorName", "createTime", "url");
         try{
             List<Template> temps =  templateService.getRecommend(userId);
             for(Template temp : temps){
-                arr.add(temp.getTempId(), temp.getName(), temp.getCreatorId(), temp.getCreatorName(), temp.getCreateTime());
+                arr.add(temp.getTempId(), temp.getName(), temp.getCreatorId(), temp.getCreatorName(), temp.getCreateTime(), localFileService.getThumbnailUrl(temp.getTempId()));
             }
             return res.get(0, arr);
         }catch (Exception e){

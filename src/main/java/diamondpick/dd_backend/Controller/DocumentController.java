@@ -61,10 +61,10 @@ public class DocumentController {
     }
     @GetMapping("/api/document/content")
     public Map<String, Object> getDoc(@RequestParam String userId, @RequestParam String docId){
-        Response res = new Response("content");
+        Response res = new Response("content", "name");
         try{
             if(authService.checkFileAuth(docId, userId) < 2)return res.get(1);
-            return res.get(0, localFileService.getDocument(docId));
+            return res.get(0, localFileService.getDocument(docId), documentDao.selectDoc(docId).getName());
         }catch (OperationFail e){
             return res.get(-1);
         }
