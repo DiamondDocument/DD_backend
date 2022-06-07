@@ -213,6 +213,8 @@ public class TeamImp implements TeamService {
         TeamDeal teamDeal = teamDealDao.selectDeal(teamId,userId);
         if(teamDeal==null)
             throw new NoDealTodo();
+        else if(teamDeal.getDealType()!=1)
+            throw new NoDealTodo();
         try{
             if(isAgree){
                 teamDealDao.updateStatus(teamDeal.getDealId(),1);
@@ -229,6 +231,8 @@ public class TeamImp implements TeamService {
     public void dealApply(String teamId, String userId, boolean isAgree) throws NoDealTodo, OtherFail {
         TeamDeal teamDeal = teamDealDao.selectDeal(teamId,userId);
         if(teamDeal==null)
+            throw new NoDealTodo();
+        else if(teamDeal.getDealType()!=2)
             throw new NoDealTodo();
         try{
             if(isAgree){

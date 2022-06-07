@@ -38,6 +38,7 @@ public class EmailImp implements EmailService {
      * @param subject 邮件主题
      * @param contnet 邮件内容
      */
+    @Override
     public void sendSimpleMail(String to, String subject, String contnet){
 
         SimpleMailMessage message = new SimpleMailMessage();
