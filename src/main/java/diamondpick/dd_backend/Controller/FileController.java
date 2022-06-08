@@ -49,7 +49,7 @@ public class FileController {
                                           @RequestParam(value = "teamId", required = false) String teamId,
                                           @RequestParam(value = "parentId", required = false) String parentId,
                                           @RequestParam(value = "templateId", required = false) String templateId,
-                                          @RequestParam(value = "file", required = false) MultipartFile file) {
+                                          @RequestParam(required = false) MultipartFile file) {
         Response res = new Response("fileId");
         int auth = 3;
         int spaceId;

@@ -20,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.print.attribute.standard.MediaSize;
 import java.nio.channels.NotYetConnectedException;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -61,10 +62,11 @@ public class DocumentController {
     }
     @GetMapping("/api/document/content")
     public Map<String, Object> getDoc(@RequestParam String userId, @RequestParam String docId){
-        Response res = new Response("content", "name", "authority");
+        Response res = new Response("content", "name", "authority", "modifyTime");
         try{
             if(authService.checkFileAuth(docId, userId) < 2)return res.get(1);
-            return res.get(0, localFileService.getDocument(docId), documentDao.selectDoc(docId).getName(), authService.checkFileAuth(docId, userId));
+            Document doc = documentDao.selectDoc(docId);
+            return res.get(0, localFileService.getDocument(docId), doc.getName(), authService.checkFileAuth(docId, userId), doc.getModifyTime());
         }catch (OperationFail e){
             return res.get(-1);
         }
@@ -77,11 +79,13 @@ public class DocumentController {
         String name = req.get("newName");
         Response res = new Response();
         try{
+            documentService.checkEdit(docId, userId);
             int auth = authService.checkFileAuth(docId, userId);
             if(content != null){
                 if(auth < 4)return res.get(-1);
-                documentService.checkEdit(docId, userId);
                 localFileService.saveDocument(docId, content);
+                documentDao.updateDoc(docId, "modify_time", new Date());
+                documentDao.updateDoc(docId, "modifier_id", userId);
             }
             if(name != null){
                 if(auth < 5)return res.get(-1);
