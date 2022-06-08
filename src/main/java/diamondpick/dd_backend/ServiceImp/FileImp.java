@@ -88,15 +88,34 @@ public class FileImp implements FileService {
     }
 
     @Override
-    public void deleteFile(String fileId, String userId) throws OtherFail {
+    public int deleteFile(String fileId, String userId) throws OtherFail {
         try {
             if (authService.checkFileAuth(fileId, userId) < 4) {
-                throw new NoAuth();
+                return 1;
             }
             if (fileId.charAt(0) == 'f') {
+                List<Folder> folders = folderDao.selectSubDir(fileId);
+                List<Document> documents = documentDao.selectSubDir(fileId);
+                if (folders.size() == 0 && documents.size() == 0) {
+                    return 0;
+                }
+                for (Folder folder : folders) {
+                    if (deleteFile(folder.getFileId(), userId) == 1) {
+                        return 1;
+                    }
+                    folderDao.updateToDelete(folder.getFileId(), userId);
+                }
+                for (Document document : documents) {
+                    if (authService.checkFileAuth(document.getFileId(), userId) < 4) {
+                        return 1;
+                    }
+                    documentDao.updateToDelete(document.getFileId(), userId);
+                }
                 folderDao.updateToDelete(fileId, userId);
+                return 0;
             } else if (fileId.charAt(0) == 'd') {
                 documentDao.updateToDelete(fileId, userId);
+                return 0;
             } else {
                 throw new OtherFail();
             }
@@ -111,7 +130,6 @@ public class FileImp implements FileService {
             if (authService.checkFileAuth(fileId, userId) < 4) {
                 return 1;
             }
-            System.out.println(fileId);
             if (fileId.charAt(0) == 'f') {
                 List<Folder> folders = folderDao.selectSubDir(fileId);
                 List<Document> documents = documentDao.selectSubDir(fileId);

@@ -150,9 +150,13 @@ public class FileController {
         String userId = re_map.get("userId");
         String fileId = re_map.get("fileId");
         try {
-
+            if (authService.checkFileAuth(fileId, userId) < 4) {
+                return res.get(-1);
+            }
             if (fileId.charAt(0) == 'f') {
-                folderDao.updateToDelete(fileId, userId);
+                int resp = fileService.deleteFile(fileId, userId);
+                if (resp == 1) throw new Exception("No auth.");
+                else if (resp == -1) throw new Exception("Something wrong.");
             } else if (fileId.charAt(0) == 'd') {
                 documentDao.updateToDelete(fileId, userId);
             } else {
@@ -174,7 +178,9 @@ public class FileController {
                 return res.get(-1);
             }
             if (fileId.charAt(0) == 'f') {
-                fileService.deletePermanently(fileId, userId);
+                int resp = fileService.deletePermanently(fileId, userId);
+                if (resp == 1) throw new Exception("No auth.");
+                else if (resp == -1) throw new Exception("Something wrong.");
             } else if (fileId.charAt(0) == 'd') {
                 documentDao.deleteDoc(fileId);
             } else {

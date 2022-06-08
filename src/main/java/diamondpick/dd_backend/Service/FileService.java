@@ -49,10 +49,11 @@ public interface FileService {
      *
      * @param fileId 文件id（文档或文件夹）
      * @param userId 删除者id
+     * @return 删除状态：0-成功，-1-失败，1-没有权限
      * @throws OtherFail 其他错误
      * @throws NoAuth    没有权限
      */
-    void deleteFile(String fileId, String userId) throws OtherFail, NoAuth;
+    public int deleteFile(String fileId, String userId) throws OtherFail, NoAuth;
 
     /**
      * 永久删除文件
