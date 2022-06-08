@@ -1,10 +1,7 @@
 package diamondpick.dd_backend.Dao;
 
 import diamondpick.dd_backend.Entity.TeamDeal;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Update;
+import org.apache.ibatis.annotations.*;
 import org.springframework.dao.DataIntegrityViolationException;
 
 @Mapper
@@ -24,4 +21,7 @@ public interface TeamDealDao {
 
     @Select("select * from team_deal where deal_id = #{param1}")
     public TeamDeal selectDealByDealId(int dealId);
+
+    @Delete("delete from team_deal where team_id = #{param1}")
+    public void deleteAllDeal(String teamId);
 }

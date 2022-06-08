@@ -75,6 +75,8 @@ public class TeamImp implements TeamService {
             int spaceId = teamDao.selectTeam(teamId).getSpaceId();
             documentDao.deleteDocInSpace(spaceId);
             folderDao.deleteDocInSpace(spaceId);
+            teamDao.deleteAllMember(teamId);
+            teamDealDao.deleteAllDeal(teamId);
             teamDao.deleteTeam(teamId);
             spaceDao.deleteSpace(spaceId);
         }catch (DataIntegrityViolationException e){

@@ -21,6 +21,8 @@ public interface TeamDao {
     public void deleteTeam(String teamId);
     @Delete("delete from team_member where team_id = #{param1} and member_id = #{param2}")
     public void deleteMember(String teamId, String memberId);
+    @Delete("delete from team_member where team_id = #{param1}")
+    public void deleteAllMember(String teamId);
 
 
     /**

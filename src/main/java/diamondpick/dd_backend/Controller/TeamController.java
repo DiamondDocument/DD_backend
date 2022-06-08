@@ -160,7 +160,6 @@ public class TeamController {
                 ret.put("code",1);
                 return ret;
             }
-
             List<User> users = userDao.selectMember(teamId);
             JsonArray members = new JsonArray("userId", "name", "rank", "url");
             String captainId = team.getCaptainId();
@@ -215,6 +214,21 @@ public class TeamController {
             return ret;
         } catch (AlreadyCaption e) {
             ret.put("code",3);
+            return ret;
+        }
+    }
+    @PostMapping("/api/team/leave")
+    public Map<String, Object> leave(@RequestBody Map<String, String> remap){
+        Map<String,Object> ret = new HashMap<>();
+        String teamId = remap.get("teamId");
+        String userId = remap.get("userId");
+        try {
+            teamDao.deleteMember(teamId,userId);
+            ret.put("code",0);
+            return ret;
+        }
+        catch (Exception e) {
+            ret.put("code",-1);
             return ret;
         }
     }
