@@ -61,10 +61,10 @@ public class DocumentController {
     }
     @GetMapping("/api/document/content")
     public Map<String, Object> getDoc(@RequestParam String userId, @RequestParam String docId){
-        Response res = new Response("content", "name");
+        Response res = new Response("content", "name", "authority");
         try{
             if(authService.checkFileAuth(docId, userId) < 2)return res.get(1);
-            return res.get(0, localFileService.getDocument(docId), documentDao.selectDoc(docId).getName());
+            return res.get(0, localFileService.getDocument(docId), documentDao.selectDoc(docId).getName(), authService.checkFileAuth(docId, userId));
         }catch (OperationFail e){
             return res.get(-1);
         }
@@ -74,13 +74,21 @@ public class DocumentController {
         String content = req.get("content");
         String docId = req.get("docId");
         String userId = req.get("userId");
+        String name = req.get("newName");
         Response res = new Response();
         try{
-            if(authService.checkFileAuth(docId, userId) < 4)return res.get(-1);
-            documentService.checkEdit(docId, userId);
-            localFileService.saveDocument(docId, content);
+            int auth = authService.checkFileAuth(docId, userId);
+            if(content != null){
+                if(auth < 4)return res.get(-1);
+                documentService.checkEdit(docId, userId);
+                localFileService.saveDocument(docId, content);
+            }
+            if(name != null){
+                if(auth < 5)return res.get(-1);
+                documentDao.updateDoc(docId, "name", name);
+            }
             return res.get(0);
-        }catch (OperationFail e){
+        }catch (Exception e){
             return res.get(-1);
         }
     }
