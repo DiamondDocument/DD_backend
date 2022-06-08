@@ -64,9 +64,10 @@ public class TeamController {
             Team team = teamDao.selectTeam(teamId);
             if(!team.getCaptainId().equals(userId)){
                 ret.put("code",1);
+            }else{
+                teamService.dismissTeam(teamId,userId);
+                ret.put("code",0);
             }
-            teamService.dismissTeam(teamId,userId);
-            ret.put("code",0);
             return ret;
         }
         catch (Exception e) {
