@@ -201,11 +201,11 @@ public class DocumentController {
     @GetMapping("/api/comment/list")
     public Map<String, Object> listComment(@RequestParam String docId){
         Response r = new Response("comments");
-        JsonArray arr = new JsonArray("commentId", "content", "date", "userId", "userName");
+        JsonArray arr = new JsonArray("commentId", "content", "date", "userId", "userName", "url");
         try{
             List<Comment> comments = documentService.getComment(docId);
             for(Comment c : comments){
-                arr.add(c.getCommentId(), c.getContent(), c.getCreateTime(), c.getCreatorId(), c.getCreatorName());
+                arr.add(c.getCommentId(), c.getContent(), c.getCreateTime(), c.getCreatorId(), c.getCreatorName(), localFileService.getUserAvatarUrl(c.getCreatorId()));
             }
             return r.get(0, arr);
         }catch (OperationFail e){
