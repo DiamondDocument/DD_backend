@@ -257,9 +257,9 @@ public class LocalFileServiceImp implements LocalFileService {
             if(l < 1024){
                 return l + "B";
             }else if(l < 1024*1024){
-                return l/1024.0 + "KB";
+                return String.format("%.2f", l/1024.0) + "KB";
             }else{
-                return l/(1024.0*1024) + "MB";
+                return String.format("%.2f", l/(1024.0*1024))   + "MB";
             }
         }catch (Exception e){
             e.printStackTrace();
@@ -420,7 +420,7 @@ public class LocalFileServiceImp implements LocalFileService {
         }
         try {
             doc.save( baseLocation + "importTmp.html");
-            return new String(readFromFile("importTmp.html"));
+            return new String(readFromFile(baseLocation + "importTmp.html"));
         }catch (Exception e){
             e.printStackTrace();
             throw new OperationFail();

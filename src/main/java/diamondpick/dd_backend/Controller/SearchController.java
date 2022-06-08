@@ -67,7 +67,7 @@ public class SearchController {
     public Map<String, Object> searchDoc(@RequestParam String type, @RequestParam String ownerId,
                                          @RequestParam String visitorId, @RequestParam String key){
         Response r = new Response("documents");
-        JsonArray arr = new JsonArray("docId", "docName", "creatorId", "creatorName", "createTime",
+        JsonArray arr = new JsonArray("fileId", "fileName", "creatorId", "creatorName", "createTime",
                 "modifierId", "modifierName", "modifyTime", "size", "fileType");
         try {
                 List<Document> documents = searchDao.searchDoc(type, ownerId, key);
