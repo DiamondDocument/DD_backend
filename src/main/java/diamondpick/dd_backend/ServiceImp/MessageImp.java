@@ -34,7 +34,7 @@ public class MessageImp implements MessageService {
         if (deal == null) {
             throw new OperationFail();
         }
-        if (deal.getDealType() == 0) {
+        if (deal.getDealType() == 1) {
             // 邀请
             String msgId = idGenerator.generateId('m');
             String senderId;
@@ -52,7 +52,7 @@ public class MessageImp implements MessageService {
                 msgType = 5;
             }
             messageDao.insertMsg(msgId, senderId, receiverId, msgType, null, null, dealId);
-        } else if (deal.getDealType() == 1) {
+        } else if (deal.getDealType() == 2) {
             // 申请
             String msgId = idGenerator.generateId('m');
             String senderId;
