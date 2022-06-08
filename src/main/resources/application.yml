@@ -3,6 +3,9 @@ spring:
     url: jdbc:mysql://43.138.71.108:3306/dd_backend
     #    password: diamond
     username: diamond
+  servlet:
+    multipart:
+      max-file-size: 1000MB
 #    initialization-mode:
 #    schema: classpath:/Sql/*.sql
 #  jpa:
