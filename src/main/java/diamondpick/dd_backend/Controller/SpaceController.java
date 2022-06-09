@@ -202,7 +202,7 @@ public class SpaceController {
             List<JSONObject> jsonList = new ArrayList<>();
             List<Document> documents = documentDao.selectRecent(userId, 10);
 
-            addDocumentToJsonList(jsonList, documents, userId, -1);
+            addDocumentToJsonList(jsonList, documents, userId, -2);
             return res.get(0, jsonList);
         } catch (Exception e) {
             return res.get(-1);
@@ -253,6 +253,9 @@ public class SpaceController {
                 json.put("modifierId", document.getModifierId());
                 json.put("modifierName", document.getModifierName());
                 json.put("modifyTime", document.getModifyTime());
+                if (spaceId == -2) {
+                    json.put("browserTime", document.getBrowseTime());
+                }
                 json.put("size", documentService.getSize(document.getFileId()));
                 json.put("authority", authService.checkFileAuth(document.getFileId(), visitorId));
                 int isShared = documentService.checkShare(document.getFileId());
