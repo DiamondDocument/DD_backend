@@ -29,6 +29,16 @@ public class MessageImp implements MessageService {
     private IdGenerator idGenerator;
 
     @Override
+    public void newMsg(String senderId, String content, String receiverId) throws OperationFail {
+        try {
+            String msgId = idGenerator.generateId('m');
+            messageDao.insertMsg(msgId, senderId, receiverId, 1, content, null, null);
+        } catch (Exception e) {
+            throw new OperationFail();
+        }
+    }
+
+    @Override
     public void newTeamDealMsg(int dealId) throws OperationFail {
         TeamDeal deal = teamDealDao.selectDealByDealId(dealId);
         if (deal == null) {
