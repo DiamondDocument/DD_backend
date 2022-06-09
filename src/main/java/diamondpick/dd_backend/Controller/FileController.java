@@ -198,7 +198,7 @@ public class FileController {
         String fileId = re_map.get("fileId");
         try {
             if (fileId.charAt(0) == 'f') {
-                folderDao.updateFolder(fileId, "is_delete", "0");
+                fileService.recoverFile(fileId);
             } else if (fileId.charAt(0) == 'd') {
                 documentDao.updateDoc(fileId, "is_delete", "0");
             } else {

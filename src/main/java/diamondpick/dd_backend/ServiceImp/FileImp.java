@@ -97,6 +97,7 @@ public class FileImp implements FileService {
                 List<Folder> folders = folderDao.selectSubDir(fileId);
                 List<Document> documents = documentDao.selectSubDir(fileId);
                 if (folders.size() == 0 && documents.size() == 0) {
+                    folderDao.updateToDelete(fileId, userId);
                     return 0;
                 }
                 for (Folder folder : folders) {
@@ -116,6 +117,34 @@ public class FileImp implements FileService {
             } else if (fileId.charAt(0) == 'd') {
                 documentDao.updateToDelete(fileId, userId);
                 return 0;
+            } else {
+                throw new OtherFail();
+            }
+        } catch (Exception e) {
+            throw new OtherFail();
+        }
+    }
+
+    @Override
+    public void recoverFile(String fileId) throws OtherFail {
+        try {
+            if (fileId.charAt(0) == 'f') {
+                List<Folder> folders = folderDao.selectAllSubDir(fileId);
+                List<Document> documents = documentDao.selectAllSubDir(fileId);
+                if (folders.size() == 0 && documents.size() == 0) {
+                    folderDao.updateFolder(fileId, "is_delete", "0");
+                    return;
+                }
+                for (Folder folder : folders) {
+                    recoverFile(folder.getFileId());
+                    folderDao.updateFolder(folder.getFileId(), "is_delete", "0");
+                }
+                for (Document document : documents) {
+                    documentDao.updateDoc(document.getFileId(), "is_delete", "0");
+                }
+                folderDao.updateFolder(fileId, "is_delete", "0");
+            } else if (fileId.charAt(0) == 'd') {
+                documentDao.updateDoc(fileId, "is_delete", "0");
             } else {
                 throw new OtherFail();
             }

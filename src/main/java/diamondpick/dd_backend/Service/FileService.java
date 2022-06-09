@@ -56,6 +56,15 @@ public interface FileService {
     public int deleteFile(String fileId, String userId) throws OtherFail, NoAuth;
 
     /**
+     * 恢复文件
+     *
+     * @param fileId 文件id
+     * @throws OtherFail 其他错误
+     * @throws NoAuth    没有权限
+     */
+    public void recoverFile(String fileId) throws OtherFail, NoAuth;
+
+    /**
      * 永久删除文件
      * 如果是文件夹需要递归删除所有文件
      *
