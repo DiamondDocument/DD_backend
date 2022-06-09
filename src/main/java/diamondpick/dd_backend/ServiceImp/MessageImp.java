@@ -31,8 +31,7 @@ public class MessageImp implements MessageService {
     @Override
     public void newMsg(String senderId, String content, String receiverId) throws OperationFail {
         try {
-            String msgId = idGenerator.generateId('m');
-            messageDao.insertMsg(msgId, senderId, receiverId, 1, content, null, null);
+            messageDao.insertMsg(idGenerator.generateId('m'), senderId, receiverId, 1, content, null, null);
         } catch (Exception e) {
             throw new OperationFail();
         }
