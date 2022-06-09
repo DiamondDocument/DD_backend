@@ -2,7 +2,9 @@ package diamondpick.dd_backend.Controller;
 
 import diamondpick.dd_backend.Exception.Illegal.Illegal;
 import diamondpick.dd_backend.Exception.NoAuth;
+import diamondpick.dd_backend.Exception.OperationFail;
 import diamondpick.dd_backend.Exception.OtherFail;
+import diamondpick.dd_backend.Service.AuthService;
 import diamondpick.dd_backend.Service.FileService;
 import diamondpick.dd_backend.Tool.IdGenerator;
 import diamondpick.dd_backend.Tool.JsonArray;
@@ -21,6 +23,9 @@ public class TestController {
 
     @Autowired
     private FileService fileService;
+
+    @Autowired
+    private AuthService authService;
 
     @GetMapping("api/hello")
     public Map<String, Object> helloWorld(@RequestParam(required = false) String userId){
@@ -76,5 +81,14 @@ public class TestController {
         Response res = new Response();
         fileService.deletePermanently("f000006", "user2");
         return res.get(0);
+    }
+
+    @GetMapping("api/test_check_auth")
+    public Map<String, Object> testTestCheckAuth() throws OperationFail {
+        Response res = new Response("auth1", "auth2", "auth3");
+        int auth1 = authService.checkFileAuth("d000004", "user1");
+        int auth2 = authService.checkFileAuth("d000004", "user2");
+        int auth3 = authService.checkFileAuth("d000004", "user3");
+        return res.get(0, auth1, auth2, auth3);
     }
 }

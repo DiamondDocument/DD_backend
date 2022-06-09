@@ -42,6 +42,8 @@ public interface TeamDao {
     @Select("select * from teams where captain_id = #{param1}")
     public List<Team> selectTeamByCaptain(String captainId);
 
+    @Select("select * from teams where space_id = #{param1}")
+    public Team selectTeamBySpace(int spaceId);
 
     @Select("select team_id\n" +
             "from teams\n" +
