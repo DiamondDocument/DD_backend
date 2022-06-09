@@ -163,6 +163,10 @@ public class SpaceController {
             folders.sort((o1, o2) -> o2.getDeleteTime().compareTo(o1.getDeleteTime()));
             documents.sort((o1, o2) -> o2.getDeleteTime().compareTo(o1.getDeleteTime()));
             for (Folder folder : folders) {
+                Folder parentFolder = folderDao.selectFolder(folder.getParentId());
+                if (parentFolder != null && parentFolder.isDelete()) {
+                    continue;
+                }
                 JSONObject json = new JSONObject();
                 json.put("fileType", 2);
                 json.put("fileId", folder.getFileId());
@@ -176,6 +180,10 @@ public class SpaceController {
                 jsonList.add(json);
             }
             for (Document document : documents) {
+                Folder parentFolder = folderDao.selectFolder(document.getParentId());
+                if (parentFolder != null && parentFolder.isDelete()) {
+                    continue;
+                }
                 JSONObject json = new JSONObject();
                 json.put("fileType", 1);
                 json.put("fileId", document.getFileId());
