@@ -289,7 +289,7 @@ public class LocalFileServiceImp implements LocalFileService {
     public String getTemplate(String tempId) throws NotExist, OtherFail {
         if(templateDao.selectTemp(tempId) == null) throw new NotExist();
         try{
-            return new String(readFromFile(documentLocation + tempId + ".html"));
+            return new String(readFromFile(templateLocation + tempId + ".html"));
         }catch (FileNotFoundException e){
             e.printStackTrace();
             throw new NotExist();
