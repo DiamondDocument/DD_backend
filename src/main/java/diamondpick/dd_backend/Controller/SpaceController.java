@@ -201,7 +201,6 @@ public class SpaceController {
         try {
             List<JSONObject> jsonList = new ArrayList<>();
             List<Document> documents = documentDao.selectRecent(userId, 10);
-
             addDocumentToJsonList(jsonList, documents, userId, -2);
             return res.get(0, jsonList);
         } catch (Exception e) {
@@ -232,7 +231,7 @@ public class SpaceController {
     private void addDocumentToJsonList(List<JSONObject> jsonList, List<Document> documents, String visitorId, int spaceId) throws OperationFail {
         for (Document document : documents) {
             if (authService.checkFileAuth(document.getFileId(), visitorId) >= 2 &&
-                    (spaceId == -1 || document.getSpaceId().equals(String.valueOf(spaceId)))) {
+                    (spaceId == -1 || spaceId == -2 || document.getSpaceId().equals(String.valueOf(spaceId)))) {
                 JSONObject json = new JSONObject();
                 SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm");
                 String creatorInfo = formatter.format(document.getCreateTime()) + " by " + document.getCreatorName();
