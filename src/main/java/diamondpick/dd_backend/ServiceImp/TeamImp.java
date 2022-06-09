@@ -163,6 +163,7 @@ public class TeamImp implements TeamService {
         try{
             teamDao.updateTeam(teamId,"captain_id",newCaptainId);
             teamDao.deleteMember(teamId,newCaptainId);
+            teamDao.insertMember(teamId, oldCaptainId);
         }catch (DataIntegrityViolationException e){
             throw new OtherFail();
         }
