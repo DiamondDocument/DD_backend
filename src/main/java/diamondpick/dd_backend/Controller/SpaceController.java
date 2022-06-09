@@ -201,6 +201,7 @@ public class SpaceController {
         try {
             List<JSONObject> jsonList = new ArrayList<>();
             List<Document> documents = documentDao.selectRecent(userId, 10);
+
             addDocumentToJsonList(jsonList, documents, userId, -2);
             return res.get(0, jsonList);
         } catch (Exception e) {
