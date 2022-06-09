@@ -12,6 +12,7 @@ import diamondpick.dd_backend.Exception.OtherFail;
 import diamondpick.dd_backend.Exception.Team.AlreadyCaption;
 import diamondpick.dd_backend.Exception.Team.NotInTeam;
 import diamondpick.dd_backend.Service.LocalFileService;
+import diamondpick.dd_backend.Service.MessageService;
 import diamondpick.dd_backend.Service.TeamService;
 import diamondpick.dd_backend.Tool.JsonArray;
 import diamondpick.dd_backend.Tool.Response;
@@ -19,7 +20,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,6 +32,8 @@ public class TeamController {
     TeamDao teamDao;
     @Autowired
     LocalFileService localFileService;
+    @Autowired
+    MessageService messageService;
     @Autowired
     UserDao userDao;
     @PostMapping("/api/team/create")
@@ -185,14 +187,16 @@ public class TeamController {
         String memberId = remap.get("memberId");
         try {
             teamService.removeMember(teamId,memberId);
+            String captainName = userDao.selectUser(captainId).getNickname();
+            String teamName = teamDao.selectTeam(teamId).getName();
+            messageService.newMsg(captainId,captainName+"已将你移除出团队"+teamName,memberId);
             ret.put("code",0);
-            return ret;
-        }
-        catch (OtherFail e) {
-            ret.put("code",-1);
             return ret;
         } catch (NotInTeam e) {
             ret.put("code",1);
+            return ret;
+        } catch (OperationFail e) {
+            ret.put("code",-1);
             return ret;
         }
     }
@@ -225,6 +229,9 @@ public class TeamController {
         String userId = remap.get("userId");
         try {
             teamDao.deleteMember(teamId,userId);
+            String memberName = userDao.selectUser(userId).getNickname();
+            String captainId = teamDao.selectTeam(teamId).getCaptainId();
+            messageService.newMsg(userId,memberName+"已离开团队",captainId);
             ret.put("code",0);
             return ret;
         }
@@ -233,11 +240,4 @@ public class TeamController {
             return ret;
         }
     }
-    public class Member{
-        String name;
-        String rank;
-        String userId;
-        String url;
-    }
-
 }
