@@ -2,7 +2,6 @@ package diamondpick.dd_backend.zzy;
 
 import diamondpick.dd_backend.Dao.TemplateDao;
 import diamondpick.dd_backend.Entity.Document;
-import diamondpick.dd_backend.Old.zzy.Dao.CollectionDao;
 import diamondpick.dd_backend.Dao.DocumentDao;
 import diamondpick.dd_backend.Service.DocumentService;
 import diamondpick.dd_backend.Service.LocalFileService;
@@ -20,8 +19,6 @@ class DdBackendApplicationTests {
 
     @Autowired
     DocumentDao documentDao;
-    @Autowired
-    CollectionDao collectionDao;
 
     @Autowired
     DocumentService documentService;
@@ -69,6 +66,6 @@ class DdBackendApplicationTests {
     }
     @Test
     void image(){
-
+        Date date = new Date();
     }
 }

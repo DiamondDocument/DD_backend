@@ -1,6 +1,8 @@
 spring:
+  jackson:
+    time-zone : GMT+8
   datasource:
-    url: jdbc:mysql://43.138.71.108:3306/dd_backend
+    url: jdbc:mysql://43.138.71.108:3306/dd_backend?serverTimezone=Asia/Shanghai
     #    password: diamond
     username: diamond
   servlet:

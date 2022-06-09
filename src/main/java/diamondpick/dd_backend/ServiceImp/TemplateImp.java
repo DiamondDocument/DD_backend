@@ -65,7 +65,12 @@ public class TemplateImp implements TemplateService {
 
     @Override
     public List<Template> getRecommend(String userId) throws OperationFail {
-        return null;
+        try{
+            return templateDao.selectByCreator("admin");
+        }catch (Exception e){
+            e.printStackTrace();
+            throw new OtherFail();
+        }
     }
 
     @Override
