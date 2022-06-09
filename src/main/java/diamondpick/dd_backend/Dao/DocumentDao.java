@@ -101,6 +101,21 @@ public interface DocumentDao {
     public List<Document> selectSubDir(String parentId);
 
     /**
+     * 查询子文档（包括已删除）
+     *
+     * @param parentId 父文件夹id
+     * @return 子文档列表
+     */
+    @Select("select\n" +
+            "    doc2.*, m.nickname as modifier_name\n" +
+            "    from  users m right join\n" +
+            "        (select doc.*, c.nickname as creator_name from  documents doc, users  c\n" +
+            "            where doc.creator_id = c.user_id and\n" +
+            "                  doc.parent_id = #{param1}) doc2\n" +
+            "    on doc2.modifier_id = m.user_id" )
+    public List<Document> selectAllSubDir(String parentId);
+
+    /**
      * @param type 可以是"team"和"user"的一种，表示是团队空间还是用户空间
      * @param spaceOwnerId 空间所有者的id（可能是团队id或者用户id）
      * @return 只包括未删除的，包括有创建者、修改者的昵称
