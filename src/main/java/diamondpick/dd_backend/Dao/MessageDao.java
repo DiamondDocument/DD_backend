@@ -57,8 +57,7 @@ public interface MessageDao {
             "         left join (select sub_td.*, sub_t.name\n" +
             "                    from team_deal sub_td,\n" +
             "                         teams sub_t\n" +
-            "                    where sub_td.team_id = sub_t.team_id\n" +
-            "                      and sub_td.deal_status = 0) td\n" +
+            "                    where sub_td.team_id = sub_t.team_id) td\n" +
             "                   on td.deal_id = msg.msg_deal_id\n" +
             "         left join documents doc on doc.doc_id = msg.msg_doc_id\n" +
             "         left join users us on us.user_id = msg.sender_id\n" +
@@ -82,8 +81,7 @@ public interface MessageDao {
             "         left join (select sub_td.*, sub_t.name\n" +
             "                    from team_deal sub_td,\n" +
             "                         teams sub_t\n" +
-            "                    where sub_td.team_id = sub_t.team_id\n" +
-            "                      and sub_td.deal_status = 0) td\n" +
+            "                    where sub_td.team_id = sub_t.team_id) td\n" +
             "                   on td.deal_id = msg.msg_deal_id\n" +
             "         left join documents doc on doc.doc_id = msg.msg_doc_id\n" +
             "         left join users us on us.user_id = msg.sender_id\n" +
