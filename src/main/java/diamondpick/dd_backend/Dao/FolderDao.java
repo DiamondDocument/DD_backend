@@ -118,6 +118,19 @@ public interface FolderDao {
     public List<Folder> selectSubDir(String parentId);
 
     /**
+     * 查询子文件夹（包括已删除）
+     *
+     * @param parentId 父文件夹id
+     * @return 文件夹列表（包括创建者名称）
+     */
+    @Select("select f.*, u.nickname as creator_name\n" +
+            "from folders f,\n" +
+            "     users u\n" +
+            "where f.parent_id = #{param1} and\n" +
+            "      f.creator_id = u.user_id")
+    public List<Folder> selectAllSubDir(String parentId);
+
+    /**
      * 查询空间根目录下的所有文件夹
      *
      * @param type         可以是"team"和"user"的一种，表示是团队空间还是用户空间

@@ -131,11 +131,10 @@ public class FileImp implements FileService {
                 return 1;
             }
             if (fileId.charAt(0) == 'f') {
-                List<Folder> folders = folderDao.selectSubDir(fileId);
-                List<Document> documents = documentDao.selectSubDir(fileId);
-                if (folders.size() == 0 && documents.size() == 0) {
-                    return 0;
-                }
+                List<Folder> folders = folderDao.selectAllSubDir(fileId);
+                List<Document> documents = documentDao.selectAllSubDir(fileId);
+                System.out.println(folders);
+                System.out.println(documents);
                 for (Folder folder : folders) {
                     if (deletePermanently(folder.getFileId(), userId) == 1) {
                         return 1;
