@@ -46,7 +46,7 @@ public class TemplateController {
             for(Template temp : temps){
                 arr.add(temp.getTempId(), temp.getName(), temp.getCreatorId(), temp.getCreatorName(), temp.getCreateTime(),
                         localFileService.getThumbnailUrl(temp.getTempId()),
-                        templateDao.selectCollectorAndTemp(userId, temp.getTempId()));
+                        templateDao.selectCollectorAndTemp(userId, temp.getTempId()) != null);
             }
             return res.get(0, arr);
         }catch (Exception e){
@@ -62,7 +62,7 @@ public class TemplateController {
             for(Template temp : temps){
                 arr.add(temp.getTempId(), temp.getName(), temp.getCreatorId(), temp.getCreatorName(),
                         temp.getCreateTime(), localFileService.getThumbnailUrl(temp.getTempId()),
-                        templateDao.selectCollectorAndTemp(userId, temp.getTempId()));
+                        templateDao.selectCollectorAndTemp(userId, temp.getTempId()) != null);
             }
             return res.get(0, arr);
         }catch (Exception e){
@@ -78,7 +78,7 @@ public class TemplateController {
             for(Template temp : temps){
                 arr.add(temp.getTempId(), temp.getName(), temp.getCreatorId(), temp.getCreatorName(),
                         temp.getCreateTime(), localFileService.getThumbnailUrl(temp.getTempId()),
-                        templateDao.selectCollectorAndTemp(userId, temp.getTempId()));
+                        templateDao.selectCollectorAndTemp(userId, temp.getTempId()) != null);
             }
             return res.get(0, arr);
         }catch (Exception e){
@@ -120,7 +120,7 @@ public class TemplateController {
         try{
             Template t = templateDao.selectTemp(tempId);
             return res.get(0, t.getName(), t.getIntro(), t.getCreatorId(), t.getCreatorName(),
-                    templateDao.selectCollectorAndTemp(userId, tempId));
+                    templateDao.selectCollectorAndTemp(userId, tempId) != null);
         }catch (Exception e){
             return res.get(-1);
         }
