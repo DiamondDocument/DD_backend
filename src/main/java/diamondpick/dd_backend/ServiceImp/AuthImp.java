@@ -54,7 +54,7 @@ public class AuthImp implements AuthService {
                 List<Team> teamUser = teamDao.selectTeamByMember(userId);
                 boolean inTeam = false;
                 for (Team team : teamUser) {
-                    if (Objects.equals(team.getTeamId(), teamFile.getTeamId())) {
+                    if (teamFile != null && Objects.equals(team.getTeamId(), teamFile.getTeamId())) {
                         inTeam = true;
                         break;
                     }
@@ -73,7 +73,7 @@ public class AuthImp implements AuthService {
                 List<Team> teamUser = teamDao.selectTeamByMember(userId);
                 boolean inTeam = false;
                 for (Team team : teamUser) {
-                    if (Objects.equals(team.getTeamId(), teamFile.getTeamId())) {
+                    if (teamFile != null && Objects.equals(team.getTeamId(), teamFile.getTeamId())) {
                         inTeam = true;
                         break;
                     }
