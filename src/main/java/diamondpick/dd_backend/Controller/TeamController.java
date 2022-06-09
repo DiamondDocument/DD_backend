@@ -162,12 +162,12 @@ public class TeamController {
                 return ret;
             }
             List<User> users = userDao.selectMember(teamId);
-            JsonArray members = new JsonArray("userId", "name", "rank", "url");
+            JsonArray members = new JsonArray("userId", "name", "rank", "url","intro");
             String captainId = team.getCaptainId();
             User captain = userDao.selectUser(captainId);
-            members.add(captainId, captain.getNickname(), "队长", localFileService.getUserAvatarUrl(captainId));
+            members.add(captainId, captain.getNickname(), "队长", localFileService.getUserAvatarUrl(captainId),captain.getIntro());
             for(User user : users){
-                members.add(user.getUserId(), user.getNickname(), "队员", localFileService.getUserAvatarUrl(user.getUserId()));
+                members.add(user.getUserId(), user.getNickname(), "队员", localFileService.getUserAvatarUrl(user.getUserId()),user.getIntro());
             }
             ret.put("code",0);
             ret.put("member", members.get());
