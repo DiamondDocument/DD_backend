@@ -162,6 +162,7 @@ public class TeamImp implements TeamService {
             throw new NotInTeam();
         try{
             teamDao.updateTeam(teamId,"captain_id",newCaptainId);
+            teamDao.deleteMember(teamId,newCaptainId);
         }catch (DataIntegrityViolationException e){
             throw new OtherFail();
         }
