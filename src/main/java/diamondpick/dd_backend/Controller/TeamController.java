@@ -189,7 +189,7 @@ public class TeamController {
             teamService.removeMember(teamId,memberId);
             String captainName = userDao.selectUser(captainId).getNickname();
             String teamName = teamDao.selectTeam(teamId).getName();
-            messageService.newMsg(captainId,captainName+"已将你移除出团队"+teamName,memberId);
+            messageService.newMsg(captainId,captainName+" 已将你移除出团队 "+teamName,memberId);
             ret.put("code",0);
             return ret;
         } catch (NotInTeam e) {
@@ -231,7 +231,7 @@ public class TeamController {
             teamDao.deleteMember(teamId,userId);
             String memberName = userDao.selectUser(userId).getNickname();
             String captainId = teamDao.selectTeam(teamId).getCaptainId();
-            messageService.newMsg(userId,memberName+"已离开团队",captainId);
+            messageService.newMsg(userId,memberName+" 已离开团队",captainId);
             ret.put("code",0);
             return ret;
         }
