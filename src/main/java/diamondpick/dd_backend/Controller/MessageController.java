@@ -32,6 +32,7 @@ public class MessageController {
                 json.put("msgId", message.getMsgId());
                 json.put("msgType", message.getMsgType());
                 json.put("senderName", message.getSenderName());
+                json.put("senderId", message.getSenderId());
                 json.put("sendTime", message.getSendTime());
                 json.put("isRead", message.getMsgStatus());
                 if (message.getMsgType() == 2 || message.getMsgType() == 4) {
