@@ -39,11 +39,14 @@ public class TemplateController {
     @GetMapping(value="/api/template/list/my")
     public Map<String, Object> my(@RequestParam String userId) {
         Response res = new Response("temps");
-        JsonArray arr = new JsonArray("tempId", "tempName", "creatorId", "creatorName", "createTime", "url");
+        JsonArray arr = new JsonArray("tempId", "tempName", "creatorId", "creatorName",
+                "createTime", "url", "iscollection");
         try{
             List<Template> temps =  templateService.getMyTemplate(userId);
             for(Template temp : temps){
-                arr.add(temp.getTempId(), temp.getName(), temp.getCreatorId(), temp.getCreatorName(), temp.getCreateTime(), localFileService.getThumbnailUrl(temp.getTempId()));
+                arr.add(temp.getTempId(), temp.getName(), temp.getCreatorId(), temp.getCreatorName(), temp.getCreateTime(),
+                        localFileService.getThumbnailUrl(temp.getTempId()),
+                        templateDao.selectCollectorAndTemp(userId, temp.getTempId()));
             }
             return res.get(0, arr);
         }catch (Exception e){
@@ -53,11 +56,13 @@ public class TemplateController {
     @GetMapping(value="/api/template/list/collection")
     public Map<String, Object> collection(@RequestParam String userId) {
         Response res = new Response("temps");
-        JsonArray arr = new JsonArray("tempId", "tempName", "creatorId", "creatorName", "createTime", "url");
+        JsonArray arr = new JsonArray("tempId", "tempName", "creatorId", "creatorName", "createTime", "url", "iscollection");
         try{
             List<Template> temps =  templateService.getCollection(userId);
             for(Template temp : temps){
-                arr.add(temp.getTempId(), temp.getName(), temp.getCreatorId(), temp.getCreatorName(), temp.getCreateTime(), localFileService.getThumbnailUrl(temp.getTempId()));
+                arr.add(temp.getTempId(), temp.getName(), temp.getCreatorId(), temp.getCreatorName(),
+                        temp.getCreateTime(), localFileService.getThumbnailUrl(temp.getTempId()),
+                        templateDao.selectCollectorAndTemp(userId, temp.getTempId()));
             }
             return res.get(0, arr);
         }catch (Exception e){
@@ -67,11 +72,13 @@ public class TemplateController {
     @GetMapping(value="/api/template/list/recommend")
     public Map<String, Object> recommend(@RequestParam String userId) {
         Response res = new Response("temps");
-        JsonArray arr = new JsonArray("tempId", "tempName", "creatorId", "creatorName", "createTime", "url");
+        JsonArray arr = new JsonArray("tempId", "tempName", "creatorId", "creatorName", "createTime", "url","iscollection");
         try{
             List<Template> temps =  templateService.getRecommend(userId);
             for(Template temp : temps){
-                arr.add(temp.getTempId(), temp.getName(), temp.getCreatorId(), temp.getCreatorName(), temp.getCreateTime(), localFileService.getThumbnailUrl(temp.getTempId()));
+                arr.add(temp.getTempId(), temp.getName(), temp.getCreatorId(), temp.getCreatorName(),
+                        temp.getCreateTime(), localFileService.getThumbnailUrl(temp.getTempId()),
+                        templateDao.selectCollectorAndTemp(userId, temp.getTempId()));
             }
             return res.get(0, arr);
         }catch (Exception e){
@@ -108,11 +115,12 @@ public class TemplateController {
         }
     }
     @GetMapping(value="/api/template")
-    public Map<String, Object> information(@RequestParam String tempId) {
-        Response res = new Response("name", "intro", "creatorId", "creatorName");
+    public Map<String, Object> information(@RequestParam String tempId, @RequestParam String userId) {
+        Response res = new Response("name", "intro", "creatorId", "creatorName", "iscollection");
         try{
             Template t = templateDao.selectTemp(tempId);
-            return res.get(0, t.getName(), t.getIntro(), t.getCreatorId(), t.getCreatorName());
+            return res.get(0, t.getName(), t.getIntro(), t.getCreatorId(), t.getCreatorName(),
+                    templateDao.selectCollectorAndTemp(userId, tempId));
         }catch (Exception e){
             return res.get(-1);
         }
