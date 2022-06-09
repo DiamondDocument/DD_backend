@@ -8,6 +8,9 @@ import java.util.List;
 
 @Service
 public interface MessageService {
+
+    /** 新增系统通知 */
+    public void newMsg(String senderId, String content, String receiverId) throws OperationFail;
     /**
      * 新建申请或者邀请（处理）消息（取决于dealId对应的deal类型和状态）
      * 需要自动按照deal对应来确定发送者和接收者，同意或者拒绝等
