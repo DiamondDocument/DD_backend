@@ -23,7 +23,7 @@ public interface UserDao {
     @Select("select * from users\n" +
             "    where email = #{param1}")
     public User selectUserByEmail(String email);
-    @Select("select * from users where user_id = (select distinct member_id from team_member\n" +
+    @Select("select * from users where user_id in (select distinct member_id from team_member\n" +
             "    where team_id = #{param1})")
     List<User> selectMember(String teamId);
     @Select("select user_id, nickname, password, users.intro, email, users.space_id from users,teams where user_id =captain_id and team_id = #{param1} ")
